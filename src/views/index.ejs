@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Home</title>
+    <link rel="stylesheet" href="/styles/navigation.css" />
+    <link rel="stylesheet" href="/styles/indexContainer.css" />
+  </head>
+
+  <body>
+    <header><%- include("./partials/navigation"); %></header>
+    <section>
+      <div class="indexContainer">
+        <% paquets.forEach((e) => { %>
+        <div class="paquet">
+          <div class="card">
+            <div class="card-header"><%= e.title %> / <%= e.year %></div>
+            <img
+              src="<%= `./uploads/movies/${e.image}` %>"
+              alt="<%= e.title %>"
+              class="card-img-top"
+            />
+            <div class="card-body">
+              <p><%= e.sinopsis %></p>
+            </div>
+            <div class="card-footer">
+              <a href="/delete/<%= e.id %>" class="btn-delete">Delete</a>
+              <a href="/play-mov/<%= e.id %>" class="btn-delete">Play</a>
+              <a href="/download/<%= e.id %>" class="btn-delete">Descarga</a>
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </section>
+    <footer><%- include("./partials/footer"); %></footer>
+  </body>
+</html>

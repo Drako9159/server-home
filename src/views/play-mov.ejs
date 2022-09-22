@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%- movies.title %></title>
+    <link rel="stylesheet" type="text/css" href="/styles/play-mov.css" />
+    <link rel="stylesheet" href="/styles/navigation.css" />
+  </head>
+  <body>
+    <section class="play-mov">
+      <div class="play-mov-container">
+        <div class="play-mov-header">
+          <h1><%- movies.title %></h1>
+          <h2><%- movies.year %></h2>
+        </div>
+
+        <div class="play-mov-body">
+          <video
+            src="/uploads/movies/<%- movies.video %>"
+            controls
+            class="play-mov-video"
+            autoplay
+            id="video-play"
+          ></video>
+        </div>
+        <div class="controls-video">
+          <% function videoControl(operator){ const video =
+          document.getElementById("video-play"); if(operator === "playVideo"){
+          video.play(); }else if(operator === "pauseVideo"){ video.pause();
+          }else if(operator === "stopVideo"){ video.pause(); video.currentTime =
+          0; } } %>
+          <img
+            src="/icons/play.png"
+            onclick="videoControl(`playVideo`)"
+            alt="play"
+            class="play"
+          />
+          <img
+            src="/icons/pause.png"
+            onclick="videoControl(`pauseVideo`)"
+            alt="pause"
+            class="pause"
+          />
+          <a href="/"
+            ><img
+              src="/icons/stop.png"
+              onclick="videoControl(`stopVideo`)"
+              alt="stop"
+              class="stop"
+          /></a>
+        </div>
+      </div>
+    </section>
+    <script>
+      function videoControl(operator) {
+        const video = document.getElementById("video-play");
+        if (operator === "playVideo") {
+          video.play();
+        } else if (operator === "pauseVideo") {
+          video.pause();
+        } else if (operator === "stopVideo") {
+          video.pause();
+          video.currentTime = 0;
+        }
+      }
+    </script>
+  </body>
+</html>

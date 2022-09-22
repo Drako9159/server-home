@@ -1,0 +1,74 @@
+@font-face {
+  font-family: monse;
+  src: url("../assets/Montserrat-Regular.otf");
+}
+
+.indexContainer {
+  font-family: monse;
+  background-color: rgba(0, 0, 0, 0.103);
+  width: 95%;
+  height: 600px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.indexContainer .paquet {
+  background-color: #0d6efd;
+  border: none;
+  margin: 5px;
+  border-radius: 5px;
+  box-shadow: 0 0 2px black;
+}
+.indexContainer .card {
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+.indexContainer .card-img-top {
+  width: 250px;
+  height: 330px;
+  box-sizing: border-box;
+}
+.indexContainer .card-header {
+  background-color: rgba(0, 0, 0, 0.815);
+  padding: 5px;
+  box-sizing: border-box;
+  width: 100%;
+  color: white;
+  text-align: center;
+  border-radius: 5px 5px 0 0;
+}
+.indexContainer .card-body {
+  display: none;
+  background-color: bisque;
+  box-sizing: border-box;
+  width: 100%;
+  text-align: center;
+}
+.indexContainer .card-body p {
+  margin: auto;
+  font-size: 9px;
+
+  padding: 15px 0;
+}
+
+.indexContainer .card-footer {
+  margin: 15px auto;
+}
+.indexContainer .card-footer .btn-delete {
+  background-color: rgba(224, 6, 6, 0.986);
+  text-decoration: none;
+  color: white;
+  padding: 10px;
+  border: none;
+  font-size: 14px;
+  border-radius: 5px;
+  margin: 5px;
+  box-shadow: 0 0 10px rgba(241, 44, 44, 0.986);
+}
+.indexContainer .card-footer .btn-delete:hover {
+  padding: 12px;
+}

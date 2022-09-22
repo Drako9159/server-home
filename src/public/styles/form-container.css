@@ -1,0 +1,130 @@
+@font-face {
+  font-family: monse;
+  src: url("../assets/Montserrat-Regular.otf");
+}
+
+.form-container {
+  font-family: monse;
+  max-width: 600px;
+
+  margin: 20px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 5px;
+  box-shadow: 0 0 2px black;
+}
+.form-container form {
+  width: 90%;
+}
+.form-container label {
+  font-family: monse;
+  font-weight: bold;
+}
+.form-container .secuencial-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  margin: 10px;
+}
+
+.form-container input {
+  box-shadow: 0 0 2px black;
+  border: none;
+  border-radius: 5px;
+  height: 30px;
+  font-family: monse;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.form-container div input:focus {
+  border: none;
+  background-color: rgba(0, 0, 0, 0.103);
+
+  color: rgb(100, 100, 100);
+  font-weight: bold;
+}
+
+.form-container div textarea {
+  border: none;
+  border-radius: 5px;
+  box-shadow: 0 0 2px black;
+  resize: none;
+  box-sizing: border-box;
+  font-family: monse;
+  outline: none;
+}
+.form-container div textarea:focus {
+  border: none;
+  background-color: rgba(0, 0, 0, 0.103);
+
+  color: rgb(100, 100, 100);
+  font-weight: bold;
+}
+.form-year::-webkit-inner-spin-button {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+
+.intermedial-form input {
+  width: 100px;
+}
+.intermedial-form {
+  margin: 0 auto;
+  width: 90%;
+  display: flex;
+
+  align-items: center;
+  justify-content: space-between;
+}
+.intermedial-form div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  width: 40%;
+}
+.intermedial-form div input {
+  width: 100%;
+}
+
+.btn-submit {
+  font-family: monse;
+
+  margin: 0;
+  padding: 0 15px;
+  margin: 10px;
+  border-radius: 5px;
+  background-color: #0d6efd;
+  border: none;
+  color: white;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.image {
+  display: none;
+}
+.charge-image {
+  border: none;
+  box-shadow: 0 0 2px black;
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 5px;
+  text-align: center;
+  transition: all 0.2 ease;
+  cursor: pointer;
+}
+.charge-image:hover {
+  background-color: rgba(0, 0, 0, 0.103);
+}
+
+.btn-submit:hover {
+  background-color: #3586ff;
+  box-shadow: 0 0 5px #0d6efd;
+  cursor: pointer;
+}

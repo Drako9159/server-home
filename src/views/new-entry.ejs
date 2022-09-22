@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Añade película</title>
+    <link rel="stylesheet" href="/styles/navigation.css" />
+    <link rel="stylesheet" href="/styles/form-container.css" />
+  </head>
+  <body>
+    <header><%- include("./partials/navigation"); %></header>
+
+    <section class="form-container">
+      <form action="new-entry" enctype="multipart/form-data" method="POST">
+        <div class="secuencial-container">
+          <label for="title">Titulo</label>
+          <input
+            autofocus
+            type="text"
+            required
+            name="title"
+            id="title"
+            placeholder="Ingresa el titulo"
+          />
+        </div>
+        <div class="secuencial-container">
+          <label for="sinopsis">Sinopsis</label>
+          <textarea
+            type="text"
+            required
+            name="sinopsis"
+            id="sinopsis"
+            rows="3"
+            autocapitalize="none"
+          ></textarea>
+        </div>
+        <div class="intermedial-form">
+          <div>
+            <label for="year">Año</label>
+            <input
+              type="number"
+              required
+              placeholder="Ingresa el año"
+              id="year"
+              class="form-year"
+              max="2023"
+              min="1910"
+              name="year"
+            />
+          </div>
+          <div>
+            <label for="genero">Género</label>
+            <input
+              type="text"
+              required
+              placeholder="Terrror/Comedia/Drama"
+              id="genero"
+              class="form-genero"
+              name="genero"
+            />
+          </div>
+        </div>
+        <div class="secuencial-container">
+          <label for="image" class="charge-image">Imagen</label>
+          <input
+            type="file"
+            class="image"
+            name="image"
+            id="image"
+            accept="image/png, image/jpg, image/jpeg,"
+          />
+        </div>
+        <div class="secuencial-container">
+          <label for="video" class="charge-image">Video</label>
+          <input
+            type=""
+            class="image"
+            name="video"
+            id="video"
+            accept="video/mp4, video/avi, video/mkv"
+          />
+        </div>
+
+        <input type="submit" value="Guardar" class="btn-submit" />
+      </form>
+    </section>
+  </body>
+</html>

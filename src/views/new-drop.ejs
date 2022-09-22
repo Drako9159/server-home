@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add drop</title>
+    <link rel="stylesheet" href="/styles/navigation.css" />
+    <link rel="stylesheet" href="/styles/form-container.css" />
+  </head>
+  <body>
+    <header><%- include("./partials/navigation") %></header>
+
+    <section class="form-container">
+      <form action="new-drop" enctype="multipart/form-data" method="POST">
+        <div class="secuencial-container">
+          <label for="title">Nombre del archivo</label>
+          <input
+            autofocus
+            type="text"
+            required
+            name="title"
+            id="title"
+            placeholder="Nombre de Archivo"
+          />
+        </div>
+
+        <div class="secuencial-container">
+          <label for="drop" class="charge-image">Archivo</label>
+          <input type="file" class="image" name="drop" id="drop" />
+        </div>
+
+        <input type="submit" value="Guardar" class="btn-submit" />
+      </form>
+    </section>
+    <%- include("./partials/footer"); %>
+  </body>
+</html>
