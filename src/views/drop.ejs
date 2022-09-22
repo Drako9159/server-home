@@ -12,7 +12,22 @@
     <header><%- include("./partials/navigation") %></header>
     <section>
       <div class="drop-container">
-        <div>lol</div>
+        <% drops.forEach((e) => { %>
+        <div class="card">
+          <div class="card-header"><%- e.title %></div>
+          <div class="card-body">
+            <img
+              src="<%- `./uploads/drops/${e.namepath}` %>"
+              alt="<%- e.namepath %>"
+              class="card-img-top"
+            />
+          </div>
+          <div class="card-footer">
+            <h1><%- e.tipo %></h1>
+          </div>
+        </div>
+
+        <% }) %>
       </div>
     </section>
 

@@ -116,7 +116,6 @@ router.post("/new-entry", uploadContent, (req, res) => {
   fs.writeFileSync("src/paquets.json", JSON.stringify(paquets), "utf-8");
   res.redirect("/");
 });
-
 router.get("/download/:id", (req, res) => {
   const movies = paquets.find((e) => e.id === req.params.id);
   const path = `src/public/uploads/movies/${movies.video}`;
@@ -170,7 +169,7 @@ router.get("/drop", (req, res) => {
     add: "Añadir Drop",
     link: "/drop/new-drop",
   };
-  res.render("drop.ejs", { nav });
+  res.render("drop.ejs", { drops, nav });
 });
 
 router.get("/drop/new-drop", (req, res) => {
@@ -184,20 +183,24 @@ const uploadDrops = uploadDrop.single("drop");
 
 router.post("/drop/new-drop", uploadDrops, (req, res) => {
   const { title } = req.body;
-  const { tipo, filename, size } = req.file;
+
   if (!title || !req.file) {
     res.status(400).send("No ingresaste todos los datos requeridos");
     if (req.files.drop) {
-      fs.unlink(`src/public/uploads/drops/${filename}`, (err) => {
-        if (err) {
-          console.error(err);
-          return;
+      fs.unlink(
+        `src/public/uploads/drops/${req.file.drop[0].filename}`,
+        (err) => {
+          if (err) {
+            console.error(err);
+            return;
+          }
+          //file removed
         }
-        //file removed
-      });
+      );
     }
     return;
   }
+  const { tipo, filename, size } = req.file;
 
   let newDrop = {
     id: uuidv4(),

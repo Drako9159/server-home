@@ -1,5 +1,41 @@
+@font-face {
+  font-family: monse;
+  src: url("../assets/Montserrat-Regular.otf");
+}
+
 .drop-container {
+  font-family: monse;
   background-color: #ccc;
   margin: 0 auto;
   width: 95%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+.card {
+  margin: 10px;
+  background-color: red;
+  width: 240px;
+  height: 40px;
+  border-radius: 5px;
+  height: 320px;
+}
+.card-header {
+  background-color: lightcoral;
+  max-width: 250px;
+  text-align: center;
+}
+.card-body {
+  max-width: 250px;
+}
+.card-body img {
+  max-width: 250px;
+  height: 10px;
+}
+
+.card-footer {
+  max-width: 250px;
+  background-color: purple;
 }
