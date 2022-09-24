@@ -200,17 +200,27 @@ router.post("/drop/new-drop", uploadDrops, (req, res) => {
     }
     return;
   }
-  const { tipo, filename, size } = req.file;
+  const { mimetype, filename, size } = req.file;
+  function evaluateSize() {
+    let sizerMath = Math.floor(size / 1000);
+    if (sizerMath > 1024) {
+      return (sizerMath = `${sizerMath / 1000} MB`);
+    } else {
+      return (sizerMath = `${sizerMath} KB`);
+    }
+  }
 
   let newDrop = {
     id: uuidv4(),
     title: title,
-    tipo: tipo,
+    tipo: mimetype,
     namepath: filename,
-    size: size,
+    size: evaluateSize(),
   };
   drops.push(newDrop);
   fs.writeFileSync("src/drops.json", JSON.stringify(drops), "utf-8");
+  res.setHeader("Content-Type", "application/json");
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.redirect("/drop");
 });
 
