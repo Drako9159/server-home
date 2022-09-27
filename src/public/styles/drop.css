@@ -7,8 +7,10 @@
   font-family: monse;
   background-color: #ccc;
   margin: 0 auto;
+  background: url("../assets/5.png");
+  background-size: cover;
 
-  width: 95%;
+  width: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -17,16 +19,18 @@
 }
 .card {
   margin: 10px;
-  background-color: blue;
+  background-color: rgba(197, 197, 197, 0.445);
   width: 240px;
-
+  box-shadow: 0 0 4px rgb(255, 255, 255);
   border-radius: 5px;
+  backdrop-filter: blur(4px);
 }
 .card-header {
-  background-color: lightcoral;
-  max-width: 95%;
+  background-color: rgba(255, 255, 255, 0.281);
+
   padding: 5px;
-  margin: 2px auto;
+  font-weight: bold;
+  border-radius: 5px 5px 0 0;
   text-align: center;
 }
 .card-body {
@@ -43,9 +47,12 @@
 .card-footer {
   max-width: 95%;
   margin: 2px auto;
-  background-color: purple;
+  background-color: rgba(255, 255, 255, 0.329);
   display: flex;
   justify-content: space-between;
+  border-radius: 5px;
+
+  box-shadow: 0 0 3px #ccc;
 }
 .card-footer p {
   margin: 0;
@@ -61,19 +68,78 @@
 
 .btn-delete {
   margin: 3px;
-  background-color: red;
+  background-color: rgba(255, 0, 0, 0.89);
   text-decoration: none;
   color: white;
   border-radius: 5px;
   padding: 5px;
-  box-shadow: 0 0 5px rgb(255, 67, 67);
+  box-shadow: 0 0 4px rgb(255, 116, 116);
 }
 .btn-download {
   margin: 3px;
-  background-color: rgb(0, 119, 255);
+  background-color: rgb(0, 153, 255);
   text-decoration: none;
   color: white;
   border-radius: 5px;
   padding: 5px;
-  box-shadow: 0 0 5px rgb(67, 153, 252);
+  box-shadow: 0 0 4px rgb(121, 183, 255);
+}
+.btn-delete:hover {
+  background-color: rgb(180, 0, 0);
+  transition: all 0.2s ease;
+}
+.btn-download:hover {
+  background-color: rgb(0, 108, 180);
+  transition: all 0.2s ease;
+}
+.icon-container {
+  background-color: transparent;
+  margin: 0 auto;
+  width: 180px;
+  height: 200px;
+  display: flex;
+}
+.icon-container .icon-super {
+  width: 80%;
+  height: 80%;
+  box-shadow: 0 0 2px black;
+  border-top: 15px solid rgba(255, 255, 255, 0.171);
+  border-right: 20px solid rgba(255, 255, 255, 0.438);
+  border-left: 10px solid rgba(255, 255, 255, 0.459);
+  margin: auto;
+  border-radius: 5px;
+}
+
+.icon-container .icon-super .icon-corner {
+  width: 35%;
+  height: 30%;
+  background-color: transparent;
+  border-radius: 0 0 0 15px;
+  float: right;
+}
+.icon-container .icon-super p {
+  background-color: transparent;
+  width: 100%;
+
+  font-size: 20px;
+  text-align: center;
+  font-weight: bold;
+  box-sizing: border-box;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.icon-container .icon-super .icon-corner .icon-corner-in {
+  width: 0;
+  height: 0;
+  position: relative;
+  right: -2px;
+  top: -2px;
+  border-right: 25px solid rgba(255, 255, 255, 0.329);
+  border-top: 25px solid rgba(255, 255, 255, 0.329);
+  border-left: 25px solid #ffffff8a;
+  border-bottom: 25px solid #ffffff8a;
+  border-radius: 0 0 0 10px;
+  box-shadow: 0 1px 0 0 grey;
 }

@@ -16,20 +16,22 @@
         <div class="card">
           <div class="card-header"><%- e.title %></div>
           <div class="card-body">
-            <img
-              src="<%- `./icons/mkv.png` %>"
-              alt="<%- e.namepath %>"
-              class="card-img"
-            />
+            <div class="icon-container">
+              <div class="icon-super">
+                <div class="icon-corner">
+                  <div class="icon-corner-in"></div>
+                </div>
+                <div><p><%- e.tipo %></p></div>
+              </div>
+            </div>
           </div>
           <div class="card-footer">
-            <p><%- e.tipo %></p>
-            <p><%- e.size %></p>
+            <p>Tamaño: <%- e.size %></p>
           </div>
           <div class="card-buttons">
-            <a href="/drop/delete/<%- e.id %>" class="btn-delete">Delete</a>
+            <a href="/drop/delete/<%- e.id %>" class="btn-delete">Borrar</a>
             <a href="/drop/download/<%- e.id %>" class="btn-download"
-              >Download</a
+              >Descargar</a
             >
           </div>
         </div>
