@@ -26,6 +26,12 @@
             <p><%- e.tipo %></p>
             <p><%- e.size %></p>
           </div>
+          <div class="card-buttons">
+            <a href="/drop/delete/<%- e.id %>" class="btn-delete">Delete</a>
+            <a href="/drop/download/<%- e.id %>" class="btn-download"
+              >Download</a
+            >
+          </div>
         </div>
 
         <% }) %>

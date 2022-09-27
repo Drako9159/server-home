@@ -10,9 +10,11 @@ body {
   background-color: red;
   box-shadow: 0 0 2px black;
   font-family: monse;
-  position: fixed;
-  bottom: 0;
+  position: sticky;
+
+  bottom: 1;
   width: 100%;
+  margin: 0 auto;
 }
 .footer-container ul {
   display: flex;

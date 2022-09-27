@@ -10,6 +10,7 @@ let drops = JSON.parse(json_drop);
 const app = require("../app");
 //////
 const multer = require("multer");
+const { route } = require("../app");
 const storageImage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "./src/public/uploads/movies");
@@ -222,6 +223,38 @@ router.post("/drop/new-drop", uploadDrops, (req, res) => {
   res.setHeader("Content-Type", "application/json");
   res.setHeader("Access-Control-Allow-Origin", "*");
   res.redirect("/drop");
+});
+router.get("/drop/delete/:id", (req, res) => {
+  const deleteDrop = drops.find((e) => e.id === req.params.id);
+  drops = drops.filter((e) => e.id !== req.params.id);
+  function deleteDroper(drop) {
+    const path = `src/public/uploads/drops/${drop.namepath}`;
+    fs.unlink(path, (err) => {
+      if (err) {
+        console.error(err);
+        return;
+      }
+      //file removed
+    });
+  }
+
+  deleteDroper(deleteDrop);
+
+  fs.writeFileSync("src/drops.json", JSON.stringify(drops), "utf-8");
+  res.redirect("/drop");
+});
+router.get("/drop/download/:id", (req, res) => {
+  const dropForDownload = drops.find((e) => e.id === req.params.id);
+  const path = `src/public/uploads/drops/${dropForDownload.namepath}`;
+
+  const head = {
+    "Content-Type": `${dropForDownload.tipo}`,
+    "Content-Disposition": `attachment; filename=${dropForDownload.namepath}`,
+    "Content-Length": dropForDownload.size,
+  };
+
+  res.writeHead(200, head);
+  fs.createReadStream(path).pipe(res);
 });
 
 module.exports = router;
