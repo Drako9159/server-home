@@ -11,14 +11,13 @@ app.set("views", path.join(__dirname + "/views"));
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "/public")));
 ///
-
 ///
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
-
 //app.use(upload.single("image"));
 //app.use(express.json());
-app.use(require("./routes/index"));
+app.use(require("./routes/files.routes"));
+app.use(require("./routes/movies.routes"));
 
 app.use((req, res, next) => {
   res.status(404).send("404 Not Found");

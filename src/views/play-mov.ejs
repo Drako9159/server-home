@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%- movies.title %></title>
+    <title><%- sendMovPlay.title %></title>
     <link rel="stylesheet" type="text/css" href="/styles/play-mov.css" />
     <link rel="stylesheet" href="/styles/navigation.css" />
   </head>
@@ -12,13 +12,15 @@
     <section class="play-mov">
       <div class="play-mov-container">
         <div class="play-mov-header">
-          <h1><%- movies.title %></h1>
-          <h2><%- movies.year %></h2>
+          <div>
+            <h1><%- sendMovPlay.title %></h1>
+            <h2><%- sendMovPlay.year %></h2>
+          </div>
         </div>
 
         <div class="play-mov-body">
           <video
-            src="/uploads/movies/<%- movies.video %>"
+            src="/uploads/movies/<%- sendMovPlay.video %>"
             controls
             class="play-mov-video"
             autoplay
@@ -43,7 +45,7 @@
             alt="pause"
             class="pause"
           />
-          <a href="/"
+          <a href="/movies"
             ><img
               src="/icons/stop.png"
               onclick="videoControl(`stopVideo`)"

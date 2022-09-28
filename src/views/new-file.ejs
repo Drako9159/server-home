@@ -12,7 +12,7 @@
     <header><%- include("./partials/navigation") %></header>
 
     <section class="form-container">
-      <form action="new-drop" enctype="multipart/form-data" method="POST">
+      <form action="new-file" enctype="multipart/form-data" method="POST">
         <div class="secuencial-container">
           <label for="title">Nombre del archivo</label>
           <input
@@ -26,8 +26,8 @@
         </div>
 
         <div class="secuencial-container">
-          <label for="drop" class="charge-image">Archivo</label>
-          <input type="file" class="image" name="drop" id="drop" />
+          <label for="files" class="charge-image">Archivo</label>
+          <input type="file" class="image" name="files" id="files" />
         </div>
 
         <input type="submit" value="Guardar" class="btn-submit" />
