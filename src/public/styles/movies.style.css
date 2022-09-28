@@ -5,9 +5,9 @@
 
 .indexContainer {
   font-family: monse;
-  background-color: rgba(0, 0, 0, 0.103);
-  width: 95%;
-
+  background-color: rgba(97, 97, 97, 0.322);
+  backdrop-filter: blur(2px);
+  width: 100%;
   margin: 0 auto;
   display: flex;
   align-items: center;
@@ -15,17 +15,17 @@
   flex-wrap: wrap;
 }
 .indexContainer .paquet {
-  background-color: #0d6efd;
   border: none;
-  margin: 5px;
+  margin: 10px;
   border-radius: 5px;
-  box-shadow: 0 0 2px black;
+  box-shadow: 0 0 5px white;
 }
 .indexContainer .card {
   background-color: transparent;
   display: flex;
   align-items: center;
   flex-direction: column;
+  width: 250px;
 }
 .indexContainer .card-img-top {
   width: 250px;
@@ -33,13 +33,18 @@
   box-sizing: border-box;
 }
 .indexContainer .card-header {
-  background-color: rgba(0, 0, 0, 0.815);
   padding: 5px;
   box-sizing: border-box;
   width: 100%;
+  height: 40px;
   color: white;
   text-align: center;
   border-radius: 5px 5px 0 0;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 .indexContainer .card-body {
   display: none;
@@ -58,8 +63,7 @@
 .indexContainer .card-footer {
   margin: 15px auto;
 }
-.indexContainer .card-footer .btn-delete {
-  background-color: rgba(224, 6, 6, 0.986);
+.indexContainer .card-footer a {
   text-decoration: none;
   color: white;
   padding: 10px;
@@ -67,8 +71,21 @@
   font-size: 14px;
   border-radius: 5px;
   margin: 5px;
-  box-shadow: 0 0 10px rgba(241, 44, 44, 0.986);
 }
-.indexContainer .card-footer .btn-delete:hover {
-  padding: 12px;
+.indexContainer .card-footer .btn-delete {
+  background-color: rgb(231, 0, 0);
+  box-shadow: 0 0 2px white;
+}
+.indexContainer .card-footer .btn-play {
+  background-color: rgb(214, 104, 0);
+  box-shadow: 0 0 2px white;
+}
+.indexContainer .card-footer .btn-download {
+  background-color: rgba(15, 170, 79, 0.993);
+  box-shadow: 0 0 2px white;
+}
+
+.indexContainer .card-footer a:hover {
+  transition: all 0.2s ease;
+  box-shadow: 0 0 5px white;
 }

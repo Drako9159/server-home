@@ -13,65 +13,76 @@
   justify-content: center;
   flex-direction: column;
   border-radius: 5px;
-  box-shadow: 0 0 2px black;
+  box-shadow: 0 0 2px white;
 }
+
 .form-container form {
   width: 90%;
 }
 .form-container label {
   font-family: monse;
   font-weight: bold;
+  color: black;
 }
 .form-container .secuencial-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
-
   margin: 10px;
 }
 
 .form-container input {
-  box-shadow: 0 0 2px black;
+  box-shadow: 0 0 2px white;
   border: none;
   border-radius: 5px;
   height: 30px;
   font-family: monse;
   box-sizing: border-box;
   outline: none;
+  background-color: rgba(0, 0, 0, 0.103);
 }
 
 .form-container div input:focus {
   border: none;
   background-color: rgba(0, 0, 0, 0.103);
 
-  color: rgb(100, 100, 100);
+  color: #ccc;
   font-weight: bold;
+}
+.form-container div input::placeholder {
+  color: #ccc;
 }
 
 .form-container div textarea {
+  background-color: rgba(0, 0, 0, 0.103);
+  backdrop-filter: blur(2px);
   border: none;
   border-radius: 5px;
-  box-shadow: 0 0 2px black;
+  box-shadow: 0 0 2px white;
   resize: none;
   box-sizing: border-box;
   font-family: monse;
   outline: none;
+  color: #ccc;
 }
 .form-container div textarea:focus {
   border: none;
   background-color: rgba(0, 0, 0, 0.103);
-
-  color: rgb(100, 100, 100);
   font-weight: bold;
 }
+
 .form-year::-webkit-inner-spin-button {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
 }
 
-.intermedial-form input {
-  width: 100px;
+.intermedial-form div input {
+  background-color: rgba(0, 0, 0, 0.103);
+  color: #ccc;
+}
+.intermedial-form div input::placeholder {
+  color: #ccc;
 }
 .intermedial-form {
   margin: 0 auto;
@@ -125,6 +136,6 @@
 
 .btn-submit:hover {
   background-color: #3586ff;
-  box-shadow: 0 0 5px #0d6efd;
+  box-shadow: 0 0 5px white;
   cursor: pointer;
 }

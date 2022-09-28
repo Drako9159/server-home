@@ -7,8 +7,8 @@ body {
   padding: 0;
 }
 .footer-container {
-  background-color: rgb(119, 119, 119);
-  box-shadow: 0 0 2px black;
+  background-color: rgba(206, 206, 206, 0.322);
+  backdrop-filter: blur(2px);
   font-family: monse;
   position: sticky;
   bottom: 1;
@@ -30,11 +30,14 @@ body {
   display: flex;
 }
 .footer-container ul li a {
-  background-color: rgb(27, 147, 168);
   text-decoration: none;
   color: white;
   padding: 10px;
   margin: 5px;
   border-radius: 5px;
-  box-shadow: 0 0 2px black;
+  box-shadow: 0 0 5px rgb(211, 159, 176);
+  background-color: rgb(226, 0, 75);
+}
+.footer-container ul li a:hover {
+  background-color: rgb(226, 52, 110);
 }
