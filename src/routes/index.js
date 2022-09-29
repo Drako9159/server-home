@@ -6,7 +6,6 @@ const json_paquets = fs.readFileSync("src/paquets.json", "utf-8");
 //const json_drop = fs.readFileSync("src/drops.json", "utf-8");
 let paquets = JSON.parse(json_paquets);
 //let drops = JSON.parse(json_drop);
-
 const app = require("../app");
 //////
 const multer = require("multer");
