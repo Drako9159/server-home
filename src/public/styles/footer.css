@@ -12,10 +12,10 @@ body {
   align-items: center;
 
   background-color: rgba(206, 206, 206, 0.322);
-  backdrop-filter: blur(2px);
+
   font-family: monse;
   position: fixed;
-  
+
   width: 100%;
   margin: 0 auto;
 }

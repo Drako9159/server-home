@@ -20,7 +20,7 @@
 .card {
   margin: 10px;
   background-color: rgba(206, 206, 206, 0.322);
-  backdrop-filter: blur(2px);
+
   width: 240px;
   box-shadow: 0 0 2px white;
   border-radius: 5px;
