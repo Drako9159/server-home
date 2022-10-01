@@ -71,9 +71,7 @@ function deleteFile(req, res) {
       //file removed
     });
   }
-
   deleteDroper(deleteFile);
-
   fs.writeFileSync("src/files.json", JSON.stringify(files), "utf-8");
   res.redirect("/files");
 }
@@ -86,10 +84,10 @@ function downloadFile(req, res) {
     "Content-Disposition": `attachment; filename=${fileDownload.namepath}`,
     "Content-Length": fileDownload.size,
   };
-
   res.writeHead(200, head);
   fs.createReadStream(path).pipe(res);
 }
+
 module.exports = {
   render,
   renderForm,
