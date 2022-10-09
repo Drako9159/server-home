@@ -10,12 +10,12 @@ app.set("port", 5000);
 app.set("views", path.join(__dirname + "/views"));
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "/public")));
-///
-///
+
+// middlewares
 app.use(morgan("dev"));
 app.use(express.urlencoded({ extended: false }));
-//app.use(upload.single("image"));
-//app.use(express.json());
+app.use(express.json());
+// routes
 app.use(require("./routes/files.routes"));
 app.use(require("./routes/movies.routes"));
 
