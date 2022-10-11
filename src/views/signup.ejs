@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Signup</title>
+    <link rel="stylesheet" href="/styles/navigation.css" />
+    <link rel="stylesheet" href="/styles/form-container.css" />
+  </head>
+  <body>
+    <header><%- include("./partials/navigation"); %></header>
+    <section class="form-container">
+      <form action="signup" enctype="multipart/form-data" method="POST">
+        <div class="secuencial-container">
+          <label for="user">Nombre de usuario</label>
+          <input
+            autofocus
+            type="text"
+            required
+            name="user"
+            id="user"
+            placeholder="usuario"
+          />
+        </div>
+        <div class="secuencial-container">
+          <label for="email">Email</label>
+          <input
+            type="email"
+            required
+            name="email"
+            id="email"
+            placeholder="ingresa un email"
+          />
+        </div>
+        <div class="secuencial-container">
+          <label for="password">Contraseña</label>
+          <input
+            type="password"
+            required
+            name="password"
+            id="password"
+            placeholder="contraseña"
+          />
+        </div>
+
+        <input type="submit" value="Crear cuenta" class="btn-submit" />
+      </form>
+    </section>
+    <footer><%- include("./partials/footer"); %></footer>
+  </body>
+</html>
