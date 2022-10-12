@@ -60,7 +60,7 @@ body {
   display: block;
   justify-content: space-around;
   align-items: center;
-
+  background-color: transparent;
   height: 30px;
 }
 .nav-buttons li {

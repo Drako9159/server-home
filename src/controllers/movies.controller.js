@@ -6,14 +6,16 @@ let movies = JSON.parse(json_movies);
 let users = JSON.parse(json_users);
 
 async function render(req, res) {
-  const user = await users.find((e) => e.id === req.userId);
-  const nav = {
-    add: "Añadir Película",
-    link: "/movies/new-movie",
-    user: user.user,
-  };
-
-  res.render("movies.ejs", { movies, nav });
+  const userCheck = await users.find((e) => e.id === req.userId);
+  if (userCheck) {
+    const userName = userCheck.user;
+    const nav = {
+      add: "Añadir Película",
+      link: "/movies/new-movie",
+      user: await userCheck.user,
+    };
+    res.render("movies.ejs", { movies, nav });
+  }
 }
 function renderForm(req, res) {
   const nav = {

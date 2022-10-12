@@ -24,9 +24,9 @@ const movieMulter = multer({ storage: storageMovies });
 /////
 router.get("/movies", verifyToken, render);
 
-router.get("/movies/new-movie", renderForm);
+router.get("/movies/new-movie", verifyToken, renderForm);
 
-router.get("/movies/play-mov/:id", playMovie);
+router.get("/movies/play-mov/:id", verifyToken, playMovie);
 
 const uploadContent = movieMulter.fields([
   { name: "image", maxCount: 1 },
@@ -35,8 +35,8 @@ const uploadContent = movieMulter.fields([
 //
 router.post("/movies/new-movie", uploadContent, uploadMovie);
 
-router.get("/movies/download/:id", downloadMovie);
+router.get("/movies/download/:id", verifyToken, downloadMovie);
 
-router.get("/movies/delete/:id", deleteMovie);
+router.get("/movies/delete/:id", verifyToken, deleteMovie);
 
 module.exports = router;

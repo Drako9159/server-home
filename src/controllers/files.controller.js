@@ -1,14 +1,21 @@
 const fs = require("fs");
 const json_files = fs.readFileSync("src/files.json", "utf-8");
+const json_users = fs.readFileSync("src/users.json", "utf-8");
 let files = JSON.parse(json_files);
+let users = JSON.parse(json_users);
 const { v4: uuidv4 } = require("uuid");
 
-function render(req, res) {
-  const nav = {
-    add: "Añadir Archivo",
-    link: "/files/new-file",
-  };
-  res.render("files.ejs", { files, nav });
+async function render(req, res) {
+  const userCheck = await users.find((e) => e.id === req.userId);
+  if (userCheck) {
+    const userName = userCheck.user;
+    const nav = {
+      add: "Añadir Archivo",
+      link: "/files/new-file",
+      user: await userCheck.user,
+    };
+    res.render("files.ejs", { files, nav });
+  }
 }
 function renderForm(req, res) {
   const nav = {

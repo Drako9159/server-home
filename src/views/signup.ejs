@@ -7,6 +7,7 @@
     <title>Signup</title>
     <link rel="stylesheet" href="/styles/navigation.css" />
     <link rel="stylesheet" href="/styles/form-container.css" />
+    <link rel="stylesheet" href="/styles/signup.css" />
   </head>
   <body>
     <header><%- include("./partials/navigation"); %></header>
@@ -42,6 +43,10 @@
             id="password"
             placeholder="contraseña"
           />
+        </div>
+        <div class="secuencial-container">
+          <p>¿Ya tienes una cuenta?</p>
+          <a class="redirect-signup" href="/signin">Iniciar sesión</a>
         </div>
 
         <input type="submit" value="Crear cuenta" class="btn-submit" />

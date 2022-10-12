@@ -8,6 +8,7 @@ const {
   deleteFile,
   downloadFile,
 } = require("../controllers/files.controller");
+const { verifyToken } = require("../controllers/verify.controller.js");
 const storageDrop = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "./src/public/uploads/files");
@@ -19,14 +20,14 @@ const storageDrop = multer.diskStorage({
 });
 const fileMulter = multer({ storage: storageDrop });
 
-router.get("/files", render);
+router.get("/files", verifyToken, render);
 
-router.get("/files/new-file", renderForm);
+router.get("/files/new-file", verifyToken, renderForm);
 
 router.post("/files/new-file", fileMulter.single("files"), uploadFile);
 
-router.get("/files/delete/:id", deleteFile);
+router.get("/files/delete/:id", verifyToken, deleteFile);
 
-router.get("/files/download/:id", downloadFile);
+router.get("/files/download/:id", verifyToken, downloadFile);
 
 module.exports = router;
