@@ -4,14 +4,15 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Signup</title>
+    <title>Signin</title>
     <link rel="stylesheet" href="/styles/navigation.css" />
     <link rel="stylesheet" href="/styles/form-container.css" />
+    <link rel="stylesheet" href="/styles/signin.css" />
   </head>
   <body>
     <header><%- include("./partials/navigation"); %></header>
     <section class="form-container">
-      <form action="signup" method="POST">
+      <form action="signin" method="POST">
         <div class="secuencial-container">
           <label for="user">Nombre de usuario</label>
           <input
@@ -23,16 +24,7 @@
             placeholder="usuario"
           />
         </div>
-        <div class="secuencial-container">
-          <label for="email">Email</label>
-          <input
-            type="email"
-            required
-            name="email"
-            id="email"
-            placeholder="ingresa un email"
-          />
-        </div>
+
         <div class="secuencial-container">
           <label for="password">Contraseña</label>
           <input
@@ -44,7 +36,12 @@
           />
         </div>
 
-        <input type="submit" value="Crear cuenta" class="btn-submit" />
+        <input type="submit" value="Inicia sesión" class="btn-submit" />
+
+        <div class="secuencial-container">
+          <p>¿Aún no tienes una cuenta?</p>
+          <a class="redirect-signup" href="/signup">Crear una cuenta</a>
+        </div>
       </form>
     </section>
     <footer><%- include("./partials/footer"); %></footer>

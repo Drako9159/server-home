@@ -9,6 +9,7 @@ const {
   downloadMovie,
   deleteMovie,
 } = require("../controllers/movies.controller");
+const { verifyToken } = require("../controllers/verify.controller.js");
 //////
 const storageMovies = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -21,7 +22,7 @@ const storageMovies = multer.diskStorage({
 });
 const movieMulter = multer({ storage: storageMovies });
 /////
-router.get("/movies", render);
+router.get("/movies", verifyToken, render);
 
 router.get("/movies/new-movie", renderForm);
 

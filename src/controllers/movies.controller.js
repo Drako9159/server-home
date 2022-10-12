@@ -1,13 +1,18 @@
 const { v4: uuidv4 } = require("uuid");
 const fs = require("fs");
 const json_movies = fs.readFileSync("src/movies.json", "utf-8");
+const json_users = fs.readFileSync("src/users.json", "utf-8");
 let movies = JSON.parse(json_movies);
+let users = JSON.parse(json_users);
 
-function render(req, res) {
+async function render(req, res) {
+  const user = await users.find((e) => e.id === req.userId);
   const nav = {
     add: "Añadir Película",
     link: "/movies/new-movie",
+    user: user.user,
   };
+
   res.render("movies.ejs", { movies, nav });
 }
 function renderForm(req, res) {
