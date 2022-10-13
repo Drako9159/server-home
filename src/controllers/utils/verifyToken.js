@@ -11,8 +11,8 @@ function verifyToken(req, res, next) {
     return res.status(401).json({ auth: false, message: "No token provided." });
   }
   const decoded = jwt.verify(token, "secret");
-  req.userId = decoded.id;
 
+  req.userId = decoded.id;
   next();
 }
 module.exports = {

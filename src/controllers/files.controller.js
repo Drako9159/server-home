@@ -1,7 +1,5 @@
 const fs = require("fs");
-const json_files = fs.readFileSync("src/files.json", "utf-8");
 const json_users = fs.readFileSync("src/users.json", "utf-8");
-let files = JSON.parse(json_files);
 let users = JSON.parse(json_users);
 const { v4: uuidv4 } = require("uuid");
 
@@ -9,22 +7,27 @@ async function render(req, res) {
   const userCheck = await users.find((e) => e.id === req.userId);
   if (userCheck) {
     const userName = userCheck.user;
+    const files = userCheck.filesPrivate;
     const nav = {
       add: "Añadir Archivo",
       link: "/files/new-file",
-      user: await userCheck.user,
+      user: userName,
     };
     res.render("files.ejs", { files, nav });
   }
 }
-function renderForm(req, res) {
+async function renderForm(req, res) {
+  const userCheck = await users.find((e) => e.id === req.userId);
+  const userName = userCheck.user;
   const nav = {
     add: "Añadir Archivo",
     link: "/files/new-file",
+    user: userName,
   };
   res.render("new-file.ejs", { nav });
 }
-function uploadFile(req, res) {
+
+async function uploadFile(req, res) {
   const { title } = req.body;
 
   if (!title || !req.file) {
@@ -59,40 +62,54 @@ function uploadFile(req, res) {
     namepath: filename,
     size: evaluateSize(),
   };
-  files.push(newFile);
-  fs.writeFileSync("src/files.json", JSON.stringify(files), "utf-8");
-  res.setHeader("Content-Type", "application/json");
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.redirect("/files");
-}
-function deleteFile(req, res) {
-  const deleteFile = files.find((e) => e.id === req.params.id);
-  files = files.filter((e) => e.id !== req.params.id);
-  function deleteDroper(drop) {
-    const path = `src/public/uploads/files/${drop.namepath}`;
-    fs.unlink(path, (err) => {
-      if (err) {
-        console.error(err);
-        return;
-      }
-      //file removed
-    });
+  const userCheck = await users.find((e) => e.id === req.userId);
+  if (userCheck) {
+    let filesUser = userCheck.filesPrivate;
+    filesUser.push(newFile);
+    fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
+    res.setHeader("Content-Type", "application/json");
+    res.setHeader("Access-Control-Allow-Origin", "*");
+    res.redirect("/files");
   }
-  deleteDroper(deleteFile);
-  fs.writeFileSync("src/files.json", JSON.stringify(files), "utf-8");
-  res.redirect("/files");
 }
-function downloadFile(req, res) {
-  const fileDownload = files.find((e) => e.id === req.params.id);
-  const path = `src/public/uploads/files/${fileDownload.namepath}`;
+async function deleteFile(req, res) {
+  const userCheck = await users.find((e) => e.id === req.userId);
+  if (userCheck) {
+    const files = userCheck.filesPrivate;
+    const deleteFile = files.find((e) => e.id === req.params.id);
+    const userFiles = files.filter((e) => e.id !== req.params.id);
+    function deleteDroper(drop) {
+      const path = `src/public/uploads/files/${drop.namepath}`;
+      fs.unlink(path, (err) => {
+        if (err) {
+          console.error(err);
+          return;
+        }
+        //file removed
+      });
+    }
+    deleteDroper(deleteFile);
+    userCheck.filesPrivate = userFiles;
+    fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
+    res.redirect("/files");
+  }
+}
 
-  const head = {
-    "Content-Type": `${fileDownload.tipo}`,
-    "Content-Disposition": `attachment; filename=${fileDownload.namepath}`,
-    "Content-Length": fileDownload.size,
-  };
-  res.writeHead(200, head);
-  fs.createReadStream(path).pipe(res);
+async function downloadFile(req, res) {
+  const userCheck = await users.find((e) => e.id === req.userId);
+  if (userCheck) {
+    const files = userCheck.filesPrivate;
+    const fileDownload = files.find((e) => e.id === req.params.id);
+    const path = `src/public/uploads/files/${fileDownload.namepath}`;
+
+    const head = {
+      "Content-Type": `${fileDownload.tipo}`,
+      "Content-Disposition": `attachment; filename=${fileDownload.namepath}`,
+      "Content-Length": fileDownload.size,
+    };
+    res.writeHead(200, head);
+    fs.createReadStream(path).pipe(res);
+  }
 }
 
 module.exports = {

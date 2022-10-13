@@ -9,7 +9,7 @@ const {
   downloadMovie,
   deleteMovie,
 } = require("../controllers/movies.controller");
-const { verifyToken } = require("../controllers/verify.controller.js");
+const { verifyToken } = require("../controllers/utils/verifyToken.js");
 //////
 const storageMovies = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -33,7 +33,7 @@ const uploadContent = movieMulter.fields([
   { name: "video", maxCount: 1 },
 ]);
 //
-router.post("/movies/new-movie", uploadContent, uploadMovie);
+router.post("/movies/new-movie", verifyToken, uploadContent, uploadMovie);
 
 router.get("/movies/download/:id", verifyToken, downloadMovie);
 

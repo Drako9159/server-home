@@ -1,9 +1,14 @@
 const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
 const fs = require("fs");
 const { serialize } = require("cookie");
 const { v4: uuidv4 } = require("uuid");
-
+const {
+  getSaltPassword,
+  getHashPassword,
+  decryptPassword,
+} = require("./utils/hashPassword.js");
+const { getToken } = require("./utils/getToken.js");
+const { getDateFormat } = require("./utils/getDateFormat");
 const json_users = fs.readFileSync("src/users.json", "utf-8");
 let users = JSON.parse(json_users);
 
@@ -23,6 +28,7 @@ function renderSignin(req, res) {
   };
   res.render("signin.ejs", { nav });
 }
+
 async function createUser(req, res) {
   const { user, email, password } = req.body;
   if (!user || !email || !password) {
@@ -35,27 +41,20 @@ async function createUser(req, res) {
     } else if (findEmail) {
       res.status(400).send("El email ya está registrador");
     } else {
+      let salt = await getSaltPassword(10);
       let newUser = {
         id: uuidv4(),
         user: user,
         email: email,
-        password: await bcrypt.hash(password, 2),
+        salt: salt,
+        hash: await getHashPassword(password, salt),
+        createdAt: getDateFormat(),
         moviesPrivate: [],
         filesPrivate: [],
       };
       users.push(newUser);
       fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
-      const token = jwt.sign({ id: newUser.id }, "secret", {
-        expiresIn: 60 * 60 * 24,
-      });
-      const serialized = serialize("myTokenName", token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "strict",
-        maxAge: 60 * 60 * 24 * 30,
-        path: "/",
-      });
-      res.setHeader("Set-Cookie", serialized);
+      res.setHeader("Set-Cookie", getToken(newUser.id));
       res.redirect("/movies");
     }
   }
@@ -69,24 +68,8 @@ async function signinUser(req, res) {
     if (!checkUser) {
       res.status(400).send("El usuario no existe");
     } else {
-      //decrypt
-      async function checkPass(pass, hash) {
-        const decrypt = await bcrypt.compare(pass, hash);
-        return decrypt;
-      }
-      const passCheck = await checkPass(password, checkUser.password);
-      if (passCheck) {
-        const token = jwt.sign({ id: checkUser.id }, "secret", {
-          expiresIn: 60 * 60 * 24,
-        });
-        const serialized = serialize("myTokenName", token, {
-          httpOnly: true,
-          secure: process.env.NODE_ENV === "production",
-          sameSite: "strict",
-          maxAge: 60 * 60 * 24 * 30,
-          path: "/",
-        });
-        res.setHeader("Set-Cookie", serialized);
+      if (await decryptPassword(password, checkUser.hash)) {
+        res.setHeader("Set-Cookie", getToken(checkUser.id));
         res.redirect("/movies");
       } else {
         res.json({ messaje: "Error de contraseña" });
@@ -94,7 +77,6 @@ async function signinUser(req, res) {
     }
   }
 }
-
 module.exports = {
   renderSignup,
   renderSignin,
