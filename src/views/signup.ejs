@@ -44,14 +44,27 @@
             placeholder="contraseña"
           />
         </div>
+        <input type="submit" value="Crear cuenta" class="btn-submit" />
         <div class="secuencial-container">
           <p>¿Ya tienes una cuenta?</p>
           <a class="redirect-signup" href="/signin">Iniciar sesión</a>
         </div>
 
-        <input type="submit" value="Crear cuenta" class="btn-submit" />
+        
       </form>
     </section>
+    <%if(nav.alert){%>
+      <%if(nav.color === "red"){%>
+        <div style="background-color: red" class="toastAlert">
+          <p><%- nav.alert %></p>
+        </div>
+      <% } %>
+      <%if(nav.color === "green"){%>
+        <div style="background-color: rgb(15, 160, 39)" class="toastAlert">
+          <p><%- nav.alert %></p>
+        </div>
+      <% } %>
+    <% } %>
     <footer><%- include("./partials/footer"); %></footer>
   </body>
 </html>

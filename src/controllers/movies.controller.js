@@ -1,6 +1,7 @@
 const { v4: uuidv4 } = require("uuid");
 const fs = require("fs");
 const json_users = fs.readFileSync("src/users.json", "utf-8");
+const { eraseFiles } = require("./utils/readerJson.js");
 let users = JSON.parse(json_users);
 
 async function render(req, res) {
@@ -49,27 +50,11 @@ async function uploadMovie(req, res) {
   ) {
     res.status(400).send("No ingresaste todos los datos requeridos");
     if (req.files.image) {
-      fs.unlink(
-        `src/public/uploads/movies/${req.files.image[0].filename}`,
-        (err) => {
-          if (err) {
-            console.error(err);
-            return;
-          }
-          //file removed
-        }
-      );
+      let pathImage = `src/public/uploads/movies/${req.files.image[0].filename}`;
+      eraseFiles(pathImage);
     } else if (req.files.video) {
-      fs.unlink(
-        `src/public/uploads/movies/${req.files.video[0].filename}`,
-        (err) => {
-          if (err) {
-            console.error(err);
-            return;
-          }
-          //file removed
-        }
-      );
+      let pathVideo = `src/public/uploads/movies/${req.files.video[0].filename}`;
+      eraseFiles(pathVideo);
     }
     return;
   }
@@ -117,28 +102,15 @@ async function deleteMovie(req, res) {
   if (userCheck) {
     const movies = userCheck.moviesPrivate;
     const sendMovie = movies.find((e) => e.id === req.params.id);
-
     const userMovies = movies.filter((e) => e.id !== req.params.id);
 
     function dropImage(img) {
-      const path = `src/public/uploads/movies/${img.image}`;
-      fs.unlink(path, (err) => {
-        if (err) {
-          console.error(err);
-          return;
-        }
-        //file removed
-      });
+      let path = `src/public/uploads/movies/${img.image}`;
+      eraseFiles(path);
     }
     function dropVideo(video) {
-      const path = `src/public/uploads/movies/${video.video}`;
-      fs.unlink(path, (err) => {
-        if (err) {
-          console.error(err);
-          return;
-        }
-        //file removed
-      });
+      let path = `src/public/uploads/movies/${video.video}`;
+      eraseFiles(path);
     }
     dropImage(sendMovie);
     dropVideo(sendMovie);

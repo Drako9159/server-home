@@ -1,6 +1,4 @@
-const jwt = require("jsonwebtoken");
 const fs = require("fs");
-const { serialize } = require("cookie");
 const { v4: uuidv4 } = require("uuid");
 const {
   getSaltPassword,
@@ -32,14 +30,36 @@ function renderSignin(req, res) {
 async function createUser(req, res) {
   const { user, email, password } = req.body;
   if (!user || !email || !password) {
-    res.status(400).send("Los datos no son suficientes");
+    const nav = {
+      add: "Inicia Sesion",
+      link: "/signin",
+      user: "Login",
+      alert: "Datos insuficientes",
+      color: "red"
+    };
+    res.status(400).render("signup.ejs", { nav });
   } else {
     const findUser = await users.find((e) => e.user === user);
     const findEmail = await users.find((e) => e.email === email);
     if (findUser) {
-      res.status(400).send("El usuario ya está registrador");
+      const nav = {
+        add: "Inicia Sesion",
+        link: "/signin",
+        user: "Login",
+        alert: "El usuario ya está registrado",
+        color: "red"
+      };
+      res.status(400).render("signup.ejs", { nav })
+      
     } else if (findEmail) {
-      res.status(400).send("El email ya está registrador");
+      const nav = {
+        add: "Inicia Sesion",
+        link: "/signin",
+        user: "Login",
+        alert: "El email ya está registrado",
+        color: "red"
+      };
+      res.status(400).render("signup.ejs", { nav});
     } else {
       let salt = await getSaltPassword(10);
       let newUser = {
@@ -56,17 +76,33 @@ async function createUser(req, res) {
       fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
       res.setHeader("Set-Cookie", getToken(newUser.id));
       res.redirect("/movies");
+    
+     
     }
   }
 }
 async function signinUser(req, res) {
   const { user, password } = req.body;
   if (!user || !password) {
-    res.status(400).send("Los datos no son suficientes");
+    const nav = {
+      add: "Inicia Sesion",
+      link: "/signin",
+      user: "Login",
+      alert: "Datos insuficientes",
+      color: "red"
+    };
+    res.status(400).render("signin.ejs", { nav });
   } else {
     const checkUser = await users.find((e) => e.user === user);
     if (!checkUser) {
-      res.status(400).send("El usuario no existe");
+      const nav = {
+        add: "Inicia Sesion",
+        link: "/signin",
+        user: "Login",
+        alert: "El usuario no existe",
+        color: "red"
+      };
+      res.status(400).render("signin.ejs", { nav });
     } else {
       if (await decryptPassword(password, checkUser.hash)) {
         res.setHeader("Set-Cookie", getToken(checkUser.id));
