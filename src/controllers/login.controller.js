@@ -35,7 +35,7 @@ async function createUser(req, res) {
       link: "/signin",
       user: "Login",
       alert: "Datos insuficientes",
-      color: "red"
+      color: "red",
     };
     res.status(400).render("signup.ejs", { nav });
   } else {
@@ -47,19 +47,18 @@ async function createUser(req, res) {
         link: "/signin",
         user: "Login",
         alert: "El usuario ya está registrado",
-        color: "red"
+        color: "red",
       };
-      res.status(400).render("signup.ejs", { nav })
-      
+      res.status(400).render("signup.ejs", { nav });
     } else if (findEmail) {
       const nav = {
         add: "Inicia Sesion",
         link: "/signin",
         user: "Login",
         alert: "El email ya está registrado",
-        color: "red"
+        color: "red",
       };
-      res.status(400).render("signup.ejs", { nav});
+      res.status(400).render("signup.ejs", { nav });
     } else {
       let salt = await getSaltPassword(10);
       let newUser = {
@@ -74,10 +73,11 @@ async function createUser(req, res) {
       };
       users.push(newUser);
       fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
-      res.setHeader("Set-Cookie", getToken(newUser.id));
+      res.setHeader(
+        "Set-Cookie",
+        getToken(newUser.id, newUser.user, newUser.email)
+      );
       res.redirect("/movies");
-    
-     
     }
   }
 }
@@ -89,7 +89,7 @@ async function signinUser(req, res) {
       link: "/signin",
       user: "Login",
       alert: "Datos insuficientes",
-      color: "red"
+      color: "red",
     };
     res.status(400).render("signin.ejs", { nav });
   } else {
@@ -100,15 +100,25 @@ async function signinUser(req, res) {
         link: "/signin",
         user: "Login",
         alert: "El usuario no existe",
-        color: "red"
+        color: "red",
       };
       res.status(400).render("signin.ejs", { nav });
     } else {
       if (await decryptPassword(password, checkUser.hash)) {
-        res.setHeader("Set-Cookie", getToken(checkUser.id));
+        res.setHeader(
+          "Set-Cookie",
+          getToken(checkUser.id, checkUser.user, checkUser.email)
+        );
         res.redirect("/movies");
       } else {
-        res.json({ messaje: "Error de contraseña" });
+        const nav = {
+          add: "Inicia Sesion",
+          link: "/signin",
+          user: "Login",
+          alert: "Contraseña incorrecta",
+          color: "red",
+        };
+        res.status(400).render("signin.ejs", { nav });
       }
     }
   }

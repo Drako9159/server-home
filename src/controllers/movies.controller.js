@@ -1,8 +1,9 @@
 const { v4: uuidv4 } = require("uuid");
 const fs = require("fs");
 const json_users = fs.readFileSync("src/users.json", "utf-8");
-const { eraseFiles } = require("./utils/readerJson.js");
 let users = JSON.parse(json_users);
+const { eraseFiles } = require("./utils/readerJson.js");
+
 
 async function render(req, res) {
   const userCheck = await users.find((e) => e.id === req.userId);

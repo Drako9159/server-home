@@ -9,7 +9,7 @@
   margin: 0 auto;
   background: url("../assets/5.png");
   background-size: cover;
-
+  margin-bottom: 50px;
   width: 100%;
   display: flex;
   align-items: center;

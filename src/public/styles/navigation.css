@@ -1,13 +1,15 @@
 body {
   margin: 0;
   padding: 0;
-
+  min-width: 308px;
   background: linear-gradient(
     90deg,
     rgb(22, 150, 255) 0%,
     rgb(224, 0, 67) 70%,
-    rgb(224, 0, 67) 100%
+    rgb(224, 0, 67) 80%
   );
+  
+  
 }
 @font-face {
   font-family: monse;
@@ -16,14 +18,15 @@ body {
 
 .navigation {
   font-family: monse;
-
+  min-width: 308px;
   width: 100%;
 }
 .navigation nav {
+  
   display: flex;
   justify-content: space-between;
   background-color: rgba(206, 206, 206, 0.322);
-
+  
   max-width: 1000px;
 
   margin: 0 auto;
@@ -31,7 +34,7 @@ body {
 .navigation nav ul {
   display: flex;
   list-style: none;
-
+  
   padding: 5px;
   border-radius: 10px;
   margin: 10px 10px;
@@ -44,11 +47,12 @@ body {
   text-align: center;
   width: 100px;
   background-color: transparent;
+  
 }
 .title li a {
   text-decoration: none;
   color: #ffff;
-
+  
   font-size: 20px;
 
   background-color: transparent;
@@ -62,23 +66,28 @@ body {
   align-items: center;
   background-color: transparent;
   height: 30px;
+  
 }
 .nav-buttons li {
-  background-color: transparent;
+  display: flex;
+
 }
 .nav-buttons li a {
   text-decoration: none;
   color: white;
-  margin: auto;
+  margin: 0 auto;
   padding: 10px;
-  background-color: transparent;
+  
   border-radius: 5px;
   box-shadow: 0 0 2px white;
+  transition: all 0.1s ease;
+  
+  
+  
 }
 .nav-buttons li a:hover {
   background-color: rgb(22, 150, 255);
-  transition: all 0.1s ease;
-  box-shadow: 0 0 5px rgb(42, 113, 245);
+  box-shadow: 0 0 5px rgb(81, 177, 255);
 }
 .toastAlert {
  

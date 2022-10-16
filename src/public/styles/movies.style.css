@@ -5,14 +5,15 @@
 
 .indexContainer {
   font-family: monse;
-  background-color: rgba(97, 97, 97, 0.322);
 
+  min-width: 308px;
   width: 100%;
   margin: 0 auto;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-wrap: wrap;
+  margin-bottom: 50px;
 }
 .indexContainer .paquet {
   border: none;
