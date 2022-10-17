@@ -20,4 +20,8 @@ router.get("/signin", logOut, renderSignin);
 
 router.post("/signin", signinUser);
 
+router.get("/dashboard", (req, res) => {
+  res.render("dashboard")
+})
+
 module.exports = router;
