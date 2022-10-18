@@ -8,6 +8,7 @@ const {
   uploadMovie,
   downloadMovie,
   deleteMovie,
+  getDashboard
 } = require("../controllers/movies.controller");
 const { verifyToken } = require("../controllers/utils/verifyToken.js");
 //////
@@ -38,5 +39,7 @@ router.post("/movies/new-movie", verifyToken, uploadContent, uploadMovie);
 router.get("/movies/download/:id", verifyToken, downloadMovie);
 
 router.get("/movies/delete/:id", verifyToken, deleteMovie);
+/* Dashboard  */
+router.get("/dashboard", verifyToken, getDashboard)
 
 module.exports = router;

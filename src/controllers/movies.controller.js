@@ -62,6 +62,14 @@ async function uploadMovie(req, res) {
   const nameImg = req.files.image[0].filename;
   const nameVideo = req.files.video[0].filename;
   const sizeVideo = req.files.video[0].size;
+  function evaluateSize() {
+    let sizerMath = Math.floor(sizeVideo / 1000);
+    if (sizerMath > 1024) {
+      return (sizerMath = `${sizerMath / 1000} MB`);
+    } else {
+      return (sizerMath = `${sizerMath} KB`);
+    }
+  }
   let newMovie = {
     id: uuidv4(),
     title: title,
@@ -70,7 +78,7 @@ async function uploadMovie(req, res) {
     image: nameImg,
     video: nameVideo,
     genero: genero,
-    size: sizeVideo,
+    size: evaluateSize(),
   };
   const userCheck = await users.find((e) => e.id === req.userId);
   if (userCheck) {
@@ -121,6 +129,28 @@ async function deleteMovie(req, res) {
   }
 }
 
+async function getDashboard(req, res){
+  const userCheck = await users.find((e) => e.id === req.userId);
+  console.log(userCheck)
+  if (userCheck) {
+    const userName = userCheck.user;
+    //const movies = userCheck.moviesPrivate;
+    const nav = {
+      profile: {
+        user: userCheck.user,
+        email: userCheck.email,
+        createdAt: userCheck.createdAt
+      },
+      movies: userCheck.moviesPrivate,
+      files: userCheck.filesPrivate
+     
+    };
+    res.render("dashboard", { nav });
+  }
+  
+
+}
+
 module.exports = {
   render,
   renderForm,
@@ -128,4 +158,5 @@ module.exports = {
   uploadMovie,
   downloadMovie,
   deleteMovie,
+  getDashboard
 };
