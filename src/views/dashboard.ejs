@@ -13,9 +13,9 @@
     <div class="container">
         <div class="nav">
             <div class="profile"><img src="./icons/usuario.png" />
-                <h2>
+                <h3>
                     <%- nav.profile.user %>
-                </h2>
+                </h3>
             </div>
             <ul>
                 <li class="childer" id="profile">Profile</li>
@@ -24,29 +24,8 @@
             </ul>
         </div>
         <div class="content">
-            <div class="header">
-                <h1>Dashboard</h1>
-            </div>
             <div id="content" class="front-menu">
-                <% nav.movies.forEach((e) => { %>
-                    <div class="movies-container">
-                        
-                        <div class="movies-img"><img
-                            src="<%= `./uploads/movies/${e.image}` %>"
-                            alt="<%= e.title %>"
-                        /></div>
-                        <div class="movies-content">
-                            <div>
-                                <p><%- e.title %></p>
-                                <p><%- e.size %></p>
-                            </div>
-                            <div>
-                                <button class="button-edit">Editar</button>
-                                <button class="button-drop">Borrar</button>
-                            </div>
-                        </div>
-                    </div>
-                <% }) %>
+                
             </div>
         </div>
     </div>
@@ -54,15 +33,26 @@
         const $content = document.getElementById("content")
         const $profile = document.getElementById("profile")
         const $movies = document.getElementById("movies")
+        const $files = document.getElementById("files")
+        
+       
 
         $profile.addEventListener("click", (e) => {
+            $movies.classList.remove("childer-active")
+            $files.classList.remove("childer-active")
             let render = $profile.classList.toggle("childer-active")
             if (render) {
-                let push = `<div class="profile-container">
+                let push = `
+                <div class="header">
+                    <h3>Hola <%- nav.profile.user %></h3>
+                </div>
+                <div class="profile-container">
                     <h3>Username: <%- nav.profile.user %></h3>
                     <h3>Email: <%- nav.profile.email %></h3>
                     <h3>Creado: <%- nav.profile.createdAt %></h3>
-                    <button class="button-edit">Editar</button>
+                    
+                    <a class="button-edit" href="/users/edit/<%- nav.profile.id %>"><img src="./icons/editar.png"></a>
+                    <a class="button-drop" href="#"><img src="./icons/basura.png"></a>
                 </div>`
                 $content.innerHTML = push;
             } else {
@@ -70,14 +60,62 @@
             }
         })
         $movies.addEventListener("click", (e) => {
+            $profile.classList.remove("childer-active")
+            $files.classList.remove("childer-active")
             let render = $movies.classList.toggle("childer-active")
             if (render) {
-                let push = `<div class="profile-container">
-                    <h3>Username: <%- nav.profile.user %></h3>
-                    <h3>Email: <%- nav.profile.email %></h3>
-                    <h3>Creado: <%- nav.profile.createdAt %></h3>
-                    <button class="button-edit">Editar</button>
-                </div>`
+                let push = `<div class="header">
+                    <h3>Movies de <%- nav.profile.user %></h3>
+                </div>
+                <% nav.movies.forEach((e) => { %>
+                    <h3 class="movies-title"><%- e.title %></h3>
+                    <div class="movies-container">
+                        <div class="movies-img"><img
+                            src="./uploads/movies/<%- e.image %>"
+                            alt="<%- e.title %>"
+                        /></div>
+                        <div class="movies-content">
+                            <div class="movies-info">
+                                <p><%- e.size %></p>
+                                <p><%- e.createdAt %></p>
+                            </div>
+                            <div class="movies-buttons">
+                                <a class="button-edit" href="/movies/edit/<%- e.id %>" ><img src="./icons/editar.png"></a>
+                                <a class="button-ver"><img src="./icons/ver.png"></a>
+                                <a class="button-drop" href="/movies/delete/<%- e.id %>"><img src="./icons/basura.png"></a>
+                            </div>
+                        </div></div>
+                <% }) %>
+                `
+                $content.innerHTML = push;
+            } else {
+                $content.innerHTML = " ";
+            }
+        })
+        $files.addEventListener("click", (e) => {
+            $movies.classList.remove("childer-active")
+            $profile.classList.remove("childer-active")
+            let render = $files.classList.toggle("childer-active")
+            if (render) {
+                let push = `<div class="header">
+                    <h3>Files de <%- nav.profile.user %></h3>
+                </div>
+                <% nav.files.forEach((e) => { %>
+                    <h3 class="movies-title"><%- e.title %></h3>
+                    <div class="movies-container">
+                        <div class="movies-content">
+                            <div class="movies-info">
+                                <p><%- e.size %></p>
+                                <p><%- e.createdAt %></p>
+                            </div>
+                            <div class="movies-buttons">
+                                <a class="button-edit" href="/files/edit/<%- e.id %>"><img src="./icons/editar.png"></a>
+                                <a class="button-ver"><img src="./icons/ver.png"></a>
+                                <a class="button-drop" href="/files/delete/<%= e.id %>"><img src="./icons/basura.png"></a>
+                            </div>
+                        </div></div>
+                <% }) %>
+                `
                 $content.innerHTML = push;
             } else {
                 $content.innerHTML = " ";

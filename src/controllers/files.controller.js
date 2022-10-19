@@ -4,6 +4,7 @@ let users = JSON.parse(json_users);
 const { v4: uuidv4 } = require("uuid");
 //const { userActive } = require("./utils/userActive.js");
 const { eraseFiles } = require("./utils/readerJson.js");
+const { getDateFormat } = require("./utils/getDateFormat.js")
 
 function render(req, res) {
   const userCheck = users.find((e) => e.id === req.userId);
@@ -54,6 +55,7 @@ function uploadFile(req, res) {
     tipo: mimetype,
     namepath: filename,
     size: evaluateSize(),
+    createdAt: getDateFormat(),
   };
   const userCheck = users.find((e) => e.id === req.userId);
   //const userCheck = userActive(req);

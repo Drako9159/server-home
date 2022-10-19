@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Añade película</title>
+    <link rel="stylesheet" href="/styles/navigation.css" />
+    <link rel="stylesheet" href="/styles/form-container.css" />
+  </head>
+  <body>
+    <header><%- include("./partials/navigation"); %></header>
+
+    <section class="form-container">
+      <form action="edit-file"  method="POST">
+        <div class="secuencial-container">
+          <label for="id">Id</label>
+          <input
+            readonly
+            autofocus
+            type="text"
+            required
+            name="id"
+            id="id"
+            value="<%- file.id %>"
+          />
+        </div>
+        <div class="secuencial-container">
+          <label for="title">Titulo</label>
+          <input
+            autofocus
+            type="text"
+            required
+            name="title"
+            id="title"
+            placeholder="Ingresa el titulo"
+            value="<%- file.title %>"
+          />
+        </div>
+       
+        
+        
+        <input type="submit" value="Actualizar" class="btn-submit" />
+      </form>
+    </section>
+    <%- include("./partials/footer"); %>
+  </body>
+</html>

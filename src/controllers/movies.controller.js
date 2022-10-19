@@ -3,7 +3,7 @@ const fs = require("fs");
 const json_users = fs.readFileSync("src/users.json", "utf-8");
 let users = JSON.parse(json_users);
 const { eraseFiles } = require("./utils/readerJson.js");
-
+const { getDateFormat } = require("./utils/getDateFormat.js");
 
 async function render(req, res) {
   const userCheck = await users.find((e) => e.id === req.userId);
@@ -79,6 +79,7 @@ async function uploadMovie(req, res) {
     video: nameVideo,
     genero: genero,
     size: evaluateSize(),
+    createdAt: getDateFormat(),
   };
   const userCheck = await users.find((e) => e.id === req.userId);
   if (userCheck) {
@@ -128,27 +129,94 @@ async function deleteMovie(req, res) {
     res.redirect("/movies");
   }
 }
-
-async function getDashboard(req, res){
+async function editMovie(req, res) {
   const userCheck = await users.find((e) => e.id === req.userId);
-  console.log(userCheck)
+  const detectMovie = userCheck.moviesPrivate.find(
+    (e) => e.id === req.params.id
+  );
+
   if (userCheck) {
     const userName = userCheck.user;
-    //const movies = userCheck.moviesPrivate;
+    const nav = {
+      add: "Añadir Película",
+      link: "/movies/new-movie",
+      user: userName,
+    };
+    const movie = {
+      id: detectMovie.id,
+      title: detectMovie.title,
+      sinopsis: detectMovie.sinopsis,
+      year: detectMovie.year,
+      genero: detectMovie.genero,
+    };
+    res.render("edit-movie.ejs", { nav, movie });
+  }
+}
+async function editFile(req, res){
+  const userCheck = await users.find((e) => e.id === req.userId);
+  const detectFile = userCheck.filesPrivate.find(
+    (e) => e.id === req.params.id
+  );
+  if (userCheck) {
+    const userName = userCheck.user;
+    const nav = {
+      add: "Añadir Película",
+      link: "/movies/new-movie",
+      user: userName,
+    };
+    const file = {
+      id: detectFile.id,
+      title: detectFile.title,
+    };
+    res.render("edit-file.ejs", { nav, file });
+  }
+}
+async function reloadMovie(req, res) {
+  const { title, sinopsis, year, genero, id } = req.body;
+  if (!title || !sinopsis || !year || !genero) {
+    res.status(400).send("No ingresaste todos los datos requeridos");
+  }
+  const userCheck = await users.find((e) => e.id === req.userId);
+  const detectMovie = userCheck.moviesPrivate.find((e) => e.id === id);
+  detectMovie.title = title;
+  detectMovie.sinopsis = sinopsis;
+  detectMovie.year = year;
+  detectMovie.genero = genero;
+  fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
+  res.redirect("/movies");
+}
+
+async function reloadFile(req, res) {
+  const { title, id } = req.body;
+  if (!title) {
+    res.status(400).send("No ingresaste todos los datos requeridos");
+  }
+  const userCheck = await users.find((e) => e.id === req.userId);
+  const detectFile = userCheck.filesPrivate.find((e) => e.id === id);
+  detectFile.title = title;
+  fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
+  res.redirect("/movies");
+}
+function editUser(req, res){
+
+}
+async function getDashboard(req, res) {
+  const userCheck = await users.find((e) => e.id === req.userId);
+  console.log(userCheck);
+  if (userCheck) {
+    const userName = userCheck.user;
     const nav = {
       profile: {
+        id: userCheck.id,
         user: userCheck.user,
         email: userCheck.email,
-        createdAt: userCheck.createdAt
+        createdAt: userCheck.createdAt,
       },
       movies: userCheck.moviesPrivate,
-      files: userCheck.filesPrivate
-     
+      files: userCheck.filesPrivate,
     };
-    res.render("dashboard", { nav });
+    res.render("dashboard.ejs", { nav });
   }
-  
-
 }
 
 module.exports = {
@@ -158,5 +226,10 @@ module.exports = {
   uploadMovie,
   downloadMovie,
   deleteMovie,
-  getDashboard
+  getDashboard,
+  editMovie,
+  reloadMovie,
+  editFile,
+  reloadFile,
+  editUser,
 };
