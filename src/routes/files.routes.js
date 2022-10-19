@@ -7,6 +7,8 @@ const {
   uploadFile,
   deleteFile,
   downloadFile,
+  editFile,
+  reloadFile,
 } = require("../controllers/files.controller");
 const { verifyToken } = require("../controllers/utils/verifyToken.js");
 const storageDrop = multer.diskStorage({
@@ -34,5 +36,9 @@ router.post(
 router.get("/files/delete/:id", verifyToken, deleteFile);
 
 router.get("/files/download/:id", verifyToken, downloadFile);
+
+router.get("/files/edit/:id", verifyToken, editFile);
+
+router.post("/files/edit/edit-file", verifyToken, reloadFile);
 
 module.exports = router;

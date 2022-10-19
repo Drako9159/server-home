@@ -83,7 +83,7 @@ async function deleteFile(req, res) {
     deleteDroper(deleteFile);
     userCheck.filesPrivate = userFiles;
     fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
-    res.redirect("/files");
+    res.redirect("/dashboard");
   }
 }
 
@@ -102,11 +102,42 @@ async function downloadFile(req, res) {
     fs.createReadStream(path).pipe(res);
   }
 }
-
+async function reloadFile(req, res) {
+  const { title, id } = req.body;
+  if (!title) {
+    res.status(400).send("No ingresaste todos los datos requeridos");
+  }
+  const userCheck = await users.find((e) => e.id === req.userId);
+  const detectFile = userCheck.filesPrivate.find((e) => e.id === id);
+  detectFile.title = title;
+  fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
+  res.redirect("/movies");
+}
+async function editFile(req, res){
+  const userCheck = await users.find((e) => e.id === req.userId);
+  const detectFile = userCheck.filesPrivate.find(
+    (e) => e.id === req.params.id
+  );
+  if (userCheck) {
+    const userName = userCheck.user;
+    const nav = {
+      add: "Añadir Película",
+      link: "/movies/new-movie",
+      user: userName,
+    };
+    const file = {
+      id: detectFile.id,
+      title: detectFile.title,
+    };
+    res.render("edit-file.ejs", { nav, file });
+  }
+}
 module.exports = {
   render,
   renderForm,
   uploadFile,
   deleteFile,
   downloadFile,
+  reloadFile,
+  editFile
 };

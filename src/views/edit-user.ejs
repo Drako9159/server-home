@@ -12,7 +12,19 @@
   <body>
     <header><%- include("./partials/navigation"); %></header>
     <section class="form-container">
-      <form action="signup" method="POST">
+      <form action="edit-user" method="POST">
+        <div class="secuencial-container">
+          <label for="id">id</label>
+          <input
+            readonly
+            type="text"
+            required
+            name="id"
+            id="user"
+   
+            value="<%- user.id %>"
+          />
+        </div>
         <div class="secuencial-container">
           <label for="user">Nombre de usuario</label>
           <input
@@ -22,6 +34,7 @@
             name="user"
             id="user"
             placeholder="usuario"
+            value="<%- user.user %>"
           />
         </div>
         <div class="secuencial-container">
@@ -32,6 +45,7 @@
             name="email"
             id="email"
             placeholder="ingresa un email"
+            value="<%- user.email %>"
           />
         </div>
         <div class="secuencial-container">
@@ -44,11 +58,8 @@
             placeholder="contraseña"
           />
         </div>
-        <input type="submit" value="Crear cuenta" class="btn-submit" />
-        <div class="secuencial-container">
-          <p>¿Ya tienes una cuenta?</p>
-          <a class="redirect-signup" href="/signin">Iniciar sesión</a>
-        </div>
+        <input type="submit" value="Actualizar" class="btn-submit" />
+        
 
         
       </form>
@@ -65,6 +76,6 @@
         </div>
       <% } %>
     <% } %>
-    
+    <%- include("./partials/footer"); %>
   </body>
 </html>

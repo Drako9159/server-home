@@ -123,9 +123,132 @@ async function signinUser(req, res) {
     }
   }
 }
+async function getDashboard(req, res) {
+  const userCheck = await users.find((e) => e.id === req.userId);
+  if (userCheck) {
+    const userName = userCheck.user;
+    const nav = {
+      profile: {
+        id: userCheck.id,
+        user: userCheck.user,
+        email: userCheck.email,
+        createdAt: userCheck.createdAt,
+      },
+      movies: userCheck.moviesPrivate,
+      files: userCheck.filesPrivate,
+    };
+    res.render("dashboard.ejs", { nav });
+  }
+}
+async function editUser(req, res) {
+  const userCheck = await users.find((e) => e.id === req.userId);
+  if (userCheck) {
+    const user = {
+      id: userCheck.id,
+      user: userCheck.user,
+      email: userCheck.email,
+    };
+    const nav = {
+      add: "Inicia Sesion",
+      link: "/signin",
+      user: "Login",
+      alert: "Contraseña incorrecta",
+      color: "red",
+    };
+    res.render("edit-user.ejs", { user, nav });
+  }
+}
+async function reloadUser(req, res) {
+  const userCheck = await users.find((e) => e.id === req.userId);
+
+  const { user, email, password, id } = req.body;
+  if (!user || !email || !password) {
+    const user = {
+      id: userCheck.id,
+      user: userCheck.user,
+      email: userCheck.email,
+    };
+    const nav = {
+      add: "Inicia Sesion",
+      link: "/signin",
+      user: "Login",
+      alert: "Datos insuficientes",
+      color: "red",
+    };
+    res.status(400).render("edit-user.ejs", { nav, user });
+  } else {
+    let counterUsername = 0;
+    let counterEmail = 0;
+    /*
+    const findUser = await users.find((e) => e.user === user);
+    const findEmail = await users.find((e) => e.email === email);*/
+
+
+    const checkUser = users.forEach((e) => {
+    if(e.user === user){
+      counterUsername++
+    }});
+
+    const checkEmail = users.forEach((e) => {
+    if(e.email === email){
+      counterEmail++
+    }});
+
+    console.log(counterEmail)
+    console.log(counterUsername)
+    
+
+    if (counterUsername > 0) {
+      const user = {
+        id: userCheck.id,
+        user: userCheck.user,
+        email: userCheck.email,
+      };
+      const nav = {
+        add: "Inicia Sesion",
+        link: "/signin",
+        user: "Login",
+        alert: "El usuario ya está registrado",
+        color: "red",
+      };
+      res.status(400).render("edit-user.ejs", { nav, user });
+    } else if (counterEmail > 0) {
+      const user = {
+        id: userCheck.id,
+        user: userCheck.user,
+        email: userCheck.email,
+      };
+      const nav = {
+        add: "Inicia Sesion",
+        link: "/signin",
+        user: "Login",
+        alert: "El email ya está registrado",
+        color: "red",
+      };
+      res.status(400).render("edit-user.ejs", { nav, user });
+    } else {
+      let salt = await getSaltPassword(10);
+      userCheck.id = id;
+      userCheck.user = user;
+      userCheck.email = email;
+      userCheck.salt = salt;
+      userCheck.hash = await getHashPassword(password, salt);
+
+      fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
+      res.setHeader(
+        "Set-Cookie",
+        getToken(userCheck.id, userCheck.user, userCheck.email)
+      );
+      res.redirect("/movies");
+    }
+  }
+}
 module.exports = {
   renderSignup,
   renderSignin,
   createUser,
   signinUser,
+  getDashboard,
+  editUser,
+  reloadUser,
 };
