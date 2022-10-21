@@ -13,6 +13,7 @@ async function render(req, res) {
     const nav = {
       add: "Añadir Película",
       link: "/movies/new-movie",
+      dashboard: "/dashboard",
       user: userName,
     };
     res.render("movies.ejs", { movies, nav });
@@ -26,6 +27,7 @@ async function renderForm(req, res) {
       add: "Añadir Película",
       link: "/movies/new-movie",
       user: userName,
+      dashboard: "/dashboard",
     };
     res.render("new-movie.ejs", { nav });
   }
@@ -87,10 +89,7 @@ async function uploadMovie(req, res) {
     moviesUser.push(newMovie);
     fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
     res.redirect("/movies");
-  } /*
-  movies.push(newMovie);
-  fs.writeFileSync("src/movies.json", JSON.stringify(movies), "utf-8");
-  res.redirect("/movies");*/
+  } 
 }
 async function downloadMovie(req, res) {
   const userCheck = await users.find((e) => e.id === req.userId);
@@ -115,12 +114,16 @@ async function deleteMovie(req, res) {
     const userMovies = movies.filter((e) => e.id !== req.params.id);
 
     function dropImage(img) {
-      let path = `src/public/uploads/movies/${img.image}`;
-      eraseFiles(path);
+      if (img) {
+        let path = `src/public/uploads/movies/${img.image}`;
+        eraseFiles(path);
+      }
     }
     function dropVideo(video) {
-      let path = `src/public/uploads/movies/${video.video}`;
-      eraseFiles(path);
+      if (video) {
+        let path = `src/public/uploads/movies/${video.video}`;
+        eraseFiles(path);
+      }
     }
     dropImage(sendMovie);
     dropVideo(sendMovie);
@@ -141,6 +144,7 @@ async function editMovie(req, res) {
       add: "Añadir Película",
       link: "/movies/new-movie",
       user: userName,
+      dashboard: "/dashboard",
     };
     const movie = {
       id: detectMovie.id,
@@ -175,7 +179,6 @@ module.exports = {
   uploadMovie,
   downloadMovie,
   deleteMovie,
-
   editMovie,
   reloadMovie,
 };

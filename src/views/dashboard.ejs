@@ -99,7 +99,7 @@
                 $content.innerHTML = " ";
             }
         })
-        $files.addEventListener("click", (e) => {
+        $files.addEventListener("click", async (e) => {
             $movies.classList.remove("childer-active")
             $profile.classList.remove("childer-active")
             let render = $files.classList.toggle("childer-active")

@@ -4,7 +4,7 @@ let users = JSON.parse(json_users);
 const { v4: uuidv4 } = require("uuid");
 //const { userActive } = require("./utils/userActive.js");
 const { eraseFiles } = require("./utils/readerJson.js");
-const { getDateFormat } = require("./utils/getDateFormat.js")
+const { getDateFormat } = require("./utils/getDateFormat.js");
 
 function render(req, res) {
   const userCheck = users.find((e) => e.id === req.userId);
@@ -15,6 +15,7 @@ function render(req, res) {
       add: "Añadir Archivo",
       link: "/files/new-file",
       user: userName,
+      dashboard: "/dashboard",
     };
     res.render("files.ejs", { files, nav });
   }
@@ -26,6 +27,7 @@ async function renderForm(req, res) {
     add: "Añadir Archivo",
     link: "/files/new-file",
     user: userName,
+    dashboard: "/dashboard",
   };
   res.render("new-file.ejs", { nav });
 }
@@ -58,7 +60,7 @@ function uploadFile(req, res) {
     createdAt: getDateFormat(),
   };
   const userCheck = users.find((e) => e.id === req.userId);
-  //const userCheck = userActive(req);
+ 
   if (userCheck) {
     let filesUser = userCheck.filesPrivate;
     filesUser.push(newFile);
@@ -77,12 +79,15 @@ async function deleteFile(req, res) {
     const deleteFile = files.find((e) => e.id === req.params.id);
     const userFiles = files.filter((e) => e.id !== req.params.id);
     function deleteDroper(drop) {
-      let path = `src/public/uploads/files/${drop.namepath}`;
-      eraseFiles(path);
+      if (drop) {
+        let path = `src/public/uploads/files/${drop.namepath}`;
+        eraseFiles(path);
+      }
     }
     deleteDroper(deleteFile);
     userCheck.filesPrivate = userFiles;
     fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
+
     res.redirect("/dashboard");
   }
 }
@@ -113,17 +118,16 @@ async function reloadFile(req, res) {
   fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
   res.redirect("/movies");
 }
-async function editFile(req, res){
+async function editFile(req, res) {
   const userCheck = await users.find((e) => e.id === req.userId);
-  const detectFile = userCheck.filesPrivate.find(
-    (e) => e.id === req.params.id
-  );
+  const detectFile = userCheck.filesPrivate.find((e) => e.id === req.params.id);
   if (userCheck) {
     const userName = userCheck.user;
     const nav = {
       add: "Añadir Película",
       link: "/movies/new-movie",
       user: userName,
+      dashboard: "/dashboard",
     };
     const file = {
       id: detectFile.id,
@@ -139,5 +143,5 @@ module.exports = {
   deleteFile,
   downloadFile,
   reloadFile,
-  editFile
+  editFile,
 };

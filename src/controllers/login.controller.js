@@ -15,6 +15,7 @@ function renderSignup(req, res, next) {
     add: "Inicia Sesión",
     link: "/signin",
     user: "Login",
+    dashboard:"/signin",
   };
   res.render("signup.ejs", { nav });
 }
@@ -23,6 +24,7 @@ function renderSignin(req, res) {
     add: "Inicia Sesion",
     link: "/signin",
     user: "Login",
+    dashboard:"/signin",
   };
   res.render("signin.ejs", { nav });
 }
@@ -36,6 +38,7 @@ async function createUser(req, res) {
       user: "Login",
       alert: "Datos insuficientes",
       color: "red",
+      dashboard:"/signup",
     };
     res.status(400).render("signup.ejs", { nav });
   } else {
@@ -48,6 +51,7 @@ async function createUser(req, res) {
         user: "Login",
         alert: "El usuario ya está registrado",
         color: "red",
+        dashboard:"/signup",
       };
       res.status(400).render("signup.ejs", { nav });
     } else if (findEmail) {
@@ -90,6 +94,7 @@ async function signinUser(req, res) {
       user: "Login",
       alert: "Datos insuficientes",
       color: "red",
+      dashboard:"/signin",
     };
     res.status(400).render("signin.ejs", { nav });
   } else {
@@ -98,6 +103,7 @@ async function signinUser(req, res) {
       const nav = {
         add: "Inicia Sesion",
         link: "/signin",
+        dashboard:"/signin",
         user: "Login",
         alert: "El usuario no existe",
         color: "red",
@@ -115,6 +121,7 @@ async function signinUser(req, res) {
           add: "Inicia Sesion",
           link: "/signin",
           user: "Login",
+          dashboard:"/signup",
           alert: "Contraseña incorrecta",
           color: "red",
         };
@@ -151,6 +158,7 @@ async function editUser(req, res) {
     const nav = {
       add: "Inicia Sesion",
       link: "/signin",
+      dashboard:"/dashboard",
       user: "Login",
       alert: "Contraseña incorrecta",
       color: "red",
@@ -174,6 +182,7 @@ async function reloadUser(req, res) {
       user: "Login",
       alert: "Datos insuficientes",
       color: "red",
+      dashboard:"/dashboard",
     };
     res.status(400).render("edit-user.ejs", { nav, user });
   } else {
@@ -210,6 +219,7 @@ async function reloadUser(req, res) {
         user: "Login",
         alert: "El usuario ya está registrado",
         color: "red",
+        dashboard:"/dashboard",
       };
       res.status(400).render("edit-user.ejs", { nav, user });
     } else if (counterEmail > 0) {
@@ -224,6 +234,7 @@ async function reloadUser(req, res) {
         user: "Login",
         alert: "El email ya está registrado",
         color: "red",
+        dashboard:"/dashboard",
       };
       res.status(400).render("edit-user.ejs", { nav, user });
     } else {
