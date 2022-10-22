@@ -42,9 +42,9 @@
         const $movies = document.getElementById("movies")
         const $files = document.getElementById("files")
         
-       
-
+        
         $profile.addEventListener("click", (e) => {
+            
             $movies.classList.remove("childer-active")
             $files.classList.remove("childer-active")
             let render = $profile.classList.toggle("childer-active")
@@ -87,6 +87,8 @@
                                 <p><%- e.createdAt %></p>
                             </div>
                             <div class="movies-buttons">
+                                
+                                <a class="button-edit" style="background-color: <%- e.share ? "orange" : "none" %>" id="share" href="/movies/share/<%- e.id %>">share</a>
                                 <a class="button-edit" href="/movies/edit/<%- e.id %>" ><img src="./icons/editar.png"></a>
                                 <a class="button-ver"><img src="./icons/ver.png"></a>
                                 <a class="button-drop" href="/movies/delete/<%- e.id %>"><img src="./icons/basura.png"></a>
@@ -94,12 +96,18 @@
                         </div></div>
                 <% }) %>
                 `
-                $content.innerHTML = push;
+                $content.innerHTML = push;/*
+                const $share = document.getElementById("share")
+                if($share.name === "true"){
+                    $share.classList.add("childer-active")
+                } else {
+                    $share.classList.remove("childer-active")
+                }*/
             } else {
                 $content.innerHTML = " ";
             }
         })
-        $files.addEventListener("click", async (e) => {
+        $files.addEventListener("click", (e) => {
             $movies.classList.remove("childer-active")
             $profile.classList.remove("childer-active")
             let render = $files.classList.toggle("childer-active")
@@ -128,6 +136,8 @@
                 $content.innerHTML = " ";
             }
         })
+
+        
         
 
     </script>

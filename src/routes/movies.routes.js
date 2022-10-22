@@ -10,6 +10,7 @@ const {
   deleteMovie,
   editMovie,
   reloadMovie,
+  shareMovie,
 } = require("../controllers/movies.controller");
 const { verifyToken } = require("../controllers/utils/verifyToken.js");
 //////
@@ -48,5 +49,7 @@ router.get("/movies/delete/:id", verifyToken, deleteMovie);
 router.get("/movies/edit/:id", verifyToken, editMovie);
 
 router.post("/movies/edit/edit-movie", verifyToken, reloadMovie);
+
+router.get("/movies/share/:id", verifyToken, shareMovie)
 
 module.exports = router;

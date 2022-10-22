@@ -58,6 +58,7 @@ function uploadFile(req, res) {
     namepath: filename,
     size: evaluateSize(),
     createdAt: getDateFormat(),
+    share: false,
   };
   const userCheck = users.find((e) => e.id === req.userId);
  

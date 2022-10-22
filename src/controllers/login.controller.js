@@ -7,6 +7,7 @@ const {
 } = require("./utils/hashPassword.js");
 const { getToken } = require("./utils/getToken.js");
 const { getDateFormat } = require("./utils/getDateFormat");
+const { emitWarning } = require("process");
 const json_users = fs.readFileSync("src/users.json", "utf-8");
 let users = JSON.parse(json_users);
 
@@ -15,7 +16,7 @@ function renderSignup(req, res, next) {
     add: "Inicia Sesión",
     link: "/signin",
     user: "Login",
-    dashboard:"/signin",
+    dashboard: "/signin",
   };
   res.render("signup.ejs", { nav });
 }
@@ -24,7 +25,7 @@ function renderSignin(req, res) {
     add: "Inicia Sesion",
     link: "/signin",
     user: "Login",
-    dashboard:"/signin",
+    dashboard: "/signin",
   };
   res.render("signin.ejs", { nav });
 }
@@ -38,7 +39,7 @@ async function createUser(req, res) {
       user: "Login",
       alert: "Datos insuficientes",
       color: "red",
-      dashboard:"/signup",
+      dashboard: "/signup",
     };
     res.status(400).render("signup.ejs", { nav });
   } else {
@@ -51,7 +52,7 @@ async function createUser(req, res) {
         user: "Login",
         alert: "El usuario ya está registrado",
         color: "red",
-        dashboard:"/signup",
+        dashboard: "/signup",
       };
       res.status(400).render("signup.ejs", { nav });
     } else if (findEmail) {
@@ -94,7 +95,7 @@ async function signinUser(req, res) {
       user: "Login",
       alert: "Datos insuficientes",
       color: "red",
-      dashboard:"/signin",
+      dashboard: "/signin",
     };
     res.status(400).render("signin.ejs", { nav });
   } else {
@@ -103,7 +104,7 @@ async function signinUser(req, res) {
       const nav = {
         add: "Inicia Sesion",
         link: "/signin",
-        dashboard:"/signin",
+        dashboard: "/signin",
         user: "Login",
         alert: "El usuario no existe",
         color: "red",
@@ -121,7 +122,7 @@ async function signinUser(req, res) {
           add: "Inicia Sesion",
           link: "/signin",
           user: "Login",
-          dashboard:"/signup",
+          dashboard: "/signup",
           alert: "Contraseña incorrecta",
           color: "red",
         };
@@ -158,7 +159,7 @@ async function editUser(req, res) {
     const nav = {
       add: "Inicia Sesion",
       link: "/signin",
-      dashboard:"/dashboard",
+      dashboard: "/dashboard",
       user: "Login",
       alert: "Contraseña incorrecta",
       color: "red",
@@ -182,7 +183,7 @@ async function reloadUser(req, res) {
       user: "Login",
       alert: "Datos insuficientes",
       color: "red",
-      dashboard:"/dashboard",
+      dashboard: "/dashboard",
     };
     res.status(400).render("edit-user.ejs", { nav, user });
   } else {
@@ -192,20 +193,20 @@ async function reloadUser(req, res) {
     const findUser = await users.find((e) => e.user === user);
     const findEmail = await users.find((e) => e.email === email);*/
 
-
     const checkUser = users.forEach((e) => {
-    if(e.user === user){
-      counterUsername++
-    }});
+      if (e.user === user) {
+        counterUsername++;
+      }
+    });
 
     const checkEmail = users.forEach((e) => {
-    if(e.email === email){
-      counterEmail++
-    }});
+      if (e.email === email) {
+        counterEmail++;
+      }
+    });
 
-    console.log(counterEmail)
-    console.log(counterUsername)
-    
+    console.log(counterEmail);
+    console.log(counterUsername);
 
     if (counterUsername > 0) {
       const user = {
@@ -219,7 +220,7 @@ async function reloadUser(req, res) {
         user: "Login",
         alert: "El usuario ya está registrado",
         color: "red",
-        dashboard:"/dashboard",
+        dashboard: "/dashboard",
       };
       res.status(400).render("edit-user.ejs", { nav, user });
     } else if (counterEmail > 0) {
@@ -234,7 +235,7 @@ async function reloadUser(req, res) {
         user: "Login",
         alert: "El email ya está registrado",
         color: "red",
-        dashboard:"/dashboard",
+        dashboard: "/dashboard",
       };
       res.status(400).render("edit-user.ejs", { nav, user });
     } else {
@@ -254,6 +255,59 @@ async function reloadUser(req, res) {
     }
   }
 }
+function publicItems(req, res) {
+  let checkMovies = [];
+  const filter = users.map((e) => e.moviesPrivate);
+  for (let item in filter) {
+    for (let subItem in filter[item]) {
+      checkMovies.push(filter[item][subItem]);
+    }
+  }
+
+  const movies = checkMovies.filter((e) => e.share === true);
+
+  const nav = {
+    add: "Inicia Sesión",
+    link: "/signin",
+    dashboard: "/",
+    user: "Public",
+  };
+
+  res.render("public-movies.ejs", { movies, nav });
+}
+async function playMovie(req, res) {
+  let checkMovies = [];
+  const filter = users.map((e) => e.moviesPrivate);
+  for (let item in filter) {
+    for (let subItem in filter[item]) {
+      checkMovies.push(filter[item][subItem]);
+    }
+  }
+  const sendMovPlay = checkMovies.find((e) => e.id === req.params.id);
+
+  res.render("public-play-mov.ejs", { sendMovPlay });
+}
+
+function downloadMovie(req, res) {
+  let checkMovies = [];
+  const filter = users.map((e) => e.moviesPrivate);
+  for (let item in filter) {
+    for (let subItem in filter[item]) {
+      checkMovies.push(filter[item][subItem]);
+    }
+  }
+  const sendMovie = checkMovies.find((e) => e.id === req.params.id);
+  console.log(sendMovie)
+  const path = `src/public/uploads/movies/${sendMovie.video}`;
+  const head = {
+    "Content-Type": "video/mp4",
+    "Content-Disposition": `attachment; filename=${sendMovie.video}`,
+    "Content-Length": sendMovie.size,
+  };
+  res.writeHead(200, head);
+  fs.createReadStream(path).pipe(res);
+}
+
 module.exports = {
   renderSignup,
   renderSignin,
@@ -262,4 +316,7 @@ module.exports = {
   getDashboard,
   editUser,
   reloadUser,
+  publicItems,
+  playMovie,
+  downloadMovie,
 };

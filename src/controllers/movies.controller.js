@@ -82,6 +82,7 @@ async function uploadMovie(req, res) {
     genero: genero,
     size: evaluateSize(),
     createdAt: getDateFormat(),
+    share: false,
   };
   const userCheck = await users.find((e) => e.id === req.userId);
   if (userCheck) {
@@ -89,7 +90,7 @@ async function uploadMovie(req, res) {
     moviesUser.push(newMovie);
     fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
     res.redirect("/movies");
-  } 
+  }
 }
 async function downloadMovie(req, res) {
   const userCheck = await users.find((e) => e.id === req.userId);
@@ -172,6 +173,22 @@ async function reloadMovie(req, res) {
   res.redirect("/movies");
 }
 
+async function shareMovie(req, res) {
+  const userCheck = await users.find((e) => e.id === req.userId);
+  if (userCheck) {
+    const movies = userCheck.moviesPrivate;
+    const moviesShare = movies.find((e) => e.id === req.params.id);
+    //const moviesShare = movies.filter((e) => e.share === false);
+    if (moviesShare.share) {
+      moviesShare.share = false;
+    } else {
+      moviesShare.share = true;
+    }
+  }
+  fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
+  res.redirect("/dashboard");
+}
+
 module.exports = {
   render,
   renderForm,
@@ -181,4 +198,5 @@ module.exports = {
   deleteMovie,
   editMovie,
   reloadMovie,
+  shareMovie,
 };

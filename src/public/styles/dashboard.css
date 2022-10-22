@@ -74,7 +74,10 @@ body {
 }
 .childer-active {
   background-color: orange !important;
-}
+}/*
+.button-share{
+  background-color: blue;
+}*/
 .front-menu {
   position: absolute;
   top:0 ;

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Movies</title>
+    <link rel="stylesheet" href="/styles/navigation.css" />
+    <link rel="stylesheet" href="/styles/movies.style.css" />
+  </head>
+
+  <body>
+    <header><%- include("./partials/navigation"); %></header>
+    <section>
+      <div class="indexContainer">
+        <% movies.forEach((e) => { %>
+        <div class="paquet">
+          <div class="card">
+            <div class="card-header"><%= e.title %> / <%= e.year %></div>
+            <img
+              src="<%= `./uploads/movies/${e.image}` %>"
+              alt="<%= e.title %>"
+              class="card-img-top"
+            />
+            <div class="card-body">
+              <p><%= e.sinopsis %></p>
+            </div>
+            <div class="card-footer">
+             
+              <a href="/public-play-mov/<%= e.id %>" class="btn-play">Play</a>
+              <a href="/download-movie/<%= e.id %>" class="btn-download"
+                >Descarga</a
+              >
+            </div>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+    </section>
+    
+    
+  </body>
+</html>

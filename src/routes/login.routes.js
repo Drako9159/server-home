@@ -7,16 +7,21 @@ const {
   signinUser,
   getDashboard,
   editUser,
-  reloadUser
+  reloadUser,
+  publicItems,
+  playMovie,
+  downloadMovie,
 } = require("../controllers/login.controller.js");
 const { logOut } = require("../controllers/logout.controller.js");
 const { verifyToken } = require("../controllers/utils/verifyToken.js");
-router.get("/", (req, res) => {
-  res.redirect("/signin");
-});
+
+router.get("/", publicItems);
+
+router.get("/public-play-mov/:id", playMovie);
+
+router.get("/download-movie/:id", downloadMovie);
 
 router.get("/signup", logOut, renderSignup);
-
 
 router.post("/signup", createUser);
 
