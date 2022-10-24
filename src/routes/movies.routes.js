@@ -37,6 +37,7 @@ router.get("/movies/play-mov/:id", verifyToken, playMovie);
 
 const uploadContent = MulterUpload.movieMulter.fields([
   { name: "image", maxCount: 1 },
+  { name: "banner", maxCount: 1},
   { name: "video", maxCount: 1 },
 ]);
 //

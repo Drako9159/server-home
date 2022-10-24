@@ -49,7 +49,8 @@ async function uploadMovie(req, res) {
     !year ||
     !genero ||
     !req.files.image ||
-    !req.files.video
+    !req.files.video ||
+    !req.files.banner
   ) {
     res.status(400).send("No ingresaste todos los datos requeridos");
     if (req.files.image) {
@@ -58,11 +59,15 @@ async function uploadMovie(req, res) {
     } else if (req.files.video) {
       let pathVideo = `src/public/uploads/movies/${req.files.video[0].filename}`;
       eraseFiles(pathVideo);
+    } else if (req.files.banner) {
+      let pathBanner = `src/public/uploads/movies/${req.files.banner[0].filename}`;
+      eraseFiles(pathBanner);
     }
     return;
   }
   const nameImg = req.files.image[0].filename;
   const nameVideo = req.files.video[0].filename;
+  const nameBanner = req.files.banner[0].filename;
   const sizeVideo = req.files.video[0].size;
   function evaluateSize() {
     let sizerMath = Math.floor(sizeVideo / 1000);
@@ -72,14 +77,18 @@ async function uploadMovie(req, res) {
       return (sizerMath = `${sizerMath} KB`);
     }
   }
+  
+  //const sinopsisQuit = sinopsis.replace(/"/g, " ")
+
   let newMovie = {
     id: uuidv4(),
-    title: title,
-    sinopsis: sinopsis,
+    title: title.replace(/"/g, " "),
+    sinopsis: sinopsis.replace(/"/g, " "),
     year: year,
     image: nameImg,
     video: nameVideo,
-    genero: genero,
+    banner: nameBanner,
+    genero: genero.replace(/"/g, " "),
     size: evaluateSize(),
     createdAt: getDateFormat(),
     share: false,
@@ -126,8 +135,15 @@ async function deleteMovie(req, res) {
         eraseFiles(path);
       }
     }
+    function dropBanner(video) {
+      if (video) {
+        let path = `src/public/uploads/movies/${video.banner}`;
+        eraseFiles(path);
+      }
+    }
     dropImage(sendMovie);
     dropVideo(sendMovie);
+    dropBanner(sendMovie);
     userCheck.moviesPrivate = userMovies;
     fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
     res.redirect("/dashboard");
