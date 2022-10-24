@@ -9,8 +9,18 @@
   width: 1300px;
   height: 650px;
   margin: 0 auto;
+  opacity: 1;
+  animation: banner-in 4s ease;
 
 }
+@keyframes banner-in{
+  0%{ opacity: 0;};
+  99%{opacity: 0.5;};
+  100%{opacity: 1;};
+}
+
+
+
 .content-left{
   box-shadow:70px 0 70px rgba(0, 0, 0, 0.877);
  background-color: rgba(0, 0, 0, 0.877);
@@ -159,14 +169,13 @@
   width: 100%;
   height: 100%;
   z-index: 200;
-  animation: player-in 3s;
+  animation: player-in 2s ease;
   opacity: 1;
-  
 }
 @keyframes player-in{
-  0%{ opacity: 0.3;};
-  50%{opacity: 0.5;};
-  100%{opacity: 1.0;};
+  0%{ opacity: 0;};
+  99%{opacity: 0;};
+  100%{opacity: 1;};
 }
 
 
