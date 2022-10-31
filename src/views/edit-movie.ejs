@@ -48,7 +48,7 @@
             rows="3"
             autocapitalize="none"
             value="<%- movie.sinopsis %>"
-          ></textarea>
+          ><%- movie.sinopsis %></textarea>
         </div>
         <div class="intermedial-form">
           <div>
@@ -80,6 +80,7 @@
         </div>
         
         <input type="submit" value="Actualizar" class="btn-submit" />
+        <a href="/dashboard"><input type="button" class="btn-submit" value="Cancelar"></a>
       </form>
     </section>
     <%- include("./partials/footer"); %>

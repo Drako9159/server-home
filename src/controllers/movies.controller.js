@@ -110,7 +110,8 @@ async function downloadMovie(req, res) {
     const head = {
       "Content-Type": "video/mp4",
       "Content-Disposition": `attachment; filename=${sendMovie.video}`,
-      "Content-Length": sendMovie.size,
+      //"Content-Length": sendMovie.size,
+      //TODO size is deprecated in my browser
     };
     res.writeHead(200, head);
     fs.createReadStream(path).pipe(res);

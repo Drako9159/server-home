@@ -102,7 +102,8 @@ async function downloadFile(req, res) {
     const head = {
       "Content-Type": `${fileDownload.tipo}`,
       "Content-Disposition": `attachment; filename=${fileDownload.namepath}`,
-      "Content-Length": fileDownload.size,
+      //"Content-Length": fileDownload.size,
+      //TODO size is deprecated in my browser
     };
     res.writeHead(200, head);
     fs.createReadStream(path).pipe(res);

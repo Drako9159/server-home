@@ -299,10 +299,12 @@ function downloadMovie(req, res) {
   const sendMovie = checkMovies.find((e) => e.id === req.params.id);
   console.log(sendMovie)
   const path = `src/public/uploads/movies/${sendMovie.video}`;
+ 
   const head = {
     "Content-Type": "video/mp4",
     "Content-Disposition": `attachment; filename=${sendMovie.video}`,
-    "Content-Length": sendMovie.size,
+    //"Content-Length": sendMovie.size,
+    //TODO size is deprecated in my browser
   };
   res.writeHead(200, head);
   fs.createReadStream(path).pipe(res);

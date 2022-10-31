@@ -32,8 +32,19 @@
         </div>
 
         <input type="submit" value="Guardar" class="btn-submit" />
+        <input type="button" value="Charge" class="btn-submit" onClick="renderCharge()" id="btnCharger"/>
       </form>
     </section>
+    <div id="chargePage">
+      <%- include("./partials/loading") %>
+    </div>
     <%- include("./partials/footer"); %>
+    
   </body>
+  <script>
+    const $chargePage = document.getElementById("chargePage")
+   
+
+  </script>
+  
 </html>

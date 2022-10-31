@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,13 +19,13 @@
                 </h3>
             </div>
             <ul>
-                <li class="childer" id="profile">Profile</li>
-                <li class="childer" id="movies">Movies</li>
-                <li class="childer" id="files">Files</li>
+                <li class="childer" id="profile" onClick="renderProfiles()">Profile</li>
+                <li class="childer" id="movies" onClick="renderMovies()">Movies</li>
+                <li class="childer" id="files" onClick="renderFiles()">Files</li>
             </ul>
             <div class="signout">
                 <a href="/">Cerrar Sesion</a>
-               
+
             </div>
             <div class="signout">
                 <a href="/movies">Regresar</a>
@@ -34,7 +33,7 @@
         </div>
         <div class="content">
             <div id="content" class="front-menu">
-                
+
             </div>
         </div>
     </div>
@@ -43,10 +42,8 @@
         const $profile = document.getElementById("profile")
         const $movies = document.getElementById("movies")
         const $files = document.getElementById("files")
-        
-        
-        $profile.addEventListener("click", (e) => {
-            
+
+        function renderProfiles(){
             $movies.classList.remove("childer-active")
             $files.classList.remove("childer-active")
             let render = $profile.classList.toggle("childer-active")
@@ -67,8 +64,12 @@
             } else {
                 $content.innerHTML = " ";
             }
-        })
-        $movies.addEventListener("click", (e) => {
+
+        }
+
+     
+
+        function renderMovies(){
             $profile.classList.remove("childer-active")
             $files.classList.remove("childer-active")
             let render = $movies.classList.toggle("childer-active")
@@ -90,10 +91,10 @@
                             </div>
                             <div class="movies-buttons">
                                 
-                                <a class="button-edit" style="background-color: <%- e.share ? "orange" : "none" %>" id="share" href="/movies/share/<%- e.id %>">share</a>
+                                <a class="button-edit" style="background-color: <%- e.share ? "orange" : "none" %>" id="share" href="/movies/share/<%- e.id %>" onClick="renderMovies()">share</a>
                                 <a class="button-edit" href="/movies/edit/<%- e.id %>" ><img src="./icons/editar.png"></a>
                                 <a class="button-ver"><img src="./icons/ver.png"></a>
-                                <a class="button-drop" href="/movies/delete/<%- e.id %>"><img src="./icons/basura.png"></a>
+                                <a class="button-drop" href="/movies/delete/<%- e.id %>" onClick="renderMovies()"><img src="./icons/basura.png"></a>
                             </div>
                         </div></div>
                 <% }) %>
@@ -108,7 +109,8 @@
             } else {
                 $content.innerHTML = " ";
             }
-        })
+        }
+        /*
         $files.addEventListener("click", (e) => {
             $movies.classList.remove("childer-active")
             $profile.classList.remove("childer-active")
@@ -137,10 +139,40 @@
             } else {
                 $content.innerHTML = " ";
             }
-        })
+        })*/
+        function renderFiles() {
+            $movies.classList.remove("childer-active")
+            $profile.classList.remove("childer-active")
+            let render = $files.classList.toggle("childer-active")
+            if (render) {
+                let push = `<div class="header">
+                    <h3>Files de <%- nav.profile.user %></h3>
+                </div>
+                <% nav.files.forEach((e) => { %>
+                    <h3 class="movies-title"><%- e.title %></h3>
+                    <div class="movies-container">
+                        <div class="movies-content">
+                            <div class="movies-info">
+                                <p><%- e.size %></p>
+                                <p><%- e.createdAt %></p>
+                            </div>
+                            <div class="movies-buttons">
+                                <a class="button-edit" href="/files/edit/<%- e.id %>"><img src="./icons/editar.png"></a>
+                                <a class="button-ver"><img src="./icons/ver.png"></a>
+                                <a class="button-drop" href="/files/delete/<%= e.id %>" onClick="renderFiles()"><img src="./icons/basura.png"></a>
+                            </div>
+                        </div></div>
+                <% }) %>
+                `
+                $content.innerHTML = push;
+            } else {
+                $content.innerHTML = " ";
+            }
 
-        
-        
+        }
+
+
+
 
     </script>
 </body>
