@@ -28,7 +28,9 @@ async function renderForm(req, res) {
     link: "/files/new-file",
     user: userName,
     dashboard: "/dashboard",
+    
   };
+  
   res.render("new-file.ejs", { nav });
 }
 
@@ -69,6 +71,7 @@ function uploadFile(req, res) {
     fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
     res.setHeader("Content-Type", "application/json");
     res.setHeader("Access-Control-Allow-Origin", "*");
+    
     res.redirect("/files");
   }
 }
