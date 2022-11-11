@@ -2,8 +2,7 @@
   font-family: monse;
   src: url("../assets/Montserrat-Regular.otf");
 }
-header .navigation ul{
-
+header .navigation ul {
   z-index: 500;
 }
 .banner-movies {
@@ -19,7 +18,7 @@ header .navigation ul{
   0% {
     opacity: 0;
   }
- 
+
   100% {
     opacity: 1;
   }
@@ -172,7 +171,7 @@ header .navigation ul{
   0% {
     opacity: 0;
   }
- 
+
   100% {
     opacity: 1;
   }
@@ -193,4 +192,194 @@ header .navigation ul{
   width: 50px;
   height: 50px;
   cursor: pointer;
+}
+@media screen and (max-width: 750px) {
+  .banner-movies {
+    display: flex;
+
+    flex-direction: column-reverse;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    opacity: 1;
+    animation: banner-in 5s ease;
+  }
+
+  .content-left {
+    box-shadow: none;
+    background-color: rgba(0, 0, 0, 0.5);
+
+    display: flex;
+
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    min-width: 100%;
+    max-width: 100%;
+    height: 100%;
+    z-index: 90;
+  }
+  .content-right {
+    width: 100%;
+    height: 100%;
+    z-index: 100;
+    opacity: 0.7;
+  }
+  .content-left div {
+    width: 100%;
+
+    margin: 1px;
+  }
+  .content-left div h2 {
+    padding: 0 1.1rem;
+  }
+  .content-left div p {
+    padding: 0 1.1rem;
+  }
+
+  .card-title {
+    text-align: center;
+    font-weight: bold;
+    font-size: 15px;
+  }
+
+  .card-buttons {
+    display: flex;
+    justify-content: center;
+  }
+  .play-button {
+    margin: 5px;
+
+    background-color: #ffffff;
+    border-radius: 5px;
+    cursor: pointer;
+    color: black;
+    font-family: monse;
+    font-size: 15px;
+    font-weight: bolder;
+    padding: 10px 27px;
+    text-decoration: none;
+  }
+  .play-button:hover {
+    background-color: #dbdbdb;
+  }
+  .play-button:active {
+    position: relative;
+    top: 1px;
+  }
+  .download-button {
+    margin: 5px;
+
+    background-color: #ffffff5b;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    font-family: monse;
+    font-size: 15px;
+    font-weight: bolder;
+    padding: 10px 27px;
+    text-decoration: none;
+  }
+  .download-button:hover {
+    background-color: #c2c2c262;
+  }
+  .download-button:active {
+    position: relative;
+    top: 1px;
+  }
+
+  .banner-img {
+    width: 100%;
+    top: 4rem;
+    min-height: 20%;
+    max-height: 30%;
+
+    position: absolute;
+    margin: 0 auto;
+    z-index: 80;
+  }
+  .movies-selector {
+    position: relative;
+    margin: 0 auto;
+    background-color: rgba(0, 0, 0, 0.438);
+
+    width: 100%;
+    height: 220px;
+    margin-top: 0px;
+    z-index: 200;
+    
+  }
+  .title-movies-selector {
+    width: 100%;
+    height: 10%;
+  }
+  .movies-selector .title-movies-selector {
+    font-family: monse;
+  }
+  .selector {
+    display: flex;
+    width: 100%;
+    height: auto; /*
+    overflow-y: hidden;
+
+    align-items: center;*/
+    flex-wrap: wrap;
+ 
+    
+    
+  }
+  .selector::-webkit-scrollbar {
+    background: none;
+  }
+  .selector::-webkit-scrollbar-thumb {
+    background-color: rgb(2, 116, 161);
+    border-radius: 2px;
+  }
+
+  .img-selector {
+    margin: 5px;
+    width: 140px;
+    height: 190px;
+    cursor: pointer;
+  }
+
+  .img-selector:hover {
+    position: relative;
+    top: 1px;
+  }
+  .img-selector:active {
+    position: relative;
+    top: 1px;
+  }
+  .video-player {
+    transition: all 0.3 ease;
+    display: flex;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.658);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 200;
+    animation: player-in 2s ease;
+    opacity: 1;
+  }
+
+  .video-player video {
+    border: 0 0 10px black;
+    margin: 0 auto;
+    max-width: 100%;
+    max-height: 480px;
+    z-index: 200;
+  }
+  .close-player {
+    background-color: rgba(143, 0, 0, 0.658);
+    position: fixed;
+    top: 0;
+    z-index: 210;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+  }
 }
