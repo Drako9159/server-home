@@ -217,3 +217,5 @@ module.exports = {
   reloadMovie,
   shareMovie,
 };
+//Await for implement module in class, nothing use methods
+
