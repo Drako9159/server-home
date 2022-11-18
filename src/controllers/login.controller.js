@@ -7,7 +7,7 @@ const {
 } = require("./utils/hashPassword.js");
 const { getToken } = require("./utils/getToken.js");
 const { getDateFormat } = require("./utils/getDateFormat");
-const { emitWarning } = require("process");
+
 const json_users = fs.readFileSync("src/users.json", "utf-8");
 let users = JSON.parse(json_users);
 
@@ -299,7 +299,6 @@ function downloadMovie(req, res) {
   const sendMovie = checkMovies.find((e) => e.id === req.params.id);
   console.log(sendMovie)
   const path = `src/public/uploads/movies/${sendMovie.video}`;
- 
   const head = {
     "Content-Type": "video/mp4",
     "Content-Disposition": `attachment; filename=${sendMovie.video}`,
