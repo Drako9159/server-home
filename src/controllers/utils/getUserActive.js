@@ -1,4 +1,9 @@
-function getUserActive(){
+const fs = require("fs");
+const json_users = fs.readFileSync("src/users.json", "utf-8");
+let users = JSON.parse(json_users);
 
+function getUserActive(req) {
+  const userCheck = users.find((e) => e.id === req.userId);
+  return userCheck;
 }
-module.exports = { getUserActive }
+module.exports = { getUserActive };
