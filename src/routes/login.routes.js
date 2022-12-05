@@ -11,11 +11,15 @@ const {
   publicItems,
   playMovie,
   downloadMovie,
+  
 } = require("../controllers/login.controller.js");
 const { logOut } = require("../controllers/logout.controller.js");
 const { verifyToken } = require("../controllers/utils/verifyToken.js");
 
 router.get("/", publicItems);
+
+
+
 
 router.get("/public-play-mov/:id", playMovie);
 

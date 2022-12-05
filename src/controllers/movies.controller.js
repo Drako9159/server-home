@@ -7,6 +7,21 @@ const { getDateFormat } = require("./utils/getDateFormat.js");
 const { getUserActive } = require("./utils/getUserActive.js");
 
 class MoviesController {
+  static appRenderMovies(req, res) {
+    const { user, moviesPrivate } = getUserActive(req);
+    const nav = {
+      add: "Añadir Película",
+      link: "/movies/new-movie",
+      dashboard: "/dashboard",
+    };
+    res.render("AppMovies.ejs", { nav, user, moviesPrivate });
+    
+  }
+
+  static appRender(req, res) {
+    res.render("App.ejs");
+  }
+  /*
   static render(req, res) {
     //const userCheck = await users.find((e) => e.id === req.userId);
     const userCheck = getUserActive(req);
@@ -21,7 +36,7 @@ class MoviesController {
       };
       res.render("movies.ejs", { movies, nav });
     }
-  }
+  }*/
   static async renderForm(req, res) {
     const userCheck = getUserActive(req);
     if (userCheck) {

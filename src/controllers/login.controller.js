@@ -11,6 +11,9 @@ const { getDateFormat } = require("./utils/getDateFormat");
 const json_users = fs.readFileSync("src/users.json", "utf-8");
 let users = JSON.parse(json_users);
 
+
+
+
 function renderSignup(req, res, next) {
   const nav = {
     add: "Inicia Sesión",
@@ -320,4 +323,5 @@ module.exports = {
   publicItems,
   playMovie,
   downloadMovie,
+ 
 };

@@ -4,10 +4,11 @@ body {
   min-width: 308px;
   background: linear-gradient(
     90deg,
-    rgb(22, 150, 255) 0%,
+    rgb(141, 167, 189) 0%,
     rgb(224, 0, 67) 70%,
     rgb(224, 0, 67) 80%
   );
+
   
   
 }
