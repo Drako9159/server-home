@@ -1,23 +1,7 @@
 const { Router } = require("express");
 const router = Router();
-const multer = require("multer");
 const MoviesController = require("../controllers/movies.controller.js");
 const { verifyToken } = require("../controllers/utils/verifyToken.js");
-//////
-/*
-const storageMovies = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "./src/public/uploads/movies");
-  },
-  filename: (req, file, cb) => {
-    const ext = file.originalname.split(".").pop();
-    cb(null, `${Date.now()}.${ext}`);
-  },
-});
-const movieMulter = multer({ storage: storageMovies });
-*/
-/////
-
 
 const MulterUpload = require("../controllers/utils/multer.js");
 
