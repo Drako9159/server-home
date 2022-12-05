@@ -1,25 +1,26 @@
 <%- include("./partials/AppHead"); %>
     <link rel="stylesheet" type="text/css" href="/styles/AppMovies.css" />
-
     <section class="AppMovies">
         <% moviesPrivate.forEach((e)=> { %>
             <div class="card">
                 <div class="card-header">
-                    <%= e.title %> / <%= e.year %>
+                    <p><%= e.title %></p> 
                 </div>
                 <div class="card-body">
-                    <img src="<%= `./uploads/movies/${e.image}` %>" alt="<%= e.title %>" class="card-img-top" />
+                    <img src="<%= `./uploads/movies/${e.image}` %>" alt="<%= e.title %>" />
                     <p>
-                       
+                        <%= e.year %>
                     </p>
                 </div>
                 <div class="card-footer">
-                    <a href="/movies/play-mov/<%= e.id %>" class="btn-play">Play</a>
-                    <a href="/movies/download/<%= e.id %>" class="btn-download">Descarga</a>
+                    <a href="/movies/play-mov/<%= e.id %>" class="btn btn-play">Play</a>
+                    <a href="/movies/download/<%= e.id %>" class="btn btn-download">Descarga</a>
                 </div>
             </div>
-            <% }) %>
+        <% }) %>
     </section>
-
-
+    <button class="btn-add">
+        <a href="/movies/new-movie"><p>+</p></a>
+        
+    </button>
     <%- include("./partials/AppFooter"); %>

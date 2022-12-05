@@ -9,47 +9,19 @@ const { getUserActive } = require("./utils/getUserActive.js");
 class MoviesController {
   static appRenderMovies(req, res) {
     const { user, moviesPrivate } = getUserActive(req);
-    const nav = {
-      add: "Añadir Película",
-      link: "/movies/new-movie",
-      dashboard: "/dashboard",
-    };
-    res.render("AppMovies.ejs", { nav, user, moviesPrivate });
-    
+    res.render("AppMovies.ejs", { user, moviesPrivate });
+  }
+  static appRenderForm(req, res){
+    const { user } = getUserActive(req);
+    res.render("AppFormNewMovie.ejs", { user })
   }
 
-  static appRender(req, res) {
-    res.render("App.ejs");
-  }
-  /*
-  static render(req, res) {
-    //const userCheck = await users.find((e) => e.id === req.userId);
-    const userCheck = getUserActive(req);
-    if (userCheck) {
-      const userName = userCheck.user;
-      const movies = userCheck.moviesPrivate;
-      const nav = {
-        add: "Añadir Película",
-        link: "/movies/new-movie",
-        dashboard: "/dashboard",
-        user: userName,
-      };
-      res.render("movies.ejs", { movies, nav });
-    }
-  }*/
-  static async renderForm(req, res) {
-    const userCheck = getUserActive(req);
-    if (userCheck) {
-      const userName = userCheck.user;
-      const nav = {
-        add: "Añadir Película",
-        link: "/movies/new-movie",
-        user: userName,
-        dashboard: "/dashboard",
-      };
-      res.render("new-movie.ejs", { nav });
-    }
-  }
+
+  
+
+
+
+
   static async playMovie(req, res) {
     const userCheck = getUserActive(req);
     if (userCheck) {
@@ -107,7 +79,7 @@ class MoviesController {
       createdAt: getDateFormat(),
       share: false,
     };
-    const userCheck = getUserActive(req, users);
+    const userCheck = users.find((e) => e.id === req.userId);
     if (userCheck) {
       let moviesUser = userCheck.moviesPrivate;
       moviesUser.push(newMovie);
@@ -195,7 +167,7 @@ class MoviesController {
     if (!title || !sinopsis || !year || !genero) {
       res.status(400).send("No ingresaste todos los datos requeridos");
     }
-    const userCheck = getUserActive(req);
+    const userCheck = users.find((e) => e.id === req.userId);
     const detectMovie = userCheck.moviesPrivate.find((e) => e.id === id);
     detectMovie.title = title;
     detectMovie.sinopsis = sinopsis;

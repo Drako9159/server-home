@@ -6,12 +6,12 @@ const { verifyToken } = require("../controllers/utils/verifyToken.js");
 const MulterUpload = require("../controllers/utils/multer.js");
 
 router.get("/movies",verifyToken, MoviesController.appRenderMovies)
-router.get("/", verifyToken, MoviesController.appRender )
-
-
+router.get("/movies/new-movie", verifyToken, MoviesController.appRenderForm);
+//router.get("/", verifyToken, MoviesController.appRender )
 //router.get("/movies", verifyToken, MoviesController.render);
 
-router.get("/movies/new-movie", verifyToken, MoviesController.renderForm);
+
+//router.get("/movies/new-movie", verifyToken, MoviesController.renderForm);
 
 router.get("/movies/play-mov/:id", verifyToken, MoviesController.playMovie);
 

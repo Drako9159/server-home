@@ -61,7 +61,7 @@ class FilesController {
       createdAt: getDateFormat(),
       share: false,
     };
-    const userCheck = getUserActive(req);
+    const userCheck = users.find((e) => e.id === req.userId);
     if (userCheck) {
       let filesUser = userCheck.filesPrivate;
       filesUser.push(newFile);
