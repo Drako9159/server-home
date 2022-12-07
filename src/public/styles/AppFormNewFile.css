@@ -1,9 +1,9 @@
 @font-face {
-  font-family: montse;
+  font-family: monse;
   src: url("../assets/Montserrat-Regular.otf");
 }
-
-.AppFormNewMovie {
+.form-container {
+  font-family: monse;
   max-width: 600px;
   width: 90%;
   margin: 20px auto;
@@ -14,62 +14,39 @@
   border-radius: 5px;
   box-shadow: 0 0 2px #202020;
 }
-
-.AppFormNewMovie form {
+.form-container form {
   width: 90%;
 }
-.AppFormNewMovie label {
+.form-container label {
+  font-family: monse;
   font-weight: bold;
   color: #202020;
 }
-.AppFormNewMovie .secuencial-container {
+.form-container .secuencial-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   margin: 10px;
 }
 
-.AppFormNewMovie input {
-  font-family: montse;
+.form-container input {
   box-shadow: 0 0 2px white;
   border: none;
   border-radius: 5px;
   height: 30px;
-
+  font-family: monse;
   box-sizing: border-box;
   outline: none;
   background-color: rgba(0, 0, 0, 0.103);
   padding: 5px;
 }
 
-.AppFormNewMovie div input:focus {
+.form-container div input:focus {
   border: none;
   background-color: rgba(0, 0, 0, 0.103);
 
-  color: #202020;
+  color: #111111;
   font-weight: bold;
-}
-.AppFormNewMovie div input::placeholder {
-  color: #202020;
-}
-
-.AppFormNewMovie div textarea {
-  background-color: rgba(0, 0, 0, 0.103);
-  backdrop-filter: blur(2px);
-  border: none;
-  border-radius: 5px;
-  box-shadow: 0 0 2px #202020;
-  resize: none;
-  box-sizing: border-box;
-  font-family: montse;
-  outline: none;
-  color: #202020;
-}
-.AppFormNewMovie div textarea:focus {
-  border: none;
-  background-color: rgba(0, 0, 0, 0.103);
-  font-weight: bold;
-  color: #202020;
 }
 
 .form-year::-webkit-inner-spin-button {
@@ -83,7 +60,7 @@
   color: #ccc;
 }
 .intermedial-form div input::placeholder {
-  color: #202020;
+  color: #ccc;
 }
 .intermedial-form {
   margin: 0 auto;
@@ -103,15 +80,15 @@
 .intermedial-form div input {
   width: 100%;
 }
-
 .btn-submit {
+  font-family: monse;
   margin: 0;
   padding: 0 15px;
   margin: 10px;
   border-radius: 5px;
   background-color: #0d6efd;
   border: none;
-  color: white;
+  color: #858585;
   font-weight: bold;
   transition: all 0.2s ease;
 }
@@ -136,6 +113,7 @@
 .btn-submit:hover {
   background-color: #3586ff;
   box-shadow: 0 0 5px white;
+  color: #ffffff;
   cursor: pointer;
 }
 .btn-add {
@@ -154,11 +132,10 @@
   left: 20px;
   margin: 20px;
   cursor: pointer;
-  transition: background,box-shadow box-shadow 0.3s ease;
-  background-color:  #159dd3;
-  box-shadow:inset 0 0 10px 0 #08435a;
-  box-shadow:0 0 10px 0 #08435a;
- 
+  transition: background, box-shadow box-shadow 0.3s ease;
+  background-color: #159dd3;
+  box-shadow: inset 0 0 10px 0 #08435a;
+  box-shadow: 0 0 10px 0 #08435a;
 }
 .btn-add:hover {
   box-shadow: 0 0 20px 0 #08435a;

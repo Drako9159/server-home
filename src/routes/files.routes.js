@@ -2,12 +2,11 @@ const { Router } = require("express");
 const router = Router();
 const FilesController = require("../controllers/files.controller.js");
 const { verifyToken } = require("../controllers/utils/verifyToken.js");
-
 const MulterUpload = require("../controllers/utils/multer.js");
 
-router.get("/files", verifyToken, FilesController.render);
+router.get("/files", verifyToken, FilesController.appRenderFiles);
 
-router.get("/files/new-file", verifyToken, FilesController.renderForm);
+router.get("/files/new-file", verifyToken, FilesController.appRenderFormFiles);
 
 router.post(
   "/files/new-file",

@@ -9,6 +9,8 @@
   width: 200px;
   height: 380px;
   background-color: #8f8f8f;
+  box-shadow: 0 0 20px 0 #8f8f8f;
+  
   margin: 5px;
   display: flex;
   flex-direction: column;
@@ -22,20 +24,17 @@
   justify-content: center;
   width: 100%;
   height: 50px;
-  
+
   background-color: #5a5a5a;
   border-radius: 10px 10px 0 0;
   text-align: center;
- 
 }
-.card-header p{
-    overflow: hidden;
-    
-  
+.card-header p {
+  overflow: hidden;
+
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-   
 }
 .card-body {
   width: 100%;
@@ -45,68 +44,70 @@
   width: 100%;
   height: 100%;
   z-index: 100;
-  
+}
+.card-body p {
+  background-color: #5a5a5a81;
+  position: relative;
+  bottom: 48px;
+  padding: 5px;
+  z-index: 110;
+  color: #fcfcfc;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  background-color: #5a5a5a;
+  border-radius: 0 0 10px 10px;
+}
+.btn {
+  text-decoration: none;
+  padding: 10px;
+
+  border-radius: 10px;
+  color: #fcfcfc;
+  margin: 5px;
+}
+.btn-play {
+  background-color: #00a0df;
+  box-shadow: 0 0 5px 0 #007fb1,inset 0 0 5px 0 #007fb1;
+}
+.btn-download {
+  background-color: #00a552;
+  box-shadow: 0 0 5px 0 #006935,inset 0 0 5px 0 #006935;
+}
+.btn-download:hover{
+  box-shadow: 0 0 10px 0 #00a552;
+}
+.btn-play:hover {
+  box-shadow: 0 0 10px 0 #00a0df;
+}
+
+
+.btn-add {
+  text-decoration: none;
+  color: #202020;
+  width: 60px;
+    height: 60px;
+  border-radius: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+  position: sticky;
+  font-size: 2.5rem;
+  bottom: 20px;
+  left: 20px;
+  margin: 20px;
+  cursor: pointer;
+  transition: background,box-shadow box-shadow 0.3s ease;
+  background-color:  #159dd3;
+  box-shadow:inset 0 0 10px 0 #08435a;
+  box-shadow:0 0 10px 0 #08435a;
  
 }
-.card-body p{
-    background-color: #5a5a5a81;
-    position: relative;
-    bottom: 48px;
-    padding: 5px;
-    z-index: 110;
-    color: #fcfcfc;
-}
-
-.card-footer{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100%;
-    background-color: #5a5a5a;
-    border-radius: 0 0 10px 10px;
-
-}
-.btn{
-    text-decoration: none;
-    padding: 10px;
-    
-    border-radius: 10px;
-    color: #fcfcfc;
-    margin: 5px;
-
-}
-.btn-play{
-    background-color: #00a0df;
-}
-.btn-download{
-    background-color: #00a816;
-}
-.btn-add{
-    background-color: #5a5a5a;
-    width: 70px;
-    height: 70px;
-    border-radius: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: none;
-    position: sticky;
-    bottom: 20px;
-    left: 20px;
-    margin: 20px;
-    cursor: pointer;
-    transition: background, box-shadow .3s ease;
-}
-.btn-add:hover{
-    background-color: #383838;
-    box-shadow: 0 0 0 1px #000000;;
-}
-
-.btn-add a{
-    text-decoration: none;
-    color: #000000;
-}
-.btn-add p{
-    font-size: 2rem;
-    
+.btn-add:hover {
+  box-shadow: 0 0 20px 0 #08435a;
 }

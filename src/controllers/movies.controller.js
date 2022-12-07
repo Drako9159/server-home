@@ -11,7 +11,7 @@ class MoviesController {
     const { user, moviesPrivate } = getUserActive(req);
     res.render("AppMovies.ejs", { user, moviesPrivate });
   }
-  static appRenderForm(req, res){
+  static appRenderFormMovies(req, res){
     const { user } = getUserActive(req);
     res.render("AppFormNewMovie.ejs", { user })
   }

@@ -2,37 +2,22 @@ const fs = require("fs");
 const json_users = fs.readFileSync("src/users.json", "utf-8");
 let users = JSON.parse(json_users);
 const { v4: uuidv4 } = require("uuid");
-//const { userActive } = require("./utils/userActive.js");
 const { eraseFiles } = require("./utils/readerJson.js");
 const { getDateFormat } = require("./utils/getDateFormat.js");
 const { getUserActive } = require("./utils/getUserActive.js");
 
 class FilesController {
-  static render(req, res) {
-    const userCheck = getUserActive(req);
-    if (userCheck) {
-      const userName = userCheck.user;
-      const files = userCheck.filesPrivate;
-      const nav = {
-        add: "Añadir Archivo",
-        link: "/files/new-file",
-        user: userName,
-        dashboard: "/dashboard",
-      };
-      res.render("files.ejs", { files, nav });
-    }
+  static appRenderFiles(req, res) {
+    const { user, filesPrivate } = getUserActive(req);
+    res.render("AppFiles.ejs", { user, filesPrivate });
   }
-  static async renderForm(req, res) {
-    const userCheck = getUserActive(req);
-    const userName = userCheck.user;
-    const nav = {
-      add: "Añadir Archivo",
-      link: "/files/new-file",
-      user: userName,
-      dashboard: "/dashboard",
-    };
-    res.render("new-file.ejs", { nav });
+
+  static appRenderFormFiles(req, res) {
+    const { user } = getUserActive(req);
+    res.render("AppFormNewFile.ejs", { user })
   }
+
+
   static uploadFile(req, res) {
     const { title } = req.body;
     if (!title || !req.file) {
