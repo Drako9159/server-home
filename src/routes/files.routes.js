@@ -11,15 +11,15 @@ router.post(
   "/files/new-file",
   verifyToken,
   MulterUpload.fileMulter.single("files"),
-  FilesController.uploadFile
+  FilesController.appUploadFile
 );
 
-router.get("/files/delete/:id", verifyToken, FilesController.deleteFile);
+router.get("/files/delete/:id", verifyToken, FilesController.appDeleteFile);
 
 router.get("/files/download/:id", verifyToken, FilesController.downloadFile);
 
-router.get("/files/edit/:id", verifyToken, FilesController.editFile);
+router.get("/files/edit/:id", verifyToken, FilesController.appRenderEditFile);
 
-router.post("/files/edit/edit-file", verifyToken, FilesController.reloadFile);
+router.post("/files/edit/edit-file", verifyToken, FilesController.appUpdateFile);
 
 module.exports = router;

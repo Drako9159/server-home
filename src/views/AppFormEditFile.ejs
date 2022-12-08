@@ -1,0 +1,33 @@
+<%- include("./partials/AppHead"); %>
+    <link rel="stylesheet" type="text/css" href="/styles/AppFormEditFile.css" />
+    <section class="form-container">
+        <form action="edit-file"  method="POST">
+          <div class="secuencial-container">
+            <label for="id">Id</label>
+            <input
+              readonly
+              autofocus
+              type="text"
+              required
+              name="id"
+              id="id"
+              value="<%- file.id %>"
+            />
+          </div>
+          <div class="secuencial-container">
+            <label for="title">Titulo</label>
+            <input
+              autofocus
+              type="text"
+              required
+              name="title"
+              id="title"
+              placeholder="Ingresa el titulo"
+              value="<%- file.title %>"
+            />
+          </div>
+          <input type="submit" value="Actualizar" class="btn-submit" />
+          <a href="/dashboard"><input type="button" class="btn-submit" value="Cancelar"></a>
+        </form>
+      </section>
+<%- include("./partials/AppFooter"); %>
