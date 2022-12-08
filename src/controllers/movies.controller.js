@@ -8,11 +8,11 @@ const { getUserActive } = require("./utils/getUserActive.js");
 
 class MoviesController {
   static appRenderMovies(req, res) {
-    const { user, moviesPrivate } = getUserActive(req);
+    const { user, moviesPrivate } = getUserActive(req.userId);
     res.render("AppMovies.ejs", { user, moviesPrivate });
   }
   static appRenderFormMovies(req, res){
-    const { user } = getUserActive(req);
+    const { user } = getUserActive(req.userId);
     res.render("AppFormNewMovie.ejs", { user })
   }
 
@@ -23,7 +23,7 @@ class MoviesController {
 
 
   static async playMovie(req, res) {
-    const userCheck = getUserActive(req);
+    const userCheck = getUserActive(req.userId);
     if (userCheck) {
       const movies = userCheck.moviesPrivate;
       const sendMovPlay = movies.find((e) => e.id === req.params.id);
@@ -88,7 +88,7 @@ class MoviesController {
     }
   }
   static async downloadMovie(req, res) {
-    const userCheck = getUserActive(req);
+    const userCheck = getUserActive(req.userId);
     if (userCheck) {
       const movies = userCheck.moviesPrivate;
       const sendMovie = movies.find((e) => e.id === req.params.id);
@@ -105,7 +105,7 @@ class MoviesController {
   }
 
   static async deleteMovie(req, res) {
-    const userCheck = getUserActive(req);
+    const userCheck = getUserActive(req.userId);
     if (userCheck) {
       const movies = userCheck.moviesPrivate;
       const sendMovie = movies.find((e) => e.id === req.params.id);
@@ -139,7 +139,7 @@ class MoviesController {
   }
 
   static async editMovie(req, res) {
-    const userCheck = getUserActive(req);
+    const userCheck = getUserActive(req.userId);
     const detectMovie = userCheck.moviesPrivate.find(
       (e) => e.id === req.params.id
     );
@@ -177,7 +177,7 @@ class MoviesController {
     res.redirect("/movies");
   }
   static async shareMovie(req, res) {
-    const userCheck = getUserActive(req);
+    const userCheck = getUserActive(req.userId);
     if (userCheck) {
       const movies = userCheck.moviesPrivate;
       const moviesShare = movies.find((e) => e.id === req.params.id);

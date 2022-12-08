@@ -1,6 +1,6 @@
 const multer = require("multer");
 
-const storageDrop = multer.diskStorage({
+const storageFile = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, "./src/public/uploads/files");
   },
@@ -23,7 +23,7 @@ const storageMovies = multer.diskStorage({
 //const movieMulter = multer({ storage: storageMovies });
 
 const MulterUpload = {
-    fileMulter: multer({ storage: storageDrop }),
+    fileMulter: multer({ storage: storageFile }),
     movieMulter: multer({ storage: storageMovies }),
 }
 

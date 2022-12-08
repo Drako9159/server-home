@@ -5,59 +5,62 @@ const { v4: uuidv4 } = require("uuid");
 const { eraseFiles } = require("./utils/readerJson.js");
 const { getDateFormat } = require("./utils/getDateFormat.js");
 const { getUserActive } = require("./utils/getUserActive.js");
+const { getSize } = require("./utils/getSize.js");
+const { writeFile } = require("./utils/writeUsers.js");
 
 class FilesController {
   static appRenderFiles(req, res) {
-    const { user, filesPrivate } = getUserActive(req);
+    let { user, filesPrivate } = getUserActive(req.userId);
     res.render("AppFiles.ejs", { user, filesPrivate });
   }
-
   static appRenderFormFiles(req, res) {
-    const { user } = getUserActive(req);
-    res.render("AppFormNewFile.ejs", { user })
+    let { user } = getUserActive(req.userId);
+    res.render("AppFormNewFile.ejs", { user });
   }
-
-
   static uploadFile(req, res) {
     const { title } = req.body;
     if (!title || !req.file) {
-      res.status(400).send("No ingresaste todos los datos requeridos");
-      if (req.files.drop) {
-        let path = `src/public/uploads/files/${req.file.drop[0].filename}`;
-        eraseFiles(path);
-      }
+      res.status(400).send("No ingresaste todos los valores");
+      eraseFiles(`src/public/uploads/files/${req.file.filename}`);
       return;
-    }
-    const { mimetype, filename, size } = req.file;
-    function evaluateSize() {
-      let sizerMath = Math.floor(size / 1000);
-      if (sizerMath > 1024) {
-        return (sizerMath = `${sizerMath / 1000} MB`);
-      } else {
-        return (sizerMath = `${sizerMath} KB`);
-      }
-    }
-    let newFile = {
-      id: uuidv4(),
-      title: title,
-      tipo: mimetype,
-      namepath: filename,
-      size: evaluateSize(),
-      createdAt: getDateFormat(),
-      share: false,
-    };
-    const userCheck = users.find((e) => e.id === req.userId);
-    if (userCheck) {
-      let filesUser = userCheck.filesPrivate;
-      filesUser.push(newFile);
+    } else {
+      const { mimetype, filename, size, destination, path } = req.file;
+      writeFile(req.userId, {
+        id: uuidv4(),
+        title: title,
+        tipo: mimetype,
+        namepath: filename,
+        size: getSize(size),
+        createdAt: getDateFormat(),
+        share: false,
+        destination: destination,
+        path: path,
+      });
+      /*let { filesPrivate } = getUserActive(req.userId);
+      //let { filesPrivate } = users.find((e) => e.id === req.userId);
+      filesPrivate.push({
+        id: uuidv4(),
+        title: title,
+        tipo: mimetype,
+        namepath: filename,
+        size: getSize(size),
+        createdAt: getDateFormat(),
+        share: false,
+        destination: destination,
+        path: path,
+      });
       fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
       res.setHeader("Content-Type", "application/json");
       res.setHeader("Access-Control-Allow-Origin", "*");
-      res.redirect("/files");
+      res.redirect("/files");*/
+      res.setHeader("Content-Type", "application/json");
+      res.setHeader("Access-Control-Allow-Origin", "*");
+      res.redirect("/files")
     }
   }
+
   static async deleteFile(req, res) {
-    const userCheck = getUserActive(req);
+    const userCheck = users.find((e) => e.id === req.userId);
     if (userCheck) {
       const files = userCheck.filesPrivate;
       const deleteFile = files.find((e) => e.id === req.params.id);
@@ -95,14 +98,14 @@ class FilesController {
     if (!title) {
       res.status(400).send("No ingresaste todos los datos requeridos");
     }
-    const userCheck = getUserActive(req);
+    const userCheck = users.find((e) => e.id === req.userId);
     const detectFile = userCheck.filesPrivate.find((e) => e.id === id);
     detectFile.title = title;
     fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
     res.redirect("/movies");
   }
   static async editFile(req, res) {
-    const userCheck = getUserActive(req);
+    const userCheck = getUserActive(req.userId);
     const detectFile = userCheck.filesPrivate.find(
       (e) => e.id === req.params.id
     );

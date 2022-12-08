@@ -5,7 +5,6 @@ const { verifyToken } = require("../controllers/utils/verifyToken.js");
 const MulterUpload = require("../controllers/utils/multer.js");
 
 router.get("/files", verifyToken, FilesController.appRenderFiles);
-
 router.get("/files/new-file", verifyToken, FilesController.appRenderFormFiles);
 
 router.post(

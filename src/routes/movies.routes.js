@@ -5,14 +5,15 @@ const { verifyToken } = require("../controllers/utils/verifyToken.js");
 
 const MulterUpload = require("../controllers/utils/multer.js");
 
-router.get("/movies",verifyToken, MoviesController.appRenderMovies)
-router.get("/movies/new-movie", verifyToken, MoviesController.appRenderFormMovies);
+router.get("/movies", verifyToken, MoviesController.appRenderMovies);
+router.get(
+  "/movies/new-movie",
+  verifyToken,
+  MoviesController.appRenderFormMovies
+);
 //router.get("/", verifyToken, MoviesController.appRender )
 //router.get("/movies", verifyToken, MoviesController.render);
-
-
 //router.get("/movies/new-movie", verifyToken, MoviesController.renderForm);
-
 router.get("/movies/play-mov/:id", verifyToken, MoviesController.playMovie);
 
 const uploadContent = MulterUpload.movieMulter.fields([
