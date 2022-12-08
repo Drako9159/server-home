@@ -1,43 +1,26 @@
 const { Router } = require("express");
 const router = Router();
-const {
-  renderSignup,
-  createUser,
-  renderSignin,
-  signinUser,
-  getDashboard,
-  editUser,
-  reloadUser,
-  publicItems,
-  playMovie,
-  downloadMovie,
-  
-} = require("../controllers/login.controller.js");
+
+const LoginController = require("../controllers/login.controller.js");
 const { logOut } = require("../controllers/logout.controller.js");
 const { verifyToken } = require("../controllers/utils/verifyToken.js");
 
-router.get("/", publicItems);
+router.get("/", LoginController.publicItems);
 
 
 
 
-router.get("/public-play-mov/:id", playMovie);
+router.get("/public-play-mov/:id", LoginController.playMovie);
+router.get("/download-movie/:id", LoginController.downloadMovie);
 
-router.get("/download-movie/:id", downloadMovie);
-
-router.get("/signup", logOut, renderSignup);
-
-router.post("/signup", createUser);
-
-router.get("/signin", logOut, renderSignin);
-
-router.post("/signin", signinUser);
+router.get("/signup", logOut, LoginController.appRenderSignup);
+router.post("/signup", LoginController.appCreateUser);
+router.get("/signin", logOut, LoginController.appRenderSignin);
+router.post("/signin", LoginController.signinUser);
 
 /* Dashboard  */
-router.get("/dashboard", verifyToken, getDashboard)
-
-router.get("/users/edit/:id", verifyToken, editUser)
-
-router.post("/users/edit/edit-user", verifyToken, reloadUser)
+router.get("/dashboard", verifyToken, LoginController.getDashboard)
+router.get("/users/edit/:id", verifyToken, LoginController.editUser)
+router.post("/users/edit/edit-user", verifyToken, LoginController.reloadUser)
 
 module.exports = router;

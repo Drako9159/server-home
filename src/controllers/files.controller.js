@@ -68,17 +68,11 @@ class FilesController {
   static appRenderEditFile(req, res) {
     let { user, filesPrivate } = getUserActive(req.userId);
     const detectFile = filesPrivate.find((e) => e.id === req.params.id);
-    const nav = {
-      add: "Añadir Película",
-      link: "/movies/new-movie",
-      user: user,
-      dashboard: "/dashboard",
-    };
     const file = {
       id: detectFile.id,
       title: detectFile.title,
     };
-    res.render("edit-file.ejs", { nav, file });
+    res.render("AppFormEditFile.ejs", { file, user });
   }
 }
 
