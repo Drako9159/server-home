@@ -25,7 +25,7 @@ class FilesController {
       return;
     } else {
       const { mimetype, filename, size, destination, path } = req.file;
-      writeFile(req.userId, {
+      writeFile(res, req.userId, {
         id: uuidv4(),
         title: title,
         tipo: mimetype,
@@ -36,26 +36,6 @@ class FilesController {
         destination: destination,
         path: path,
       });
-      /*let { filesPrivate } = getUserActive(req.userId);
-      //let { filesPrivate } = users.find((e) => e.id === req.userId);
-      filesPrivate.push({
-        id: uuidv4(),
-        title: title,
-        tipo: mimetype,
-        namepath: filename,
-        size: getSize(size),
-        createdAt: getDateFormat(),
-        share: false,
-        destination: destination,
-        path: path,
-      });
-      fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
-      res.setHeader("Content-Type", "application/json");
-      res.setHeader("Access-Control-Allow-Origin", "*");
-      res.redirect("/files");*/
-      res.setHeader("Content-Type", "application/json");
-      res.setHeader("Access-Control-Allow-Origin", "*");
-      res.redirect("/files")
     }
   }
 
