@@ -14,9 +14,9 @@ router.get("/public-play-mov/:id", LoginController.playMovie);
 router.get("/download-movie/:id", LoginController.downloadMovie);
 
 router.get("/signup", logOut, LoginController.appRenderSignup);
-router.post("/signup", LoginController.appCreateUser);
 router.get("/signin", logOut, LoginController.appRenderSignin);
-router.post("/signin", LoginController.signinUser);
+router.post("/signup", LoginController.appCreateUser);
+router.post("/signin", LoginController.appSigninUser);
 
 /* Dashboard  */
 router.get("/dashboard", verifyToken, LoginController.getDashboard)

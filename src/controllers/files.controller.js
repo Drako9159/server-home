@@ -7,12 +7,12 @@ const { getSize } = require("./utils/getSize.js");
 const { postFile, deleteFile, updateFile } = require("./utils/writeUsers.js");
 
 class FilesController {
-  static appRenderFiles(req, res) {
-    let { user, filesPrivate } = getUserActive(req.userId);
+  static async appRenderFiles(req, res) {
+    let { user, filesPrivate } = await getUserActive(req.userId);
     res.render("AppFiles.ejs", { user, filesPrivate });
   }
-  static appRenderFormFiles(req, res) {
-    let { user } = getUserActive(req.userId);
+  static async appRenderFormFiles(req, res) {
+    let { user } = await getUserActive(req.userId);
     res.render("AppFormNewFile.ejs", { user });
   }
   static appUploadFile(req, res) {
@@ -41,9 +41,28 @@ class FilesController {
     deleteFile(res, req.userId, req.params.id);
   }
 
-  static downloadFile(req, res) {
+  static appUpdateFile(req, res) {
+    const { title, id } = req.body;
+    if (!title) {
+      res.status(400).send("No ingresaste todos los datos requeridos");
+    } else {
+      updateFile(res, req.userId, title, id);
+    }
+  }
+
+  static async appRenderEditFile(req, res) {
+    let { user, filesPrivate } = await getUserActive(req.userId);
+    const detectFile = filesPrivate.find((e) => e.id === req.params.id);
+    const file = {
+      id: detectFile.id,
+      title: detectFile.title,
+    };
+    res.render("AppFormEditFile.ejs", { file, user });
+  }
+
+  static async downloadFile(req, res) {
     //const userCheck =  users.find((e) => e.id === req.userId);
-    let { filesPrivate } = getUserActive(req.userId);
+    let { filesPrivate } = await getUserActive(req.userId);
     const fileDownload = filesPrivate.find((e) => e.id === req.params.id);
     const path = `src/public/uploads/files/${fileDownload.namepath}`;
     const head = {
@@ -54,25 +73,6 @@ class FilesController {
     };
     res.writeHead(200, head);
     fs.createReadStream(path).pipe(res);
-  }
-
-  static appUpdateFile(req, res) {
-    const { title, id } = req.body;
-    if (!title) {
-      res.status(400).send("No ingresaste todos los datos requeridos");
-    } else {
-      updateFile(res, req.userId, title, id);
-    }
-  }
-
-  static appRenderEditFile(req, res) {
-    let { user, filesPrivate } = getUserActive(req.userId);
-    const detectFile = filesPrivate.find((e) => e.id === req.params.id);
-    const file = {
-      id: detectFile.id,
-      title: detectFile.title,
-    };
-    res.render("AppFormEditFile.ejs", { file, user });
   }
 }
 

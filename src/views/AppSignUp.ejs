@@ -52,18 +52,12 @@
         
       </form>
     </section>
-    <%if(nav.alert){%>
-      <%if(nav.color === "red"){%>
-        <div style="background-color: red" class="toastAlert">
-          <p><%- nav.alert %></p>
+
+    <% if(toast !== ""){ %>
+        <div>
+            <%- toast %>
+
         </div>
-      <% } %>
-      <%if(nav.color === "green"){%>
-        <div style="background-color: rgb(15, 160, 39)" class="toastAlert">
-          <p><%- nav.alert %></p>
-        </div>
-      <% } %>
     <% } %>
-    
   </body>
 </html>

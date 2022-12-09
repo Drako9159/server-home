@@ -1,11 +1,12 @@
 const fs = require("fs");
-;
 fs.readFileSync("src/users.json", "utf-8");
 const json_users = fs.readFileSync("src/users.json", "utf-8");
 let users = JSON.parse(json_users);
 const { eraseFiles } = require("../utils/readerJson.js");
+const { getToken } = require("../utils/getToken.js");
+const { alertToast } = require("../utils/getToast");
 
-async function postFile(res, user, file) {
+function postFile(res, user, file) {
   let getUser = users.find((e) => e.id === user);
   getUser.filesPrivate.push(file);
   fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
@@ -40,4 +41,37 @@ function updateFile(res, user, newTitle, id) {
   res.redirect("/dashboard");
 }
 
-module.exports = { postFile, deleteFile, updateFile };
+function postUser(res, user) {
+  users.push(user);
+  fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
+  res.setHeader("Set-Cookie", getToken(user.id, user.user, user.email));
+  res.redirect("/files");
+}
+
+function validationUp(user, email) {
+  let checkUser = users.find((e) => e.user === user);
+  let checkEmail = users.find((e) => e.email === email);
+  if (checkUser) {
+    return "haveUser";
+  } else if (checkEmail) {
+    return "haveEmail";
+  } else {
+    return "ok";
+  }
+}
+
+function validationIn(user) {
+  let checkUser = users.find((e) => e.user === user);
+  if (checkUser) {
+    return checkUser;
+  }
+}
+
+module.exports = {
+  postFile,
+  deleteFile,
+  updateFile,
+  postUser,
+  validationUp,
+  validationIn,
+};

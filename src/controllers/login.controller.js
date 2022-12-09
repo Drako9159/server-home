@@ -6,134 +6,78 @@ const {
   decryptPassword,
 } = require("./utils/hashPassword.js");
 const { getToken } = require("./utils/getToken.js");
-const { getDateFormat } = require("./utils/getDateFormat");
-
+const { getDateFormat } = require("./utils/getDateFormat.js");
+const { alertToast } = require("./utils/getToast.js");
+const {
+  postUser,
+  validationUp,
+  validationIn,
+} = require("./utils/writeUsers.js");
 const json_users = fs.readFileSync("src/users.json", "utf-8");
 let users = JSON.parse(json_users);
 
 class LoginController {
   static appRenderSignup(req, res, next) {
-    const nav = {
-      add: "Inicia Sesión",
-      link: "/signin",
-      user: "Login",
-      dashboard: "/signin",
-    };
-    res.render("AppSignUp.ejs", { nav });
+    res.render("AppSignUp.ejs", { toast: "" });
   }
   static appRenderSignin(req, res) {
-    const nav = {
-      add: "Inicia Sesion",
-      link: "/signin",
-      user: "Login",
-      dashboard: "/signin",
-    };
-    res.render("AppSignin.ejs", { nav });
+    res.render("AppSignin.ejs", { toast: "" });
   }
-
-
 
   static async appCreateUser(req, res) {
     const { user, email, password } = req.body;
     if (!user || !email || !password) {
-      const nav = {
-        add: "Inicia Sesion",
-        link: "/signin",
-        user: "Login",
-        alert: "Datos insuficientes",
-        color: "red",
-        dashboard: "/signup",
-      };
-      res.status(400).render("signup.ejs", { nav });
+      let toast = alertToast("red", "Datos insuficientes");
+      res.status(400).render("AppSignUp.ejs", { toast });
     } else {
-      const findUser = await users.find((e) => e.user === user);
-      const findEmail = await users.find((e) => e.email === email);
-      if (findUser) {
-        const nav = {
-          add: "Inicia Sesion",
-          link: "/signin",
-          user: "Login",
-          alert: "El usuario ya está registrado",
-          color: "red",
-          dashboard: "/signup",
-        };
-        res.status(400).render("signup.ejs", { nav });
-      } else if (findEmail) {
-        const nav = {
-          add: "Inicia Sesion",
-          link: "/signin",
-          user: "Login",
-          alert: "El email ya está registrado",
-          color: "red",
-        };
-        res.status(400).render("signup.ejs", { nav });
-      } else {
-        let salt = await getSaltPassword(10);
-        let newUser = {
+      let haveUser = validationUp(user, email);
+      if (haveUser === "haveUser") {
+        let toast = alertToast("red", "El usuario ya está registrado");
+        res.status(400).render("AppSignUp.ejs", { toast });
+      } else if (haveUser === "haveEmail") {
+        let toast = alertToast("red", "El email ya está registrado");
+        res.status(400).render("AppSignUp.ejs", { toast });
+      } else if (haveUser === "ok") {
+        postUser(res, {
           id: uuidv4(),
           user: user,
           email: email,
-          salt: salt,
-          hash: await getHashPassword(password, salt),
+          salt: await getSaltPassword(10),
+          hash: await getHashPassword(password, await getSaltPassword(10)),
           createdAt: getDateFormat(),
           moviesPrivate: [],
           filesPrivate: [],
-        };
-        users.push(newUser);
-        fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
-        res.setHeader(
-          "Set-Cookie",
-          getToken(newUser.id, newUser.user, newUser.email)
-        );
-        res.redirect("/movies");
+        });
       }
     }
   }
-  static async signinUser(req, res) {
+
+  static async appSigninUser(req, res) {
     const { user, password } = req.body;
     if (!user || !password) {
-      const nav = {
-        add: "Inicia Sesion",
-        link: "/signin",
-        user: "Login",
-        alert: "Datos insuficientes",
-        color: "red",
-        dashboard: "/signin",
-      };
-      res.status(400).render("signin.ejs", { nav });
+      let toast = alertToast("red", "Datos insuficientes");
+      res.status(400).render("AppSignin.ejs", { toast });
     } else {
-      const checkUser = await users.find((e) => e.user === user);
-      if (!checkUser) {
-        const nav = {
-          add: "Inicia Sesion",
-          link: "/signin",
-          dashboard: "/signin",
-          user: "Login",
-          alert: "El usuario no existe",
-          color: "red",
-        };
-        res.status(400).render("signin.ejs", { nav });
+      let haveUser = validationIn(user);
+      if (!haveUser) {
+        let toast = alertToast("red", "El usuario no existe");
+        res.status(400).render("AppSignin.ejs", { toast });
       } else {
-        if (await decryptPassword(password, checkUser.hash)) {
+        console.log(haveUser)
+        if (await decryptPassword(password, haveUser.hash)) {
           res.setHeader(
             "Set-Cookie",
-            getToken(checkUser.id, checkUser.user, checkUser.email)
+            getToken(haveUser.id, haveUser.user, haveUser.email)
           );
-          res.redirect("/movies");
+          res.redirect("/files");
         } else {
-          const nav = {
-            add: "Inicia Sesion",
-            link: "/signin",
-            user: "Login",
-            dashboard: "/signup",
-            alert: "Contraseña incorrecta",
-            color: "red",
-          };
-          res.status(400).render("signin.ejs", { nav });
+          let toast = alertToast("red", "Contraseña incorrecta");
+          res.status(400).render("AppSignin.ejs", { toast });
         }
       }
     }
   }
+
   static async getDashboard(req, res) {
     const userCheck = await users.find((e) => e.id === req.userId);
     if (userCheck) {
