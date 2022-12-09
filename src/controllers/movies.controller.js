@@ -5,7 +5,11 @@ let users = JSON.parse(json_users);
 const { eraseFiles } = require("./utils/readerJson.js");
 const { getDateFormat } = require("./utils/getDateFormat.js");
 const { getUserActive } = require("./utils/getUserActive.js");
-const { postMovie, deleteMovie,  } = require("./utils/writeUsers.js");
+const {
+  postMovie,
+  deleteMovie,
+  updateMovie,
+} = require("./utils/writeUsers.js");
 const { getSize } = require("./utils/getSize.js");
 class MoviesController {
   static async appRenderMovies(req, res) {
@@ -75,47 +79,36 @@ class MoviesController {
   }
 
   static async appDeleteMovie(req, res) {
-    deleteMovie(res, req.userId, req.params.id) 
+    deleteMovie(res, req.userId, req.params.id);
   }
 
-  static async editMovie(req, res) {
-    const userCheck = await getUserActive(req.userId);
-    const detectMovie = userCheck.moviesPrivate.find(
-      (e) => e.id === req.params.id
-    );
-
-    if (userCheck) {
-      const userName = userCheck.user;
-      const nav = {
-        add: "Añadir Película",
-        link: "/movies/new-movie",
-        user: userName,
-        dashboard: "/dashboard",
-      };
-      const movie = {
-        id: detectMovie.id,
-        title: detectMovie.title,
-        sinopsis: detectMovie.sinopsis,
-        year: detectMovie.year,
-        genero: detectMovie.genero,
-      };
-      res.render("edit-movie.ejs", { nav, movie });
-    }
+  static async appRenderEditMovie(req, res) {
+    let { user, moviesPrivate } = await getUserActive(req.userId);
+    const detectMovie = moviesPrivate.find((e) => e.id === req.params.id);
+    const movie = {
+      id: detectMovie.id,
+      title: detectMovie.title,
+      sinopsis: detectMovie.sinopsis,
+      year: detectMovie.year,
+      genero: detectMovie.genero,
+    };
+    res.render("AppFormEditMovie.ejs", { movie, user });
   }
-  static async reloadMovie(req, res) {
+
+  static async appUpdateMovie(req, res) {
     const { title, sinopsis, year, genero, id } = req.body;
     if (!title || !sinopsis || !year || !genero) {
       res.status(400).send("No ingresaste todos los datos requeridos");
+    } else {
+      updateMovie(
+        res,
+        req.userId,
+        { title: title, sinopsis: sinopsis, year: year, genero: genero },
+        id
+      );
     }
-    const userCheck = users.find((e) => e.id === req.userId);
-    const detectMovie = userCheck.moviesPrivate.find((e) => e.id === id);
-    detectMovie.title = title;
-    detectMovie.sinopsis = sinopsis;
-    detectMovie.year = year;
-    detectMovie.genero = genero;
-    fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
-    res.redirect("/movies");
   }
+
   static async shareMovie(req, res) {
     const userCheck = await getUserActive(req.userId);
     if (userCheck) {

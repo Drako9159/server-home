@@ -32,12 +32,21 @@ function deleteFile(res, user, file) {
   res.redirect("/dashboard");
 }
 
-
-
 function updateFile(res, user, newTitle, id) {
   let getUser = users.find((e) => e.id === user);
   const detectFile = getUser.filesPrivate.find((e) => e.id === id);
   detectFile.title = newTitle;
+  fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
+  res.redirect("/dashboard");
+}
+
+function updateMovie(res, user, newMovie, id) {
+  let getUser = users.find((e) => e.id === user);
+  const detectMovie = getUser.moviesPrivate.find((e) => e.id === id);
+  detectMovie.title = newMovie.title;
+  detectMovie.sinopsis = newMovie.sinopsis;
+  detectMovie.year = newMovie.year;
+  detectMovie.genero = newMovie.genero;
   fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
   res.redirect("/dashboard");
 }
@@ -75,19 +84,19 @@ function postMovie(res, user, movie) {
   res.redirect("/movies");
 }
 function deleteMovie(res, user, movie) {
-    let getUser = users.find((e) => e.id === user);
-    const deleteMovie = getUser.moviesPrivate.find((e) => e.id === movie);
-    const userMovies = getUser.moviesPrivate.filter((e) => e.id !== movie);
-    function deleteDroper(){
-      eraseFiles(`src/public/uploads/movies/${deleteMovie.image}`)
-      eraseFiles(`src/public/uploads/movies/${deleteMovie.video}`)
-      eraseFiles(`src/public/uploads/movies/${deleteMovie.banner}`)
-    }
-    deleteDroper()
-    getUser.moviesPrivate = userMovies;
-    fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
-    res.redirect("/dashboard");
+  let getUser = users.find((e) => e.id === user);
+  const deleteMovie = getUser.moviesPrivate.find((e) => e.id === movie);
+  const userMovies = getUser.moviesPrivate.filter((e) => e.id !== movie);
+  function deleteDroper() {
+    eraseFiles(`src/public/uploads/movies/${deleteMovie.image}`);
+    eraseFiles(`src/public/uploads/movies/${deleteMovie.video}`);
+    eraseFiles(`src/public/uploads/movies/${deleteMovie.banner}`);
   }
+  deleteDroper();
+  getUser.moviesPrivate = userMovies;
+  fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
+  res.redirect("/dashboard");
+}
 module.exports = {
   postFile,
   deleteFile,
@@ -97,4 +106,5 @@ module.exports = {
   validationIn,
   postMovie,
   deleteMovie,
+  updateMovie,
 };

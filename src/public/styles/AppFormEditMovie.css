@@ -1,0 +1,156 @@
+
+@font-face {
+    font-family: monse;
+    src: url("../assets/Montserrat-Regular.otf");
+  }
+  .form-container {
+    font-family: monse;
+    max-width: 600px;
+    width: 90%;
+    margin: 20px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 5px;
+    box-shadow: 0 0 2px #202020;
+  }
+  .form-container form {
+    width: 90%;
+  }
+  .form-container label {
+    font-family: monse;
+    font-weight: bold;
+    color: #202020;
+  }
+  .form-container .secuencial-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 10px;
+  }
+  
+  .form-container input {
+    
+    box-shadow: 0 0 2px white;
+    border: none;
+    border-radius: 5px;
+    height: 30px;
+    font-family: monse;
+    box-sizing: border-box;
+    outline: none;
+    background-color: rgba(0, 0, 0, 0.103);
+    padding: 5px;
+  }
+  textarea{
+    resize: vertical;
+    box-shadow: 0 0 2px white;
+    border: none;
+    border-radius: 5px;
+    
+    font-family: monse;
+    box-sizing: border-box;
+    outline: none;
+    background-color: rgba(0, 0, 0, 0.103);
+    padding: 5px;
+  }
+  
+  .form-container div input:focus {
+    border: none;
+    background-color: rgba(0, 0, 0, 0.103);
+  
+    color: #111111;
+    font-weight: bold;
+  }
+  
+  .form-year::-webkit-inner-spin-button {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+  }
+  
+  .intermedial-form div input {
+    background-color: rgba(0, 0, 0, 0.103);
+    color: #202020;
+  }
+  .intermedial-form div input::placeholder {
+    color: #525252;
+  }
+  .intermedial-form {
+    margin: 0 auto;
+    width: 90%;
+    display: flex;
+  
+    align-items: center;
+    justify-content: space-between;
+  }
+  .intermedial-form div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  
+    width: 40%;
+  }
+  .intermedial-form div input {
+    width: 100%;
+  }
+  .btn-submit {
+    font-family: monse;
+    margin: 0;
+    padding: 0 15px;
+    margin: 10px;
+    border-radius: 5px;
+    background-color: #0d6efd;
+    border: none;
+    color: #858585;
+    font-weight: bold;
+    transition: all 0.2s ease;
+  }
+  
+  .image {
+    display: none;
+  }
+  .charge-image {
+    border: none;
+    box-shadow: 0 0 2px black;
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 5px;
+    text-align: center;
+    transition: all 0.2 ease;
+    cursor: pointer;
+  }
+  .charge-image:hover {
+    background-color: rgba(0, 0, 0, 0.103);
+  }
+  
+  .btn-submit:hover {
+    background-color: #3586ff;
+    box-shadow: 0 0 5px white;
+    color: #ffffff;
+    cursor: pointer;
+  }
+  .btn-add {
+    text-decoration: none;
+    color: #202020;
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    position: sticky;
+    font-size: 2.5rem;
+    bottom: 20px;
+    left: 20px;
+    margin: 20px;
+    cursor: pointer;
+    transition: background, box-shadow 0.3s ease;
+    background-color: #159dd3;
+    box-shadow: inset 0 0 10px 0 #08435a;
+    box-shadow: 0 0 10px 0 #08435a;
+  }
+  .btn-add:hover {
+    box-shadow: 0 0 20px 0 #08435a;
+  }

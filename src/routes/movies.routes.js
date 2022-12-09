@@ -29,12 +29,12 @@ router.post(
 router.get("/movies/download/:id", verifyToken, MoviesController.appDownloadMovie);
 router.get("/movies/delete/:id", verifyToken, MoviesController.appDeleteMovie);
 
-router.get("/movies/edit/:id", verifyToken, MoviesController.editMovie);
+router.get("/movies/edit/:id", verifyToken, MoviesController.appRenderEditMovie);
 
 router.post(
   "/movies/edit/edit-movie",
   verifyToken,
-  MoviesController.reloadMovie
+  MoviesController.appUpdateMovie
 );
 
 router.get("/movies/share/:id", verifyToken, MoviesController.shareMovie);
