@@ -19,7 +19,9 @@ class FilesController {
     const { title } = req.body;
     if (!title || !req.file) {
       res.status(400).send("No ingresaste todos los valores");
-      eraseFiles(`src/public/uploads/files/${req.file.filename}`);
+      if (req.file.filename) {
+        eraseFiles(`src/public/uploads/files/${req.file.filename}`);
+      }
       return;
     } else {
       const { mimetype, filename, size, destination, path } = req.file;
@@ -60,7 +62,7 @@ class FilesController {
     res.render("AppFormEditFile.ejs", { file, user });
   }
 
-  static async downloadFile(req, res) {
+  static async appDownloadFile(req, res) {
     //const userCheck =  users.find((e) => e.id === req.userId);
     let { filesPrivate } = await getUserActive(req.userId);
     const fileDownload = filesPrivate.find((e) => e.id === req.params.id);

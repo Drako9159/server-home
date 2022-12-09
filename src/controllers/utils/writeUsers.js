@@ -4,7 +4,6 @@ const json_users = fs.readFileSync("src/users.json", "utf-8");
 let users = JSON.parse(json_users);
 const { eraseFiles } = require("../utils/readerJson.js");
 const { getToken } = require("../utils/getToken.js");
-const { alertToast } = require("../utils/getToast");
 
 function postFile(res, user, file) {
   let getUser = users.find((e) => e.id === user);
@@ -32,6 +31,8 @@ function deleteFile(res, user, file) {
   fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
   res.redirect("/dashboard");
 }
+
+
 
 function updateFile(res, user, newTitle, id) {
   let getUser = users.find((e) => e.id === user);
@@ -67,6 +68,26 @@ function validationIn(user) {
   }
 }
 
+function postMovie(res, user, movie) {
+  let getUser = users.find((e) => e.id === user);
+  getUser.moviesPrivate.push(movie);
+  fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
+  res.redirect("/movies");
+}
+function deleteMovie(res, user, movie) {
+    let getUser = users.find((e) => e.id === user);
+    const deleteMovie = getUser.moviesPrivate.find((e) => e.id === movie);
+    const userMovies = getUser.moviesPrivate.filter((e) => e.id !== movie);
+    function deleteDroper(){
+      eraseFiles(`src/public/uploads/movies/${deleteMovie.image}`)
+      eraseFiles(`src/public/uploads/movies/${deleteMovie.video}`)
+      eraseFiles(`src/public/uploads/movies/${deleteMovie.banner}`)
+    }
+    deleteDroper()
+    getUser.moviesPrivate = userMovies;
+    fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
+    res.redirect("/dashboard");
+  }
 module.exports = {
   postFile,
   deleteFile,
@@ -74,4 +95,6 @@ module.exports = {
   postUser,
   validationUp,
   validationIn,
+  postMovie,
+  deleteMovie,
 };

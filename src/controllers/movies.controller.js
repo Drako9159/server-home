@@ -5,32 +5,26 @@ let users = JSON.parse(json_users);
 const { eraseFiles } = require("./utils/readerJson.js");
 const { getDateFormat } = require("./utils/getDateFormat.js");
 const { getUserActive } = require("./utils/getUserActive.js");
-
+const { postMovie, deleteMovie,  } = require("./utils/writeUsers.js");
+const { getSize } = require("./utils/getSize.js");
 class MoviesController {
-  static appRenderMovies(req, res) {
-    const { user, moviesPrivate } = getUserActive(req.userId);
+  static async appRenderMovies(req, res) {
+    const { user, moviesPrivate } = await getUserActive(req.userId);
     res.render("AppMovies.ejs", { user, moviesPrivate });
   }
-  static appRenderFormMovies(req, res){
-    const { user } = getUserActive(req.userId);
-    res.render("AppFormNewMovie.ejs", { user })
+  static async appRenderFormMovies(req, res) {
+    const { user } = await getUserActive(req.userId);
+    res.render("AppFormNewMovie.ejs", { user });
   }
-
-
-  
-
-
-
-
   static async playMovie(req, res) {
-    const userCheck = getUserActive(req.userId);
+    const userCheck = await getUserActive(req.userId);
     if (userCheck) {
       const movies = userCheck.moviesPrivate;
       const sendMovPlay = movies.find((e) => e.id === req.params.id);
       res.render("play-mov.ejs", { sendMovPlay });
     }
   }
-  static async uploadMovie(req, res) {
+  static async appUploadMovie(req, res) {
     const { title, sinopsis, year, genero } = req.body;
     if (
       !title ||
@@ -42,104 +36,50 @@ class MoviesController {
       !req.files.banner
     ) {
       res.status(400).send("No ingresaste todos los datos requeridos");
-      if (req.files.image) {
-        let pathImage = `src/public/uploads/movies/${req.files.image[0].filename}`;
-        eraseFiles(pathImage);
-      } else if (req.files.video) {
-        let pathVideo = `src/public/uploads/movies/${req.files.video[0].filename}`;
-        eraseFiles(pathVideo);
-      } else if (req.files.banner) {
-        let pathBanner = `src/public/uploads/movies/${req.files.banner[0].filename}`;
-        eraseFiles(pathBanner);
+      if (req.files.image[0].filename) {
+        eraseFiles(`src/public/uploads/movies/${req.files.image[0].filename}`);
+      } else if (req.files.video[0].filename) {
+        eraseFiles(`src/public/uploads/movies/${req.files.video[0].filename}`);
+      } else if (req.files.banner[0].filename) {
+        eraseFiles(`src/public/uploads/movies/${req.files.banner[0].filename}`);
       }
       return;
     }
-    const nameImg = req.files.image[0].filename;
-    const nameVideo = req.files.video[0].filename;
-    const nameBanner = req.files.banner[0].filename;
-    const sizeVideo = req.files.video[0].size;
-    function evaluateSize() {
-      let sizerMath = Math.floor(sizeVideo / 1000);
-      if (sizerMath > 1024) {
-        return (sizerMath = `${sizerMath / 1000} MB`);
-      } else {
-        return (sizerMath = `${sizerMath} KB`);
-      }
-    }
-    let newMovie = {
+    postMovie(res, req.userId, {
       id: uuidv4(),
       title: title.replace(/"/g, " "),
       sinopsis: sinopsis.replace(/"/g, " "),
       year: year,
-      image: nameImg,
-      video: nameVideo,
-      banner: nameBanner,
+      image: req.files.image[0].filename,
+      video: req.files.video[0].filename,
+      banner: req.files.banner[0].filename,
       genero: genero.replace(/"/g, " "),
-      size: evaluateSize(),
+      size: getSize(req.files.video[0].size),
       createdAt: getDateFormat(),
       share: false,
+    });
+  }
+
+  static async appDownloadMovie(req, res) {
+    let { moviesPrivate } = await getUserActive(req.userId);
+    const sendMovie = moviesPrivate.find((e) => e.id === req.params.id);
+    const path = `src/public/uploads/movies/${sendMovie.video}`;
+    const head = {
+      "Content-Type": "video/mp4",
+      "Content-Disposition": `attachment; filename=${sendMovie.video}`,
+      //"Content-Length": sendMovie.size,
+      //TODO size is deprecated in my browser
     };
-    const userCheck = users.find((e) => e.id === req.userId);
-    if (userCheck) {
-      let moviesUser = userCheck.moviesPrivate;
-      moviesUser.push(newMovie);
-      fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
-      res.redirect("/movies");
-    }
-  }
-  static async downloadMovie(req, res) {
-    const userCheck = getUserActive(req.userId);
-    if (userCheck) {
-      const movies = userCheck.moviesPrivate;
-      const sendMovie = movies.find((e) => e.id === req.params.id);
-      const path = `src/public/uploads/movies/${sendMovie.video}`;
-      const head = {
-        "Content-Type": "video/mp4",
-        "Content-Disposition": `attachment; filename=${sendMovie.video}`,
-        //"Content-Length": sendMovie.size,
-        //TODO size is deprecated in my browser
-      };
-      res.writeHead(200, head);
-      fs.createReadStream(path).pipe(res);
-    }
+    res.writeHead(200, head);
+    fs.createReadStream(path).pipe(res);
   }
 
-  static async deleteMovie(req, res) {
-    const userCheck = getUserActive(req.userId);
-    if (userCheck) {
-      const movies = userCheck.moviesPrivate;
-      const sendMovie = movies.find((e) => e.id === req.params.id);
-      const userMovies = movies.filter((e) => e.id !== req.params.id);
-
-      function dropImage(img) {
-        if (img) {
-          let path = `src/public/uploads/movies/${img.image}`;
-          eraseFiles(path);
-        }
-      }
-      function dropVideo(video) {
-        if (video) {
-          let path = `src/public/uploads/movies/${video.video}`;
-          eraseFiles(path);
-        }
-      }
-      function dropBanner(video) {
-        if (video) {
-          let path = `src/public/uploads/movies/${video.banner}`;
-          eraseFiles(path);
-        }
-      }
-      dropImage(sendMovie);
-      dropVideo(sendMovie);
-      dropBanner(sendMovie);
-      userCheck.moviesPrivate = userMovies;
-      fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
-      res.redirect("/dashboard");
-    }
+  static async appDeleteMovie(req, res) {
+    deleteMovie(res, req.userId, req.params.id) 
   }
 
   static async editMovie(req, res) {
-    const userCheck = getUserActive(req.userId);
+    const userCheck = await getUserActive(req.userId);
     const detectMovie = userCheck.moviesPrivate.find(
       (e) => e.id === req.params.id
     );
@@ -177,7 +117,7 @@ class MoviesController {
     res.redirect("/movies");
   }
   static async shareMovie(req, res) {
-    const userCheck = getUserActive(req.userId);
+    const userCheck = await getUserActive(req.userId);
     if (userCheck) {
       const movies = userCheck.moviesPrivate;
       const moviesShare = movies.find((e) => e.id === req.params.id);

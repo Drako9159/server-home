@@ -11,9 +11,6 @@ router.get(
   verifyToken,
   MoviesController.appRenderFormMovies
 );
-//router.get("/", verifyToken, MoviesController.appRender )
-//router.get("/movies", verifyToken, MoviesController.render);
-//router.get("/movies/new-movie", verifyToken, MoviesController.renderForm);
 router.get("/movies/play-mov/:id", verifyToken, MoviesController.playMovie);
 
 const uploadContent = MulterUpload.movieMulter.fields([
@@ -26,12 +23,11 @@ router.post(
   "/movies/new-movie",
   verifyToken,
   uploadContent,
-  MoviesController.uploadMovie
+  MoviesController.appUploadMovie
 );
 
-router.get("/movies/download/:id", verifyToken, MoviesController.downloadMovie);
-
-router.get("/movies/delete/:id", verifyToken, MoviesController.deleteMovie);
+router.get("/movies/download/:id", verifyToken, MoviesController.appDownloadMovie);
+router.get("/movies/delete/:id", verifyToken, MoviesController.appDeleteMovie);
 
 router.get("/movies/edit/:id", verifyToken, MoviesController.editMovie);
 

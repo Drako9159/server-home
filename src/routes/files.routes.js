@@ -16,7 +16,7 @@ router.post(
 
 router.get("/files/delete/:id", verifyToken, FilesController.appDeleteFile);
 
-router.get("/files/download/:id", verifyToken, FilesController.downloadFile);
+router.get("/files/download/:id", verifyToken, FilesController.appDownloadFile);
 
 router.get("/files/edit/:id", verifyToken, FilesController.appRenderEditFile);
 
