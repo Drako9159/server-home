@@ -4,18 +4,18 @@
     <% filesPrivate.forEach((e) =>{ %>
     <div class="card">
         <div class="card-left">
-            <p>Titulo: <%- e.title %></p>
-            <p>Creado: <%- e.createdAt %></p>
-            <p>Tipo: <%- e.tipo %></p>
-            <p>Tamaño: <%- e.size %></p>
+            <p><b>Titulo:</b> <%- e.title %></p>
+            <p><b>Creado:</b> <%- e.createdAt %></p>
+            <p><b>Tipo:</b> <%- e.tipo %></p>
+            <p><b>Tamaño:</b> <%- e.size %></p>
         </div>
         <div class="card-center"></div>
         <div class="card-right">
             <a href="/files/edit/<%- e.id %>">
                 <img src="./icons/editar.png" />
             </a>
-            <a href="#">
-                <img src="./icons/ver.png" />
+            <a href="/files/share/<%- e.id %>" class='<%- e.share ? "background-share-active" : "background-share-desactive" %>'>
+                <img src="./icons/share.png" />
             </a>
             <a href="/files/delete/<%- e.id %>">
                 <img src="./icons/basura.png" />

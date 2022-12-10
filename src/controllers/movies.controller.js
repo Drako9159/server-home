@@ -1,7 +1,5 @@
 const { v4: uuidv4 } = require("uuid");
 const fs = require("fs");
-const json_users = fs.readFileSync("src/users.json", "utf-8");
-let users = JSON.parse(json_users);
 const { eraseFiles } = require("./utils/readerJson.js");
 const { getDateFormat } = require("./utils/getDateFormat.js");
 const { getUserActive } = require("./utils/getUserActive.js");
@@ -9,8 +7,11 @@ const {
   postMovie,
   deleteMovie,
   updateMovie,
+  shareMovie,
 } = require("./utils/writeUsers.js");
 const { getSize } = require("./utils/getSize.js");
+
+
 class MoviesController {
   static async appRenderMovies(req, res) {
     const { user, moviesPrivate } = await getUserActive(req.userId);
@@ -109,22 +110,9 @@ class MoviesController {
     }
   }
 
-  static async shareMovie(req, res) {
-    const userCheck = await getUserActive(req.userId);
-    if (userCheck) {
-      const movies = userCheck.moviesPrivate;
-      const moviesShare = movies.find((e) => e.id === req.params.id);
-      //const moviesShare = movies.filter((e) => e.share === false);
-      if (moviesShare.share) {
-        moviesShare.share = false;
-      } else {
-        moviesShare.share = true;
-      }
-    }
-    fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
-    res.redirect("/dashboard");
+  static async appShareMovie(req, res) {
+    shareMovie(res, req.userId, req.params.id);
   }
 }
 
 module.exports = MoviesController;
-//Await for implement module in class, nothing use methods

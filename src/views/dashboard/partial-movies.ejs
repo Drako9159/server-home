@@ -1,26 +1,26 @@
-
 <div id="items" class="items">
     <h3>Movies</h3>
-    <% moviesPrivate.forEach((e) =>{ %>
-    <div class="card">
-        <div class="card-left">
-            <p>Titulo: <%- e.title %></p>
-            <p>Creado: <%- e.createdAt %></p>
-            <p>Año: <%- e.year %></p>
-            <p>Tamaño: <%- e.size %></p>
+    <% moviesPrivate.forEach((e)=>{ %>
+        <div class="card">
+            <div class="card-left">
+                <p><b>Titulo:</b> <%- e.title %></p>
+                <p><b>Creado:</b> <%- e.createdAt %></p>
+                <p><b>Año:</b> <%- e.year %></p>
+                <p><b>Tamaño:</b> <%- e.size %></p>
+            </div>
+            <div class="card-center"></div>
+            <div class="card-right">
+                <a href="/movies/edit/<%- e.id %>">
+                    <img src="./icons/editar.png" />
+                </a>
+                <a href="/movies/share/<%- e.id %>"
+                    class='<%- e.share ? "background-share-active" : "background-share-desactive" %>'>
+                    <img src="./icons/share.png" />
+                </a>
+                <a href="/movies/delete/<%- e.id %>">
+                    <img src="./icons/basura.png" />
+                </a>
+            </div>
         </div>
-        <div class="card-center"></div>
-        <div class="card-right">
-            <a href="/movies/edit/<%- e.id %>">
-                <img src="./icons/editar.png" />
-            </a>
-            <a href="/movies/share/<%- e.id %>" style="background-color: '<%- e.share ? 'red' : 'blue' %>';">
-                <img src="./icons/share.png" />
-            </a>
-            <a href="/movies/delete/<%- e.id %>">
-                <img src="./icons/basura.png" />
-            </a>
-        </div>
-    </div>
-    <% }) %>
+        <% }) %>
 </div>

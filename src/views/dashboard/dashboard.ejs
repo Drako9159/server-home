@@ -36,12 +36,12 @@
         const rightContainer = document.querySelector("#rightContainer")
 
         let buttons = [btnFiles, btnMovies, btnProfile]
-        let container = [`<%- include("./partial-files"); %>`, `<%- include("./partial-movies"); %>`]
+        let container = [`<%- include("./partial-files"); %>`, `<%- include("./partial-movies"); %>`, `<%- include("./partial-user"); %>`]
 
         btnProfile.addEventListener("click", (e) => {
             deactiveButtons(buttons.filter((e) => e !== btnProfile))
-            
             btnProfile.classList.toggle("button-active")
+            rightContainer.innerHTML = container[2]
         })
         btnMovies.addEventListener("click", (e) => {
             deactiveButtons(buttons.filter((e) => e !== btnMovies))

@@ -4,7 +4,7 @@ const { eraseFiles } = require("./utils/readerJson.js");
 const { getDateFormat } = require("./utils/getDateFormat.js");
 const { getUserActive } = require("./utils/getUserActive.js");
 const { getSize } = require("./utils/getSize.js");
-const { postFile, deleteFile, updateFile } = require("./utils/writeUsers.js");
+const { postFile, deleteFile, updateFile, shareFile } = require("./utils/writeUsers.js");
 
 class FilesController {
   static async appRenderFiles(req, res) {
@@ -75,6 +75,9 @@ class FilesController {
     };
     res.writeHead(200, head);
     fs.createReadStream(path).pipe(res);
+  }
+  static async appShareFile(req, res) {
+    shareFile(res, req.userId, req.params.id);
   }
 }
 

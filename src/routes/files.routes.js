@@ -15,11 +15,9 @@ router.post(
 );
 
 router.get("/files/delete/:id", verifyToken, FilesController.appDeleteFile);
-
 router.get("/files/download/:id", verifyToken, FilesController.appDownloadFile);
-
 router.get("/files/edit/:id", verifyToken, FilesController.appRenderEditFile);
-
 router.post("/files/edit/edit-file", verifyToken, FilesController.appUpdateFile);
+router.get("/files/share/:id", verifyToken, FilesController.appShareFile)
 
 module.exports = router;
