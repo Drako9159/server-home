@@ -1,23 +1,23 @@
 
 <div id="items" class="items">
-    <h3>Files</h3>
-    <% filesPrivate.forEach((e) =>{ %>
+    <h3>Movies</h3>
+    <% moviesPrivate.forEach((e) =>{ %>
     <div class="card">
         <div class="card-left">
             <p>Titulo: <%- e.title %></p>
             <p>Creado: <%- e.createdAt %></p>
-            <p>Tipo: <%- e.tipo %></p>
+            <p>Año: <%- e.year %></p>
             <p>Tamaño: <%- e.size %></p>
         </div>
         <div class="card-center"></div>
         <div class="card-right">
-            <a href="/files/edit/<%- e.id %>">
+            <a href="/movies/edit/<%- e.id %>">
                 <img src="./icons/editar.png" />
             </a>
-            <a href="#">
-                <img src="./icons/ver.png" />
+            <a href="/movies/share/<%- e.id %>" style="background-color: '<%- e.share ? 'red' : 'blue' %>';">
+                <img src="./icons/share.png" />
             </a>
-            <a href="/files/delete/<%- e.id %>">
+            <a href="/movies/delete/<%- e.id %>">
                 <img src="./icons/basura.png" />
             </a>
         </div>

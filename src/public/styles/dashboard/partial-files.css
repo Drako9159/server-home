@@ -1,12 +1,76 @@
 .items{
-    background-color: red;
+    background-color: #cccccc;
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
+    
 }
 .card{
-    width: 90%;
-    background-color: blue;
+    width: 95%;
+    background-color: #b3b3b3;
     height: 100px;
+    display: flex;
+    margin: 0.3rem;
+    box-shadow: 0 0 3px 0 #202020, inset 0 0 2px 0 #202020;
+    
+}
+.card-left{
+   
+    height: 100%;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;overflow: hidden;
+}
+.card-left p{
+    margin: 0;
+    padding: 3px;
+
+    overflow: hidden;
+    
+}
+.card-center{
+    width: 30%;
+    
+    height: 100%;
+}
+.card-right{
+    width: 20%;
+    height: 100%;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+
+}
+.card-right a{
+    box-shadow: 0 0 2px 0 #202020, inset 0 0 2px 0 #202020;
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    align-items: center;
+    border-radius: 5px;
+    margin: 3px;
+    max-width: 45px;
+    max-height: 45px;
+    transition: background .3s ease;
+    background-color: #cccccc;
+    width: 33%;
+    
+    
+    
+    
+   
+}
+.card-right a:hover{
+    background-color: #a8a8a8;
+
+}
+.card-right a img{
+    margin: 5px;
+    width: 70%;
+    padding: 5px;
 }

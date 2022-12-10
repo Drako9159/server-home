@@ -20,13 +20,10 @@
                     <button id="button-files" class="link">Files</button>
                     <a href="/signin" class="extra-links">Cerrar Sesión</a>
                     <a href="/movies" class="extra-links">Regresar</a>
-                    
                 </div>
-                
-
             </div>
-            <div class="right">
-                <%- include("../dashboard/partial-files.ejs); %>
+            <div id="rightContainer" class="right"> 
+                
             </div>
         </div>
     </section>
@@ -36,20 +33,26 @@
         const btnFiles = document.querySelector("#button-files")
         const btnLogout = document.querySelector("#button-logout")
         const btnReturn = document.querySelector("#button-return")
-        const mainContainer = document.querySelector()
+        const rightContainer = document.querySelector("#rightContainer")
+
         let buttons = [btnFiles, btnMovies, btnProfile]
+        let container = [`<%- include("./partial-files"); %>`, `<%- include("./partial-movies"); %>`]
 
         btnProfile.addEventListener("click", (e) => {
             deactiveButtons(buttons.filter((e) => e !== btnProfile))
+            
             btnProfile.classList.toggle("button-active")
         })
         btnMovies.addEventListener("click", (e) => {
             deactiveButtons(buttons.filter((e) => e !== btnMovies))
             btnMovies.classList.toggle("button-active")
+            rightContainer.innerHTML = container[1]
         })
         btnFiles.addEventListener("click", (e) => {
             deactiveButtons(buttons.filter((e) => e !== btnFiles))
             btnFiles.classList.toggle("button-active")
+            rightContainer.innerHTML = container[0]
+            
         })
         function deactiveButtons(buttons) {
             buttons.forEach((e) => { e.classList.remove("button-active") })
