@@ -1,0 +1,56 @@
+@font-face {
+  font-family: montse;
+  src: url("../../assets/Montserrat-Regular.otf");
+}
+body {
+  font-family: montse;
+  background-color: #cccccc;
+  margin: 0;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  width: 90%;
+  max-width: 1200px;
+}
+
+.alert {
+  max-width: 600px;
+  width: 90%;
+  margin: 20px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  border-radius: 10px;
+  box-shadow: 0 0 10px 0 #202020;
+
+  background: linear-gradient(
+    90deg,
+    #7bbfff 0%,
+
+    #b5ff60 90%
+  );
+}
+.alert h3 {
+  color: #202020;
+}
+.alert a {
+  box-shadow: 0 0 2px 0 #202020, inset 0 0 2px 0 #202020;
+  border-radius: 5px;
+  background-color: #202020;
+  text-decoration: none;
+  color: #ffffff;
+  padding: 0.8rem;
+  margin: 1rem;
+  transition: background .3s ease;
+  transition: box-shadow .3 ease;
+}
+.alert a:hover{
+    background-color: #494949;
+    box-shadow: 0 0 2px 0 #3b3b3b, inset 0 0 2px 0 #3b3b3b;
+}
