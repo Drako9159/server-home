@@ -18,9 +18,9 @@ router.get("/signin", logOut, LoginController.appRenderSignin);
 router.post("/signup", LoginController.appCreateUser);
 router.post("/signin", LoginController.appSigninUser);
 
-/* Dashboard  */
+/* Dashboard  
 router.get("/dashboard", verifyToken, LoginController.getDashboard)
 router.get("/users/edit/:id", verifyToken, LoginController.editUser)
-router.post("/users/edit/edit-user", verifyToken, LoginController.reloadUser)
-
+router.post("/users/edit/edit-user", verifyToken, LoginController.reloadUser)*/
+router.get("/dashboardw", verifyToken, LoginController.getDashboard)
 module.exports = router;

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" type="text/css" href="/styles/dashboard/dashboard.css" />
+</head>
+
+<body>
+    <section class="container-dashboard">
+        <div class="main">
+            <div class="left">
+                <div class="user"><%- user %></div>
+                <div class="links-desktop">
+                    <button id="button-profile" class="link">Profile</button>
+                    <button id="button-movies" class="link">Movies</button>
+                    <button id="button-files" class="link">Files</button>
+                    <a href="/signin" class="extra-links">Cerrar Sesión</a>
+                    <a href="/movies" class="extra-links">Regresar</a>
+                    
+                </div>
+                
+
+            </div>
+            <div class="right">
+                <%- include("../dashboard/partial-files.ejs); %>
+            </div>
+        </div>
+    </section>
+    <script>
+        const btnProfile = document.querySelector("#button-profile")
+        const btnMovies = document.querySelector("#button-movies")
+        const btnFiles = document.querySelector("#button-files")
+        const btnLogout = document.querySelector("#button-logout")
+        const btnReturn = document.querySelector("#button-return")
+        const mainContainer = document.querySelector()
+        let buttons = [btnFiles, btnMovies, btnProfile]
+
+        btnProfile.addEventListener("click", (e) => {
+            deactiveButtons(buttons.filter((e) => e !== btnProfile))
+            btnProfile.classList.toggle("button-active")
+        })
+        btnMovies.addEventListener("click", (e) => {
+            deactiveButtons(buttons.filter((e) => e !== btnMovies))
+            btnMovies.classList.toggle("button-active")
+        })
+        btnFiles.addEventListener("click", (e) => {
+            deactiveButtons(buttons.filter((e) => e !== btnFiles))
+            btnFiles.classList.toggle("button-active")
+        })
+        function deactiveButtons(buttons) {
+            buttons.forEach((e) => { e.classList.remove("button-active") })
+           
+            
+        }
+
+    </script>
+</body>
+
+</html>

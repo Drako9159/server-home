@@ -63,7 +63,6 @@ class LoginController {
         let toast = alertToast("red", "El usuario no existe");
         res.status(400).render("AppSignin.ejs", { toast });
       } else {
-        console.log(haveUser)
         if (await decryptPassword(password, haveUser.hash)) {
           res.setHeader(
             "Set-Cookie",
