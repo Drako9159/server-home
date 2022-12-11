@@ -1,4 +1,4 @@
-const fs = require("fs");
+
 const { v4: uuidv4 } = require("uuid");
 const {
   getSaltPassword,
@@ -13,8 +13,6 @@ const {
   validationUp,
   validationIn,
 } = require("./utils/writeUsers.js");
-const json_users = fs.readFileSync("src/users.json", "utf-8");
-let users = JSON.parse(json_users);
 
 class LoginController {
   static appRenderSignup(req, res, next) {

@@ -4,16 +4,30 @@ const { eraseFiles } = require("./utils/readerJson.js");
 const { getDateFormat } = require("./utils/getDateFormat.js");
 const { getUserActive } = require("./utils/getUserActive.js");
 const { getSize } = require("./utils/getSize.js");
-const { postFile, deleteFile, updateFile, shareFile } = require("./utils/writeUsers.js");
+const {
+  postFile,
+  deleteFile,
+  updateFile,
+  shareFile,
+} = require("./utils/writeUsers.js");
 
 class FilesController {
   static async appRenderFiles(req, res) {
-    let { user, filesPrivate } = await getUserActive(req.userId);
-    res.render("AppFiles.ejs", { user, filesPrivate });
+    try {
+      let { user, filesPrivate } = await getUserActive(req.userId);
+      res.render("AppFiles.ejs", { user, filesPrivate });
+    } catch (e) {
+      console.log(e);
+      res.redirect("/signin");
+    }
   }
   static async appRenderFormFiles(req, res) {
-    let { user } = await getUserActive(req.userId);
-    res.render("AppFormNewFile.ejs", { user });
+    try {
+      let { user } = await getUserActive(req.userId);
+      res.render("AppFormNewFile.ejs", { user });
+    } catch (e) {
+      res.redirect("/signin");
+    }
   }
   static appUploadFile(req, res) {
     const { title } = req.body;
@@ -53,13 +67,17 @@ class FilesController {
   }
 
   static async appRenderEditFile(req, res) {
-    let { user, filesPrivate } = await getUserActive(req.userId);
-    const detectFile = filesPrivate.find((e) => e.id === req.params.id);
-    const file = {
-      id: detectFile.id,
-      title: detectFile.title,
-    };
-    res.render("AppFormEditFile.ejs", { file, user });
+    try {
+      let { user, filesPrivate } = await getUserActive(req.userId);
+      const detectFile = filesPrivate.find((e) => e.id === req.params.id);
+      const file = {
+        id: detectFile.id,
+        title: detectFile.title,
+      };
+      res.render("AppFormEditFile.ejs", { file, user });
+    } catch (e) {
+      res.redirect("/signin");
+    }
   }
 
   static async appDownloadFile(req, res) {

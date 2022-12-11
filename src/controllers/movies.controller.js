@@ -11,15 +11,24 @@ const {
 } = require("./utils/writeUsers.js");
 const { getSize } = require("./utils/getSize.js");
 
-
 class MoviesController {
   static async appRenderMovies(req, res) {
-    const { user, moviesPrivate } = await getUserActive(req.userId);
-    res.render("AppMovies.ejs", { user, moviesPrivate });
+    try {
+      const { user, moviesPrivate } = await getUserActive(req.userId);
+      res.render("AppMovies.ejs", { user, moviesPrivate });
+    } catch (e) {
+      console.log(e);
+      res.redirect("/signin");
+    }
   }
   static async appRenderFormMovies(req, res) {
-    const { user } = await getUserActive(req.userId);
-    res.render("AppFormNewMovie.ejs", { user });
+    try {
+      const { user } = await getUserActive(req.userId);
+      res.render("AppFormNewMovie.ejs", { user });
+    } catch (e) {
+      console.log(e);
+      res.redirect("/signin");
+    }
   }
   static async playMovie(req, res) {
     const userCheck = await getUserActive(req.userId);
@@ -84,16 +93,21 @@ class MoviesController {
   }
 
   static async appRenderEditMovie(req, res) {
-    let { user, moviesPrivate } = await getUserActive(req.userId);
-    const detectMovie = moviesPrivate.find((e) => e.id === req.params.id);
-    const movie = {
-      id: detectMovie.id,
-      title: detectMovie.title,
-      sinopsis: detectMovie.sinopsis,
-      year: detectMovie.year,
-      genero: detectMovie.genero,
-    };
-    res.render("AppFormEditMovie.ejs", { movie, user });
+    try {
+      let { user, moviesPrivate } = await getUserActive(req.userId);
+      const detectMovie = moviesPrivate.find((e) => e.id === req.params.id);
+      const movie = {
+        id: detectMovie.id,
+        title: detectMovie.title,
+        sinopsis: detectMovie.sinopsis,
+        year: detectMovie.year,
+        genero: detectMovie.genero,
+      };
+      res.render("AppFormEditMovie.ejs", { movie, user });
+    } catch (e) {
+      console.log(e);
+      res.redirect("/signin");
+    }
   }
 
   static async appUpdateMovie(req, res) {
