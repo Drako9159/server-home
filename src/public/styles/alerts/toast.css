@@ -1,5 +1,23 @@
+@font-face {
+  font-family: montse;
+  src: url("../../assets/Montserrat-Regular.otf");
+}
 .toast{
-    
-    color: green;
-    padding: 20px;
+  
+  position: absolute;
+  animation: toast 3s ease;
+  opacity: 0;
+}
+.alertToast {
+  font-family: montse;
+  border-radius: 5px;
+  padding: 10px;
+  color: #ffffff;
+  text-decoration: none;
+  
+}
+@keyframes toast {
+    0%{ opacity: 0; }
+    30%{ opacity: 1; }
+    100%{ opacity: 0; }
 }

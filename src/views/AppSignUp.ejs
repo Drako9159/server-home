@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Signup</title>
     <link rel="stylesheet" href="/styles/AppSignUp.css" />
+    <link rel="stylesheet" href="/styles/alerts/toast.css" />
     <link rel="icon" href="/icons/boton-inicio.png">
   </head>
   <body>
@@ -54,7 +55,7 @@
     </section>
 
     <% if(toast !== ""){ %>
-        <div>
+        <div class="toast">
             <%- toast %>
         </div>
     <% } %>
