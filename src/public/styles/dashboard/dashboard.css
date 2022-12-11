@@ -103,11 +103,13 @@ body {
 }
 .card {
   width: 95%;
-  background-color: #b3b3b3;
+  background-color: #969696;
+  color: #202020;
   height: 100px;
   display: flex;
   margin: 0.3rem;
-  box-shadow: 0 0 3px 0 #202020, inset 0 0 2px 0 #202020;
+  box-shadow: 0 0 6px 0 #202020, inset 0 0 5px 0 #cccccc;
+  border-radius: 5px;
 }
 .card-left {
   height: 100%;

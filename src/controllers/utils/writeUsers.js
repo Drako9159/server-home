@@ -5,17 +5,20 @@ let users = JSON.parse(json_users);
 const { eraseFiles } = require("../utils/readerJson.js");
 const { getToken } = require("../utils/getToken.js");
 
+
 // FILES //
 function postFile(res, user, file) {
   let getUser = users.find((e) => e.id === user);
   getUser.filesPrivate.push(file);
   fs.writeFileSync("src/users.json", JSON.stringify(users), "utf-8");
+  
   if (getUser.filesPrivate.find((e) => e.filename === file.filename)) {
     res.setHeader("Content-Type", "application/json");
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.redirect("/files");
   }
 }
+
 function deleteFile(res, user, file) {
   let getUser = users.find((e) => e.id === user);
   const deleteFile = getUser.filesPrivate.find((e) => e.id === file);
@@ -119,8 +122,6 @@ function validationIn(user) {
   }
 }
 // USER //
-
-
 
 module.exports = {
   postFile,
