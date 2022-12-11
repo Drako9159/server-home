@@ -59,7 +59,7 @@ class MoviesController {
       }
       return;
     }
-    postMovie(res, req.userId, {
+    await postMovie(res, req.userId, {
       id: uuidv4(),
       title: title.replace(/"/g, " "),
       sinopsis: sinopsis.replace(/"/g, " "),
