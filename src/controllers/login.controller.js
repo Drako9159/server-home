@@ -30,7 +30,7 @@ class LoginController {
       let toast = alertToast("red", "Datos insuficientes");
       res.status(400).render("AppSignUp.ejs", { toast });
     } else {
-      let haveUser = validationUp(user, email);
+      let haveUser = await validationUp(user, email);
       if (haveUser === "haveUser") {
         let toast = alertToast("red", "El usuario ya está registrado");
         res.status(400).render("AppSignUp.ejs", { toast });
@@ -58,7 +58,7 @@ class LoginController {
       let toast = alertToast("red", "Datos insuficientes");
       res.status(400).render("AppSignin.ejs", { toast });
     } else {
-      let haveUser = validationIn(user);
+      let haveUser = await validationIn(user);
       if (!haveUser) {
         let toast = alertToast("red", "El usuario no existe");
         res.status(400).render("AppSignin.ejs", { toast });
