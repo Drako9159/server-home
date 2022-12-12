@@ -79,10 +79,10 @@
   box-shadow: 0 0 5px 0 #006935,inset 0 0 5px 0 #006935;
 }
 .btn-download:hover{
-  box-shadow: 0 0 10px 0 #00a552;
+  box-shadow: 0 0 10px #004221;
 }
 .btn-play:hover {
-  box-shadow: 0 0 10px 0 #00a0df;
+  box-shadow: 0 0 10px 0 #005b80;
 }
 
 

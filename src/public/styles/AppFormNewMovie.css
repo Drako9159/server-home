@@ -80,7 +80,7 @@
 
 .intermedial-form div input {
   background-color: rgba(0, 0, 0, 0.103);
-  color: #ccc;
+  color: #202020;
 }
 .intermedial-form div input::placeholder {
   color: #202020;
@@ -89,7 +89,7 @@
   margin: 0 auto;
   width: 90%;
   display: flex;
-
+  
   align-items: center;
   justify-content: space-between;
 }
