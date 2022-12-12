@@ -1,0 +1,16 @@
+<%- include("./partials/AppHead"); %>
+    <link rel="stylesheet" type="text/css" href="/styles/AppPlayMovie.css" />
+    <img class="banner" src="<%= `/uploads/movies/${movie.banner}` %>">
+
+    <section class="play-movie">
+        <div class="title-close">
+            <h3><%- movie.title %></h3>
+            <a class="close" hreF="/movies">X</a>
+        </div>
+        <video class="video" controls>
+            <source src="<%= `/uploads/movies/${movie.video}` %>" type="video/mp4">
+            Your browser does not support the video tag
+        </video>
+    </section>
+
+    <%- include("./partials/AppFooter"); %>

@@ -30,12 +30,14 @@ class MoviesController {
       res.redirect("/signin");
     }
   }
-  static async playMovie(req, res) {
-    const userCheck = await getUserActive(req.userId);
-    if (userCheck) {
-      const movies = userCheck.moviesPrivate;
-      const sendMovPlay = movies.find((e) => e.id === req.params.id);
-      res.render("play-mov.ejs", { sendMovPlay });
+  static async appPlayMovie(req, res) {
+    try {
+      let { moviesPrivate, user } = await getUserActive(req.userId);
+      const movie = moviesPrivate.find((e) => e.id === req.params.id);
+      res.render("AppPlayMovie.ejs", { movie, user });
+      
+    } catch (e) {
+      console.log(e);
     }
   }
   static async appUploadMovie(req, res) {

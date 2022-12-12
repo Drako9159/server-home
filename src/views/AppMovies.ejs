@@ -1,5 +1,6 @@
 <%- include("./partials/AppHead"); %>
     <link rel="stylesheet" type="text/css" href="/styles/AppMovies.css" />
+    <link rel="stylesheet" type="text/css" href="/styles/AppPlayMovie.css" />
     <section class="AppMovies">
         <% moviesPrivate.forEach((e)=> { %>
             <div class="card">
@@ -20,6 +21,6 @@
         <% }) %>
     </section>
 
+
     <a class="btn-add" href="/movies/new-movie"><p>+</p></a>
-        
     <%- include("./partials/AppFooter"); %>

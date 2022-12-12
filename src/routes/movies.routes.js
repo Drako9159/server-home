@@ -11,7 +11,7 @@ router.get(
   verifyToken,
   MoviesController.appRenderFormMovies
 );
-router.get("/movies/play-mov/:id", verifyToken, MoviesController.playMovie);
+router.get("/movies/play-mov/:id", verifyToken, MoviesController.appPlayMovie);
 
 const uploadContent = MulterUpload.movieMulter.fields([
   { name: "image", maxCount: 1 },
@@ -35,5 +35,6 @@ router.post(
   MoviesController.appUpdateMovie
 );
 router.get("/movies/share/:id", verifyToken, MoviesController.appShareMovie);
+
 
 module.exports = router;
