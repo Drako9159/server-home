@@ -28,6 +28,8 @@
     width: 90%;
     max-width: 900px;
     border-radius: 10px 10px 0 0;
+    overflow: hidden;
+    height: 50px;
 
 }
 .close{
@@ -53,6 +55,8 @@
     max-width: 1600px;
     z-index: 300;
     max-height: 700px;
+    
+    object-fit: cover;
     
 }
 .video{
