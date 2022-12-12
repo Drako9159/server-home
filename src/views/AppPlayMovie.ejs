@@ -7,7 +7,7 @@
             <h3><%- movie.title %></h3>
             <a class="close" hreF="/movies">X</a>
         </div>
-        <video class="video" controls>
+        <video class="video" controls autoplay>
             <source src="<%= `/uploads/movies/${movie.video}` %>" type="video/mp4">
             Your browser does not support the video tag
         </video>
