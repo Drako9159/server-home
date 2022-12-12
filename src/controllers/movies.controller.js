@@ -38,6 +38,7 @@ class MoviesController {
       
     } catch (e) {
       console.log(e);
+      res.redirect("/signin");
     }
   }
   static async appUploadMovie(req, res) {
