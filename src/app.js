@@ -23,3 +23,25 @@ app.use((req, res, next) => {
   res.status(404).send("404 Not Found");
 });
 module.exports = app;
+
+
+/*
+const cors = require("cors")
+
+const whiteList = ["https://www.section.io"]
+
+const corsOptions = {
+  origin:(origin, callback) => {
+    if(whiteList.indexOf(origin) !== -1){
+      callback(null, true);
+    } else {
+      callback(new Error)
+    }
+  }
+}
+app.use(cors({
+  origin: ["https://www.section.io"],
+  methods: ["GET", "POST", "DELETE", "PUT"]
+}))
+
+*/
